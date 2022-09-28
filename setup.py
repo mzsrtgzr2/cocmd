@@ -10,7 +10,7 @@ requirements = [
 ]
 
 setup(
-    name='cli_app',
+    name='ggist',
     version='0.1.0',
     description="CLI tool boilerplate using click, please replace!",
     long_description=readme,
@@ -25,13 +25,13 @@ setup(
         # called and where it will look for it. Please edit to suit
         # your needs
         'console_scripts': [
-            'cli_app=cli_app:cli'
+            'ggist=cli_app:cli'
         ]
     },
     include_package_data=True,
     install_requires=requirements,
     zip_safe=False,
-    keywords='cli_app',
+    keywords='ggist',
     classifiers=[
         'Intended Audience :: Developers',
         'Natural Language :: English',

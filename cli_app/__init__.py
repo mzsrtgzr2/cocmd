@@ -18,4 +18,4 @@ def cli():
 
 
 # Add commands
-cli.add_command(commands.hello)
+cli.add_command(commands.aliases)
