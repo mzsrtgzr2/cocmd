@@ -4,7 +4,7 @@
 
 import click
 
-from cli_app import commands
+from . import commands
 
 
 __author__ = """Travis Hathaway"""
@@ -18,4 +18,6 @@ def cli():
 
 
 # Add commands
-cli.add_command(commands.aliases)
+cli.add_command(commands.aliases.add)
+
+cli()
