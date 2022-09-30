@@ -7,6 +7,6 @@ def source(name):
     """
     Simple command that says hello
     """
-    click.echo(f'Hello {name}')
+    
 
 
