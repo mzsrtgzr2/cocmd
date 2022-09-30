@@ -8,7 +8,9 @@ from ggist_cli_app.context import click_pass_context
 @click.command()
 @click_pass_context
 def apply(context):
-    res = command.run(['source', context.aliases_file])
-    print(res.output)
+    # apply it in bashrc with 
+    # cd /workspaces/ggist/ && eval "$(python -m ggist_cli_app apply)"
+    with open(context.aliases_file, 'r') as fin:
+        print(fin.read())
 
 
