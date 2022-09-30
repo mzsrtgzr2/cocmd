@@ -8,9 +8,9 @@
             "name": "alias add",
             "type": "python",
             "request": "launch",
-            "module": "cli_app",
+            "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["add", "moshe"]
+            "args": ["add"]
         }
     ]
 }

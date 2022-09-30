@@ -17,7 +17,7 @@ setup(
     author="Travis Hathaway",
     author_email='travis@example.com',
     url='https://github.com/travishathaway/click-boilerplate',
-    packages=find_packages(include=['cli_app']),
+    packages=find_packages(include=['ggist_cli_app']),
     entry_points={
         # ATTENTION! ACHTUNG! ATENCIÓN!
         # 
@@ -25,7 +25,7 @@ setup(
         # called and where it will look for it. Please edit to suit
         # your needs
         'console_scripts': [
-            'ggist=cli_app:cli'
+            'ggist=ggist_cli_app:cli'
         ]
     },
     include_package_data=True,
