@@ -5,12 +5,12 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "alias add",
+            "name": "apply",
             "type": "python",
             "request": "launch",
             "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["add"]
+            "args": ["apply"]
         }
     ]
 }

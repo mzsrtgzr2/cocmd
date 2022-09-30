@@ -1,12 +1,14 @@
 import click
+import os
+import command
+from ggist_cli_app.consts import Consts 
+from ggist_cli_app.context import click_pass_context
 
 
 @click.command()
-@click.argument('name', nargs=1)
-def source(name):
-    """
-    Simple command that says hello
-    """
-    
+@click_pass_context
+def apply(context):
+    res = command.run(['source', context.aliases_file])
+    print(res.output)
 
 

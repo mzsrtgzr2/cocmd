@@ -1,1 +1,1 @@
-from . import aliases
+from . import aliases, terminal

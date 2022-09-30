@@ -19,5 +19,6 @@ def cli():
 
 # Add commands
 cli.add_command(commands.aliases.add)
+cli.add_command(commands.terminal.apply)
 
 cli()
