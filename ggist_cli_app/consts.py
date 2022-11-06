@@ -6,3 +6,4 @@ class Consts:
     ALIASES_FILE='aliases.txt'
     SCRIPTS_DIR='scripts'
     DEFAULT_TERMINAL='bash'
+    CONFIG_FILE='config.yaml'

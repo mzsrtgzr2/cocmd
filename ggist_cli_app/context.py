@@ -9,6 +9,7 @@ class Context:
         self.terminal = terminal or Consts.DEFAULT_TERMINAL
         self.aliases_file = os.path.join(self.home, Consts.ALIASES_FILE)
         self.scripts_dir = os.path.join(self.home, Consts.SCRIPTS_DIR)
+        self.config_file = os.path.join(self.home, Consts.CONFIG_FILE)
         mkdir(self.home)
         touch(self.aliases_file)
         mkdir(self.scripts_dir)
