@@ -7,10 +7,12 @@ class Source:
 
     def __init__(self, _location: str):
         self._location = _location.lower()
+        print(self._location)
         if os.path.exists(self._location):
             self._aliases = tuple(file_read_lines(os.path.join(self._location, Consts.ALIASES_FILE)))
         else:
-            raise
+
+            raise RuntimeError(f'path {self._location} not exists')
 
     @property
     def is_exists_locally(self):
