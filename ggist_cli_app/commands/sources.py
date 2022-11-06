@@ -19,7 +19,7 @@ def add(context, source: str):
     file_write_lines(context.sources_file, tuple(map(str, sources)))
 
     # update aliases file
-    recreate_aliases(sources)
+    recreate_aliases(context.aliases_file, sources)
 
 
 

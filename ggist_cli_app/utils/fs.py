@@ -9,8 +9,8 @@ def touch(file):
 
 def file_read_lines(file) -> Sequence[str]:
     with open(file, 'r') as fp:
-        yield from fp.readlines()
+        return map(lambda s: s.strip(), fp.readlines())
 
 def file_write_lines(file, lines):
     with open(file, 'w') as fp:
-        fp.writelines(lines)
+        fp.writelines(map(lambda s: f'{s}\n', lines))
