@@ -1,5 +1,9 @@
+import os
 from pathlib import Path
 from typing import Sequence
+
+def exists(path)->bool:
+    return os.path.exists(path)
 
 def mkdir(dir):
     Path(dir).mkdir(parents=True, exist_ok=True)

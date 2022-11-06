@@ -1,15 +1,25 @@
 import os
 from ggist_cli_app.consts import Consts
-from ggist_cli_app.utils.fs import file_read_lines
+from ggist_cli_app.context import Context
+from ggist_cli_app.utils.fs import exists, file_read_lines
+from ggist_cli_app.utils import git
 
 
 class Source:
 
-    def __init__(self, _location: str):
+    def __init__(self, _location: str, context: Context):
+        self.context = context
         self._location = _location.lower()
-        print(self._location)
-        if os.path.exists(self._location):
+        if exists(self._location):
             self._aliases = tuple(file_read_lines(os.path.join(self._location, Consts.ALIASES_FILE)))
+        elif self._location.endswith('.git'):
+            local_repo = os.path.join(context.home, git.get_repo_name(self._location))
+            if not exists(local_repo):
+                git.clone(
+                    self._location, 
+                    local_repo
+                )
+            self._aliases = tuple(file_read_lines(os.path.join(local_repo, Consts.ALIASES_FILE)))
         else:
 
             raise RuntimeError(f'path {self._location} not exists')
@@ -33,3 +43,7 @@ class Source:
 
     def __hash__(self):
         return hash((type(self), self._location))
+
+    @staticmethod
+    def load_sources(sources_file, context):
+        return set(map(lambda s: Source(s, context), file_read_lines(sources_file)))

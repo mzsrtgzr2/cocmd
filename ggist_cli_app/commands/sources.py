@@ -11,9 +11,10 @@ def add(context, source: str):
     """
     Simple command that says hello
     """
-    source = Source(source)
+    source = Source(source, context)
 
-    sources = set(map(Source, file_read_lines(context.sources_file)))
+    sources = Source.load_sources(context.sources_file, context)
+
     sources.add(source)
 
     file_write_lines(context.sources_file, tuple(map(str, sources)))
@@ -24,3 +25,29 @@ def add(context, source: str):
 
 
 
+@click.command()
+@click.argument('source')
+@click_pass_context
+def remove(context, source: str):
+    """
+    Simple command that says hello
+    """
+    source = Source(source, context)
+
+    sources = Source.load_sources(context.sources_file, context)
+    sources.remove(source)
+
+    file_write_lines(context.sources_file, tuple(map(str, sources)))
+
+    # update aliases file
+    recreate_aliases(context.aliases_file, sources)
+
+
+
+
+@click.command()
+@click_pass_context
+def refresh(context):
+    sources = Source.load_sources(context.sources_file, context)
+    # update aliases file
+    recreate_aliases(context.aliases_file, sources)
