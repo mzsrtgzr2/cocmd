@@ -10,9 +10,11 @@ class Context:
         self.aliases_file = os.path.join(self.home, Consts.ALIASES_FILE)
         self.scripts_dir = os.path.join(self.home, Consts.SCRIPTS_DIR)
         self.config_file = os.path.join(self.home, Consts.CONFIG_FILE)
+        self.sources_file = os.path.join(self.home, Consts.SOURCES_FILE)
         mkdir(self.home)
         touch(self.aliases_file)
         mkdir(self.scripts_dir)
+        touch(self.sources_file)
 
 
 # from https://click.palletsprojects.com/en/8.1.x/complex/

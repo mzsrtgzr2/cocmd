@@ -7,3 +7,4 @@ class Consts:
     SCRIPTS_DIR='scripts'
     DEFAULT_TERMINAL='bash'
     CONFIG_FILE='config.yaml'
+    SOURCES_FILE='sources.txt'

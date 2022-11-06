@@ -1,7 +1,16 @@
 from pathlib import Path
+from typing import Sequence
 
 def mkdir(dir):
     Path(dir).mkdir(parents=True, exist_ok=True)
 
 def touch(file):
     Path(file).touch()
+
+def file_read_lines(file) -> Sequence[str]:
+    with open(file, 'r') as fp:
+        yield from fp.readlines()
+
+def file_write_lines(file, lines):
+    with open(file, 'w') as fp:
+        fp.writelines(lines)

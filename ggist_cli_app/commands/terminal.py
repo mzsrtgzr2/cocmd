@@ -19,7 +19,15 @@ def apply(context):
     print(f'export PATH=$PATH:{context.scripts_dir}')
 
 
-@click.command()
-@click_pass_context
-def refresh(context):
-    
+# @click.command()
+# @click_pass_context
+# def apply(context):
+#     # apply it in bashrc with 
+#     # cd /workspaces/ggist/ && eval "$(python -m ggist_cli_app apply)"
+
+#     # apply aliases
+#     with open(context.aliases_file, 'r') as fin:
+#         print(fin.read())
+
+#     # apply scripts
+#     print(f'export PATH=$PATH:{context.scripts_dir}')
