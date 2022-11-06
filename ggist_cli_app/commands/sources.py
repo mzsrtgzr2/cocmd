@@ -24,7 +24,6 @@ def add(context, source: str):
 
 
 
-
 @click.command()
 @click.argument('source')
 @click_pass_context
@@ -41,8 +40,6 @@ def remove(context, source: str):
 
     # update aliases file
     recreate_aliases(context.aliases_file, sources)
-
-
 
 
 @click.command()

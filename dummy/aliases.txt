@@ -1,2 +1,0 @@
-moshe2='echo moshe2 is here'
-moshe3='echo moshe3 is here'

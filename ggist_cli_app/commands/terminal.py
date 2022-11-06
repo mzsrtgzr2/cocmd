@@ -13,7 +13,10 @@ def apply(context):
 
     # apply aliases
     with open(context.aliases_file, 'r') as fin:
-        print(fin.read())
+        line = fin.read()
+        if not line.startswith('alias '):
+            line = f'alias {line}'
+        print(line)
 
     # apply scripts
     print(f'export PATH=$PATH:{context.scripts_dir}')
