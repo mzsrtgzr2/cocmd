@@ -1,4 +1,5 @@
 import os
+from typing import Sequence
 from ggist_cli_app.consts import Consts
 from ggist_cli_app.context import Context
 from ggist_cli_app.utils.fs import exists, file_read_lines
@@ -11,7 +12,7 @@ class Source:
         self.context = context
         self._location = _location.lower()
         if exists(self._location):
-            self._aliases = tuple(file_read_lines(os.path.join(self._location, Consts.ALIASES_FILE)))
+            self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
         elif self._location.endswith('.git'):
             local_repo = os.path.join(context.home, git.get_repo_name(self._location))
             if not exists(local_repo):
@@ -19,7 +20,7 @@ class Source:
                     self._location, 
                     local_repo
                 )
-            self._aliases = tuple(file_read_lines(os.path.join(local_repo, Consts.ALIASES_FILE)))
+            self._aliases = self.read_aliases(os.path.join(local_repo, Consts.ALIASES_FILE))
         else:
 
             raise RuntimeError(f'path {self._location} not exists')
@@ -43,6 +44,13 @@ class Source:
 
     def __hash__(self):
         return hash((type(self), self._location))
+
+    @staticmethod
+    def read_aliases(file)->Sequence[str]:
+        def _clean(s):
+            s = s.strip()
+
+        return tuple(filter(bool, map(_clean, file_read_lines(file))))
 
     @staticmethod
     def load_sources(sources_file, context):
