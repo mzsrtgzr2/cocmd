@@ -19,3 +19,16 @@ def sources(context):
     print('sources:')
     for source in sources:
         print(f' - {source}')
+
+
+
+@show.command()
+@click_pass_context
+def aliases(context):
+    """
+    Show aliases
+    """
+    print('aliases:')
+    with open(context.aliases_file, 'r') as fin:
+        line = fin.read()
+        print(line)
