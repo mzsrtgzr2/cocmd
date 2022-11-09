@@ -49,6 +49,7 @@ class Source:
     def read_aliases(file)->Sequence[str]:
         def _clean(s):
             s = s.strip()
+            return s
 
         return tuple(filter(bool, map(_clean, file_read_lines(file))))
 
