@@ -22,5 +22,6 @@ cli.add_command(commands.sources.add)
 cli.add_command(commands.sources.remove)
 cli.add_command(commands.sources.refresh)
 cli.add_command(commands.terminal.apply)
+cli.add_command(commands.show.show)
 
 cli()
