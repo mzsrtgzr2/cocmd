@@ -17,7 +17,7 @@ setup(
     author="Moshe Ro",
     author_email='mzsrtgzr2@gmail.com',
     url='https://github.com/mzsrtgzr2/ggist',
-    packages=find_packages(include=['ggist_cli_app']),
+    packages=find_packages(),
     entry_points={
         'console_scripts': [
             'ggist=ggist_cli_app:cli'
