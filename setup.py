@@ -10,20 +10,15 @@ requirements = [
 ]
 
 setup(
-    name='ggist',
+    name='ggist1',
     version='0.1.0',
     description="CLI tool boilerplate using click, please replace!",
     long_description=readme,
-    author="Travis Hathaway",
-    author_email='travis@example.com',
-    url='https://github.com/travishathaway/click-boilerplate',
+    author="Moshe Ro",
+    author_email='mzsrtgzr2@gmail.com',
+    url='https://github.com/mzsrtgzr2/ggist',
     packages=find_packages(include=['ggist_cli_app']),
     entry_points={
-        # ATTENTION! ACHTUNG! ATENCIÓN!
-        # 
-        # The following lines determine what your CLI program is 
-        # called and where it will look for it. Please edit to suit
-        # your needs
         'console_scripts': [
             'ggist=ggist_cli_app:cli'
         ]
@@ -31,10 +26,7 @@ setup(
     include_package_data=True,
     install_requires=requirements,
     zip_safe=False,
-    keywords='ggist',
+    keywords='ggist1',
     classifiers=[
-        'Intended Audience :: Developers',
-        'Natural Language :: English',
-        'Programming Language :: Python :: 3.6',
     ]
 )
