@@ -194,16 +194,7 @@ fi
 emph "Installing GGIST CLI:"
 # pip install ggist1
 
-SHELL=$(eval "ps -p $$ -ocomm=")
-echo $SHELL
-if [[ "$SHELL" == *bash* ]]; then
-   PROFILE_FILE=~/.bashrc
-elif [[ "$SHELL" == *zsh* ]]; then
-   PROFILE_FILE=~/.zshrc
-else
-  PROFILE_FILE=~/.bash_profile
-fi
-echo Updating $PROFILE_FILE
+PROFILE_FILE=~/.profile
 echo 'export PATH=~/.ggist/scripts:$PATH' >> $PROFILE_FILE
 echo 'eval "$(ggist apply)"' >> $PROFILE_FILE
 
