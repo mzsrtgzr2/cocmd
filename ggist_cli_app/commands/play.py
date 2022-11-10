@@ -1,6 +1,8 @@
 import click
 from ggist_cli_app.context import click_pass_context
 from ggist_cli_app.core.workflow import WorkflowStep, Workflow
+from ggist_cli_app.core.os import OS
+from ggist_cli_app.core.workflow import WorkflowCommand
 
 @click.group()
 def play():
@@ -13,8 +15,11 @@ def flow(context):
     Play a workflow
     """
     steps = [
-        WorkflowStep(title='Say Hello', description='', cmd="echo 'hello'"),
-        WorkflowStep(title='Download the latest release with the command', description='', cmd="""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
+        WorkflowStep(title='Say Hello', description='', cmd={OS.any: WorkflowCommand("echo 'hello'")}),
+        WorkflowStep(title='Download the latest release with the command', description='', cmd={
+            OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
+            OS.osx: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
+        }),
         WorkflowStep(title='Validate the binary', description='', cmd="""curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\""""),
         WorkflowStep(title='Validate Sha', description='', cmd="""echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check"""),
         WorkflowStep(title='Install in the system', description='', cmd="""sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"""),

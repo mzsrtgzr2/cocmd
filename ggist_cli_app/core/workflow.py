@@ -1,7 +1,7 @@
 
 import subprocess
 import os
-from typing import Sequence
+from typing import Sequence, Mapping
 from dataclasses import dataclass
 
 from ggist_cli_app.core.os import OS
@@ -15,7 +15,7 @@ class WorkflowCommand:
 class WorkflowStep:
     title: str
     description: str
-    cmd: WorkflowCommand
+    cmd: Mapping[OS, WorkflowCommand]
 
 class Workflow:
 
