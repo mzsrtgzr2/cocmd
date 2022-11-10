@@ -195,9 +195,10 @@ emph "Installing GGIST CLI:"
 # pip install ggist1
 
 
-echo 'eval "$(ggist apply)"' >> ~/.profile
-echo 'eval "$(ggist apply)"' >> ~/.zprofile
-
+echo 'eval "$(ggist apply)"' >> ~/.bashrc
+echo 'updated bash'
+echo 'eval "$(ggist apply)"' >> ~/.zshrc
+echo 'updated zsh'
 
 echo
 emph "Next steps:"
