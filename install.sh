@@ -194,9 +194,9 @@ fi
 emph "Installing GGIST CLI:"
 # pip install ggist1
 
-PROFILE_FILE=~/.profile
-echo 'export PATH=~/.ggist/scripts:$PATH' >> $PROFILE_FILE
-echo 'eval "$(ggist apply)"' >> $PROFILE_FILE
+
+echo 'eval "$(ggist apply)"' >> ~/.profile
+echo 'eval "$(ggist apply)"' >> ~/.zprofile
 
 
 echo
