@@ -192,7 +192,7 @@ if ! [[ "$READ_TERMS" == 'Y' || "$READ_TERMS" == 'y' ]]; then
 fi
 
 emph "Installing GGIST CLI:"
-# pip install ggist1
+pip install ggist1 --upgrade
 
 
 echo 'eval "$(ggist apply)"' >> ~/.bashrc
