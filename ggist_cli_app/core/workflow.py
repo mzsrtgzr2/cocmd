@@ -4,16 +4,22 @@ import os
 from typing import Sequence
 from dataclasses import dataclass
 
+from ggist_cli_app.core.os import OS
+
+
+@dataclass(frozen=True)
+class WorkflowCommand:
+    cmd: str
 
 @dataclass(frozen=True)
 class WorkflowStep:
     title: str
     description: str
-    cmd: str
+    cmd: WorkflowCommand
 
 class Workflow:
 
-    def __init__(self, steps: Sequence[WorkflowStep], os: str):
+    def __init__(self, steps: Sequence[WorkflowStep], os: OS):
         self.steps = steps
         self.os = os
 
