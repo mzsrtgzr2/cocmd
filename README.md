@@ -1,4 +1,4 @@
-# Hi 👋
+# Hi 
 
 **ggist** is a terminal utility to find and create:
 - aliases
@@ -14,8 +14,7 @@ The easiest way to install GGist's CLI is using the install script:
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/ggist/main/install.sh)"
 ```
 
-
-# 
+## Details 
 - manage your aliases and helper scripts
     - get new from community 
     - create your own

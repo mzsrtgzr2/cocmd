@@ -11,9 +11,9 @@ requirements = [
 
 setup(
     name='ggist1',
-    version='0.1.3',
+    version='0.1.5',
     description="CLI tool boilerplate using click, please replace!",
-    long_description=readme,
+    long_description='bla bla',
     author="Moshe Ro",
     author_email='mzsrtgzr2@gmail.com',
     url='https://github.com/mzsrtgzr2/ggist',
