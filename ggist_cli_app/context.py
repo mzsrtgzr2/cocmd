@@ -2,6 +2,7 @@ import os
 import click
 from ggist_cli_app.consts import Consts
 from ggist_cli_app.utils.fs import mkdir, touch
+from ggist_cli_app.utils.sys import get_os
 
 class Context:
     def __init__(self, home=None, terminal=None):
@@ -15,6 +16,10 @@ class Context:
         touch(self.aliases_file)
         mkdir(self.scripts_dir)
         touch(self.sources_file)
+
+        self.os = get_os()
+
+        print(f'Operating System is {self.os.value}')
 
 
 # from https://click.palletsprojects.com/en/8.1.x/complex/

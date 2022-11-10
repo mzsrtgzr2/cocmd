@@ -28,6 +28,12 @@ class Workflow:
 
         for step in self.steps:
             print(f'running "{step.title}"')
-            print(step.cmd)
-            os.system(step.cmd)
+            if self.os in step.cmd:
+                flow_cmd = step.cmd[self.os]
+            elif OS.any in step.cmd:
+                flow_cmd = step.cmd[OS.any]
+            else:
+                raise LookupError(f'no os config for step {step}')
+            print(flow_cmd.cmd)
+            os.system(flow_cmd.cmd)
             # subprocess.Popen([step.cmd], stdout=subprocess.PIPE)
