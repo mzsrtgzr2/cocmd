@@ -1,1 +1,1 @@
-from . import sources, terminal, show
+from . import sources, terminal, show, play
