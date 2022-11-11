@@ -193,7 +193,7 @@ fi
 
 emph "Installing GGIST CLI:"
 pip install ggist1 --upgrade
-
+echo 'Installation OK'
 
 echo 'eval "$(ggist apply)"' >> ~/.bashrc
 echo 'updated bash'
