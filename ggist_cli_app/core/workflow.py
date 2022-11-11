@@ -27,6 +27,7 @@ class Workflow:
     
     def play(self):
         console = Console()
+        error_console = Console(stderr=True, style="bold red")
 
         from subprocess import PIPE, run
 
@@ -41,7 +42,10 @@ class Workflow:
             elif OS.any in step.cmd:
                 flow_cmd = step.cmd[OS.any]
             else:
-                raise LookupError(f'no os config for step {step}')
+                error_console.print(f'step #{ii}({step.title}) missing your operating system support ({self.os})')
+                console.print("[bold red]Flow failed")
+                return 
+
             console.print(f'[bold]running step {ii+1} out of {len(self.steps)}: "{step.title}"\n')
             
             
