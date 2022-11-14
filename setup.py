@@ -13,7 +13,7 @@ requirements = [
 
 setup(
     name='ggist1',
-    version='0.1.9',
+    version='0.1.10',
     description="CLI tool boilerplate using click, please replace!",
     long_description='bla bla',
     author="Moshe Ro",

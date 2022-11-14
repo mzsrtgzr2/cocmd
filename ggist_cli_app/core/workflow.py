@@ -30,7 +30,7 @@ class Workflow:
         
 
         def out(command):
-            result = run(command, stdout=PIPE, stderr=PIPE, universal_newlines=True, shell=True)
+            result = run(command, stdout=PIPE, stderr=PIPE, stdin=PIPE, universal_newlines=True, shell=True)
             return result
 
         for ii, cmd in enumerate(self.commands):
