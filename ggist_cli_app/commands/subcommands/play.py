@@ -34,32 +34,32 @@ FLOWS = {
             OS.osx: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
         }),
     ], None),
-    'awscli-setup': Workflow([
-        WorkflowStep(title='Say Hello', description='', cmd={OS.any: WorkflowCommand("echo 'hello'")}),
-        WorkflowStep(title='Download the latest release with the command', description='', cmd={
-            OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
-            OS.osx: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
+    'awscli-setup': Workflow([ # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
+        WorkflowStep(title='Download the pkg installer', description='', cmd={
+            OS.osx: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
+            OS.osx: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
         }),
-        WorkflowStep(title='Validate the binary', description='', cmd={
-            OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\""""),
-            OS.osx: WorkflowCommand("""curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\""""),
+        WorkflowStep(title='Run the pkg installer', description='', cmd={
+            OS.osx: WorkflowCommand("""installer -pkg AWSCLIV2.pkg -target CurrentUserHomeDirectory"""),
+            OS.osx: WorkflowCommand("""installer -pkg AWSCLIV2.pkg -target CurrentUserHomeDirectory"""),
         }),
-        WorkflowStep(title='Validate Sha', description='', cmd={
-            OS.linux: WorkflowCommand("""echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check"""),
-            OS.osx: WorkflowCommand("""echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check"""),
+        WorkflowStep(title='Create symbols', description='', cmd={
+            OS.osx: WorkflowCommand("""sudo ln -s ~/aws-cli/aws /usr/local/bin/aws"""),
+            OS.osx: WorkflowCommand("""sudo ln -s ~/aws-cli/aws /usr/local/bin/aws"""),
         }),
-        WorkflowStep(title='Install in the system', description='', cmd={
-            OS.linux: WorkflowCommand("""sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"""),
-            OS.osx: WorkflowCommand("""sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"""),
+        WorkflowStep(title='Create symbols', description='', cmd={
+            OS.osx: WorkflowCommand("""sudo ln -s /folder/installed/aws-cli/aws_completer /usr/local/bin/aws_completer"""),
+            OS.osx: WorkflowCommand("""sudo ln -s /folder/installed/aws-cli/aws_completer /usr/local/bin/aws_completer"""),
         }),
-        WorkflowStep(title='Test', description='', cmd={
-            OS.any: WorkflowCommand("""kubectl version --client"""),
+        WorkflowStep(title='Validation', description='', cmd={
+            OS.osx: WorkflowCommand("""aws --version"""),
+            OS.osx: WorkflowCommand("""aws --version"""),
         }),
-        WorkflowStep(title='Cleanup', description='', cmd={
-            OS.linux: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
-            OS.osx: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
+        WorkflowStep(title='configure', description='', cmd={
+            OS.osx: WorkflowCommand("""aws configure"""),
+            OS.linux: WorkflowCommand("""aws configure"""),
         }),
-    ], None)
+    ], None),
 
 }
 @play.command()
@@ -87,6 +87,10 @@ def flow(context, flow_name: str):
     if flow_name in FLOWS:
         wf = FLOWS[flow_name]
         wf.os = context.os
+
+        if not wf.commands:
+            error_console.print('This flow is not supported by your os') 
+            return 
 
         console.print(f'This will execute {len(wf.commands)} shell commands:')
         for command in wf.commands:

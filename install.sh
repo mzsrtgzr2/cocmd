@@ -212,5 +212,6 @@ add aliases and goodies, for example:
 run playbooks:
 - ggist play flow k8s-setup
 - ggist play flow awscli-setup
+- ggist play flow zsh-setup
 
 EOS

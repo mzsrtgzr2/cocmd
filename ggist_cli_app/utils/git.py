@@ -2,7 +2,7 @@ import subprocess
 import os
 
 def clone(repo, local):
-    p = subprocess.Popen(['git', 'clone', repo, local], stdout=subprocess.PIPE)
+    p = subprocess.Popen(['git', 'clone', '--depth', '1', repo, local], stdout=subprocess.PIPE)
     return p.communicate()
 
 def get_repo_name(remote_url):

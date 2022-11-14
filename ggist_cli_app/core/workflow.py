@@ -1,7 +1,7 @@
 
 import subprocess
 import os
-from typing import Sequence, Mapping
+from typing import Sequence, Mapping, Optional
 from dataclasses import dataclass
 from rich.console import Console
 
@@ -48,7 +48,7 @@ class Workflow:
         console.print("[bold green]Flow completed")
     
     @property
-    def commands(self)->list[WorkflowCommand]:
+    def commands(self)->Optional[list[WorkflowCommand]]:
         commands = []
         console = Console()
         error_console = Console(stderr=True, style="bold red")
@@ -59,5 +59,5 @@ class Workflow:
                 commands.append(step.cmd[OS.any])
             else:
                 error_console.print(f'step #{ii}({step.title}) missing your operating system support ({self.os})')
-                console.print("[bold red]Flow failed")
+                return None
         return commands
