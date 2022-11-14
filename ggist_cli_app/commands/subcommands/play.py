@@ -1,12 +1,11 @@
 import click
+from ggist_cli_app.commands.groups import play
 from ggist_cli_app.context import click_pass_context
 from ggist_cli_app.core.workflow import WorkflowStep, Workflow
 from ggist_cli_app.core.os import OS
 from ggist_cli_app.core.workflow import WorkflowCommand
 
-@click.group()
-def play():
-    pass
+
 
 @play.command()
 @click_pass_context

@@ -14,11 +14,11 @@ def cli():
 
 
 # Add commands
-cli.add_command(commands.sources.add)
-cli.add_command(commands.sources.remove)
-cli.add_command(commands.sources.refresh)
-cli.add_command(commands.terminal.apply)
-cli.add_command(commands.show.show)
-cli.add_command(commands.play.play)
+cli.add_command(commands.groups.add)
+cli.add_command(commands.groups.remove)
+cli.add_command(commands.groups.show)
+cli.add_command(commands.groups.play)
+cli.add_command(commands.stubs.apply)
+cli.add_command(commands.stubs.refresh)
 
 cli()

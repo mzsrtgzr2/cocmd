@@ -3,6 +3,7 @@ import click
 from ggist_cli_app.consts import Consts
 from ggist_cli_app.utils.fs import mkdir, touch
 from ggist_cli_app.utils.sys import get_os
+from ggist_cli_app.core.sources import Sources
 
 class Context:
     def __init__(self, home=None, terminal=None):
@@ -18,6 +19,8 @@ class Context:
         touch(self.sources_file)
 
         self.os = get_os()
+
+        self.sources = Sources(self.sources_file, self)
 
         print(f'Operating System is {self.os.value}')
 

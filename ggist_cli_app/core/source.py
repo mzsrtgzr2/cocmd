@@ -1,14 +1,13 @@
 import os
 from typing import Sequence
 from ggist_cli_app.consts import Consts
-from ggist_cli_app.context import Context
 from ggist_cli_app.utils.fs import exists, file_read_lines
 from ggist_cli_app.utils import git
 
 
 class Source:
 
-    def __init__(self, _location: str, context: Context):
+    def __init__(self, _location: str, context: 'Context'):
         self.context = context
         self._location = _location.lower()
         if exists(self._location):
@@ -52,7 +51,3 @@ class Source:
             return s
 
         return tuple(filter(bool, map(_clean, file_read_lines(file))))
-
-    @staticmethod
-    def load_sources(sources_file, context):
-        return set(map(lambda s: Source(s, context), file_read_lines(sources_file)))

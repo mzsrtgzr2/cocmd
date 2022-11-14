@@ -15,3 +15,8 @@ def apply(context):
 
     # apply scripts
     print(f'export PATH=$PATH:{context.scripts_dir}')
+
+@click.command()
+@click_pass_context
+def refresh(context):
+    context.sources.save()

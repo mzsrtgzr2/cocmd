@@ -3,7 +3,7 @@
 **ggist** is a terminal utility to find and create:
 - aliases
 - scripts
-- terminal playbooks
+- playbooks
 
 
 ## Getting Started
