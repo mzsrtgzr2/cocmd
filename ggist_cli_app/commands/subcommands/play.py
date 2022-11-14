@@ -37,11 +37,11 @@ FLOWS = {
     'awscli-setup': Workflow([ # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
         WorkflowStep(title='Download the pkg installer', description='', cmd={
             OS.osx: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
-            OS.linux: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
+            OS.linux: WorkflowCommand("""curl \"https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip\" -o \"awscliv2.zip\""""),
         }),
         WorkflowStep(title='Run the pkg installer', description='', cmd={
             OS.osx: WorkflowCommand("""sudo installer -pkg AWSCLIV2.pkg -target /"""),
-            OS.linux: WorkflowCommand("""installer -pkg AWSCLIV2.pkg -target CurrentUserHomeDirectory"""),
+            OS.linux: WorkflowCommand("""unzip awscliv2.zip && sudo ./aws/install"""),
         }),
         WorkflowStep(title='Validation', description='', cmd={
             OS.osx: WorkflowCommand("""aws --version"""),

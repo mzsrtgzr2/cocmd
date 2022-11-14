@@ -14,6 +14,39 @@ The easiest way to install GGist's CLI is using the install script:
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/ggist/main/install.sh)"
 ```
 
+
+## Add new aliases and scripts
+Currently only demo - 
+
+add kubernetes goodies:
+```
+ggist add source demo/k8s
+```
+
+add git goodies:
+```
+ggist add source demo/git
+```
+
+add docker goodies:
+```
+ggist add source demo/docker
+```
+
+
+** Make sure you open a new terminal to see the changes **
+
+### to see all your sources
+```
+ggist show sources
+```
+
+### See all your aliases
+```
+ggist show aliases
+```
+
+
 ## Details 
 - manage your aliases and helper scripts
     - get new from community 

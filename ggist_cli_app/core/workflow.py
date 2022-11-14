@@ -1,10 +1,13 @@
 
+import threading
 from typing import Sequence, Mapping, Optional
 from dataclasses import dataclass
 from rich.console import Console
 
 from ggist_cli_app.core.os import OS
 from subprocess import PIPE, run
+import subprocess
+
 
 @dataclass(frozen=True)
 class WorkflowCommand:
@@ -30,17 +33,14 @@ class Workflow:
         
 
         def out(command):
-            result = run(command, stdout=PIPE, stderr=PIPE, stdin=PIPE, universal_newlines=True, shell=True)
-            return result
+            p = subprocess.run(command, shell=True)           
+            return p
 
         for ii, cmd in enumerate(self.commands):
             
             console.print(f'[bold]running step {ii+1} out of {len(self.steps)}: "{cmd.cmd}"\n')
 
             r = out(cmd.cmd)
-            
-            console.print(r.stdout)
-            console.print(r.stderr)
 
             if r.returncode:
                 error_console.print("failed to run step")
