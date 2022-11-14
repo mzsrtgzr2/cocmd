@@ -60,7 +60,7 @@ ggist play flow awscli-setup
 ```
 
 
-## Details 
+## Vision 
 - manage your aliases and helper scripts
     - get new from community 
     - create your own
