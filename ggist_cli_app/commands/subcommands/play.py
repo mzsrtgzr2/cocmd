@@ -4,16 +4,11 @@ from ggist_cli_app.context import click_pass_context
 from ggist_cli_app.core.workflow import WorkflowStep, Workflow
 from ggist_cli_app.core.os import OS
 from ggist_cli_app.core.workflow import WorkflowCommand
+import inquirer
+from rich.console import Console
 
-
-
-@play.command()
-@click_pass_context
-def flow(context):
-    """
-    Play a workflow
-    """
-    steps = [
+FLOWS = {
+    'k8s-setup': Workflow([
         WorkflowStep(title='Say Hello', description='', cmd={OS.any: WorkflowCommand("echo 'hello'")}),
         WorkflowStep(title='Download the latest release with the command', description='', cmd={
             OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
@@ -38,6 +33,73 @@ def flow(context):
             OS.linux: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
             OS.osx: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
         }),
-    ]
-    wf = Workflow(steps, context.os)
-    wf.play()
+    ], None),
+    'awscli-setup': Workflow([
+        WorkflowStep(title='Say Hello', description='', cmd={OS.any: WorkflowCommand("echo 'hello'")}),
+        WorkflowStep(title='Download the latest release with the command', description='', cmd={
+            OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
+            OS.osx: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
+        }),
+        WorkflowStep(title='Validate the binary', description='', cmd={
+            OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\""""),
+            OS.osx: WorkflowCommand("""curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\""""),
+        }),
+        WorkflowStep(title='Validate Sha', description='', cmd={
+            OS.linux: WorkflowCommand("""echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check"""),
+            OS.osx: WorkflowCommand("""echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check"""),
+        }),
+        WorkflowStep(title='Install in the system', description='', cmd={
+            OS.linux: WorkflowCommand("""sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"""),
+            OS.osx: WorkflowCommand("""sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl"""),
+        }),
+        WorkflowStep(title='Test', description='', cmd={
+            OS.any: WorkflowCommand("""kubectl version --client"""),
+        }),
+        WorkflowStep(title='Cleanup', description='', cmd={
+            OS.linux: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
+            OS.osx: WorkflowCommand("""rm -rf kubectl kubectl.sha256"""),
+        }),
+    ], None)
+
+}
+@play.command()
+@click.argument('flow_name',  required=False)
+@click_pass_context
+def flow(context, flow_name: str):
+    """
+    Play a workflow
+    """
+    if not flow_name:
+        questions = [
+            inquirer.List(
+                "flow",
+                message="What flow to run",
+                choices=tuple(FLOWS.keys()),
+            ),
+        ]
+
+        answers = inquirer.prompt(questions)
+        flow_name = answers['flow']
+
+    console = Console()
+    error_console = Console(stderr=True, style="bold red")
+
+    if flow_name in FLOWS:
+        wf = FLOWS[flow_name]
+        wf.os = context.os
+
+        console.print(f'This will execute {len(wf.commands)} shell commands:')
+        for command in wf.commands:
+            console.print(f'[gray] - {command.cmd}')
+        
+        questions = [
+            inquirer.Confirm("sure", message="Continue?", default=True)]
+
+        answers = inquirer.prompt(questions)
+
+        if answers['sure']:     
+            wf.play()
+        else:
+            console.print("[bold red]Skipped. you answered 'NO'")
+    else:
+        error_console.print('I don\'t know this flow')        

@@ -20,7 +20,7 @@ class Context:
 
         self.os = get_os()
 
-        self.sources = Sources(self.sources_file, self)
+        self.sources = Sources(self)
 
         print(f'Operating System is {self.os.value}')
 

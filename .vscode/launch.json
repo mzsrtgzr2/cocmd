@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["add", "https://github.com/mzsrtgzr2/ggist.git"]
+            "args": ["play", "flow", "awscli-setup"]
         }
     ]
 }

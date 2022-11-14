@@ -10,6 +10,11 @@ class Source:
     def __init__(self, _location: str, context: 'Context'):
         self.context = context
         self._location = _location.lower()
+
+        if _location.startswith('demo/'):
+            from ggist_cli_app import resources
+            self._location = os.path.join(os.path.dirname(resources.__file__), self._location)
+
         if exists(self._location):
             self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
         elif self._location.endswith('.git'):
@@ -22,7 +27,7 @@ class Source:
             self._aliases = self.read_aliases(os.path.join(local_repo, Consts.ALIASES_FILE))
         else:
 
-            raise RuntimeError(f'path {self._location} not exists')
+            raise RuntimeError(f'path {self._location} not exists. edit `~/.ggist/sources.txt` and remove it manually')
 
     @property
     def is_exists_locally(self):

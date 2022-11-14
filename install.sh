@@ -203,5 +203,14 @@ echo 'updated zsh'
 echo
 emph "Next steps:"
 cat << EOS
-- GGIST is installed.
+
+add aliases and goodies, for example:
+- ggist add source demo/k8s
+- ggist add source demo/git
+- ggist add source demo/docker
+
+run playbooks:
+- ggist play flow k8s-setup
+- ggist play flow awscli-setup
+
 EOS

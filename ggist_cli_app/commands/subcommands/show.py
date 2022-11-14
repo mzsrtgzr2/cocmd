@@ -1,6 +1,6 @@
 import click
 from ggist_cli_app.context import click_pass_context
-from ggist_cli_app.core.source import Source
+from ggist_cli_app.core.sources import Sources
 from ggist_cli_app.utils.fs import file_write_lines
 from ggist_cli_app.commands.groups import show
 
@@ -10,7 +10,7 @@ def sources(context):
     """
     Show sources
     """
-    sources = Source.load_sources(context.sources_file, context)
+    sources = Sources.load_sources(context.sources_file, context)
 
     print('sources:')
     for source in sources:
