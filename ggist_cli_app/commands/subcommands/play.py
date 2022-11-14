@@ -37,25 +37,17 @@ FLOWS = {
     'awscli-setup': Workflow([ # https://docs.aws.amazon.com/cli/latest/userguide/getting-started-install.html
         WorkflowStep(title='Download the pkg installer', description='', cmd={
             OS.osx: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
-            OS.osx: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
+            OS.linux: WorkflowCommand("""curl \"https://awscli.amazonaws.com/AWSCLIV2.pkg\" -o \"AWSCLIV2.pkg\""""),
         }),
         WorkflowStep(title='Run the pkg installer', description='', cmd={
-            OS.osx: WorkflowCommand("""installer -pkg AWSCLIV2.pkg -target CurrentUserHomeDirectory"""),
-            OS.osx: WorkflowCommand("""installer -pkg AWSCLIV2.pkg -target CurrentUserHomeDirectory"""),
-        }),
-        WorkflowStep(title='Create symbols', description='', cmd={
-            OS.osx: WorkflowCommand("""sudo ln -s ~/aws-cli/aws /usr/local/bin/aws"""),
-            OS.osx: WorkflowCommand("""sudo ln -s ~/aws-cli/aws /usr/local/bin/aws"""),
-        }),
-        WorkflowStep(title='Create symbols', description='', cmd={
-            OS.osx: WorkflowCommand("""sudo ln -s /folder/installed/aws-cli/aws_completer /usr/local/bin/aws_completer"""),
-            OS.osx: WorkflowCommand("""sudo ln -s /folder/installed/aws-cli/aws_completer /usr/local/bin/aws_completer"""),
+            OS.osx: WorkflowCommand("""sudo installer -pkg AWSCLIV2.pkg -target /"""),
+            OS.linux: WorkflowCommand("""installer -pkg AWSCLIV2.pkg -target CurrentUserHomeDirectory"""),
         }),
         WorkflowStep(title='Validation', description='', cmd={
             OS.osx: WorkflowCommand("""aws --version"""),
-            OS.osx: WorkflowCommand("""aws --version"""),
+            OS.linux: WorkflowCommand("""aws --version"""),
         }),
-        WorkflowStep(title='configure', description='', cmd={
+        WorkflowStep(title='Configure', description='', cmd={
             OS.osx: WorkflowCommand("""aws configure"""),
             OS.linux: WorkflowCommand("""aws configure"""),
         }),

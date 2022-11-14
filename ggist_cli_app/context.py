@@ -22,8 +22,5 @@ class Context:
 
         self.sources = Sources(self)
 
-        print(f'Operating System is {self.os.value}')
-
-
 # from https://click.palletsprojects.com/en/8.1.x/complex/
 click_pass_context = click.make_pass_decorator(Context, ensure=True)
