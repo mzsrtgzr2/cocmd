@@ -15,7 +15,7 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/ggist/main/ins
 ```
 
 
-## Add new aliases and scripts
+# Add new aliases and scripts
 Currently only demo - 
 
 add kubernetes goodies:
@@ -44,6 +44,19 @@ ggist show sources
 ### See all your aliases
 ```
 ggist show aliases
+```
+
+# Run playbooks
+playbook can be really anthing:
+- installation logic
+- onboarding steps
+
+it can be applied depending on Operating System and environment conditions.
+
+For example:
+```
+ggist play flow k8s-setup
+ggist play flow awscli-setup
 ```
 
 
