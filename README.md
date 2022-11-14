@@ -10,7 +10,7 @@
 The easiest way to install GGist's CLI is using the install script:
 
 ```
-# Copy and run command to install the Pixie CLI.
+# Copy and run command to install the CLI.
 bash -c "$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/ggist/main/install.sh)"
 ```
 
