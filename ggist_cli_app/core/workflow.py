@@ -53,7 +53,7 @@ class Workflow:
         console.print("[bold green]Flow completed")
     
     @property
-    def commands(self)->Optional[list[WorkflowCommand]]:
+    def commands(self)->Optional[Sequence[WorkflowCommand]]:
         commands = []
         console = Console()
         error_console = Console(stderr=True, style="bold red")
