@@ -1,58 +1,67 @@
 description: setup Kubernetes for desktop
 spec:
-- depends: null
-  env: linux
-  label: debian
-  steps:
-  - content: '
-
-      curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
-
-      curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
-
-      echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
-
-      sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
-
-      kubectl version --client
-
-      rm -rf kubectl kubectl.sha256
-
-      '
-    description: This will install kubectl on your machine
-    runner: shell
-    title: Install kubectl
-  - content: sudo apt install kubectx
+  globals:
+  - content: "\n# Kubernetes is awesome\n## cheers\n### all good\n               \
+      \     "
     description: ''
-    runner: shell
-    title: Install kubectx
-- depends:
-  - installed:brew
-  env: osx
-  label: '>10.x.x'
-  steps:
-  - content: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+    id: kube_instructions_md
+    runner: readme
+    title: Instructions
+  variations:
+  - depends: []
+    env: linux
+    label: debian
+    steps:
+    - ref: kube_instructions_md
+    - content: '
 
-      curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+        curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
 
-      echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+        curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
 
-      sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+        echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
 
-      kubectl version --client
+        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
 
-      rm -rf kubectl kubectl.sha256
+        kubectl version --client
 
-      '
-    description: This will install kubectl on your machine
-    runner: python
-    title: Install kubectl
-  - content: brew install kubectx
-    description: ''
-    runner: shell
-    title: Install kubectx
-  - content: brew install --cask lens
-    description: ''
-    runner: shell
-    title: Install kubectx
+        rm -rf kubectl kubectl.sha256
+
+        '
+      description: This will install kubectl on your machine
+      runner: shell
+      title: Install kubectl
+    - content: sudo apt install kubectx
+      description: ''
+      runner: shell
+      title: Install kubectx
+  - depends:
+    - installed:brew
+    env: osx
+    label: '>10.x.x'
+    steps:
+    - content: 'curl -LO "https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl"
+
+        curl -LO "https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256"
+
+        echo "$(cat kubectl.sha256)  kubectl" | sha256sum --check
+
+        sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+
+        kubectl version --client
+
+        rm -rf kubectl kubectl.sha256
+
+        '
+      description: This will install kubectl on your machine
+      runner: python
+      title: Install kubectl
+    - content: brew install kubectx
+      description: ''
+      runner: shell
+      title: Install kubectx
+    - content: brew install --cask lens
+      description: ''
+      runner: shell
+      title: Install kubectx
 title: setup

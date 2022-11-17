@@ -6,11 +6,26 @@ from ggist_cli_app.core.models.script_model import *
 data = ScriptModel(
     title="setup",
     description="setup Kubernetes for desktop",
-    spec=[
+    spec=SpecModel(
+        globals=[
+            StepGlobalModel(
+                    title="Instructions",
+                    description="",
+                    runner="readme",
+                    content="""
+# Kubernetes is awesome
+## cheers
+### all good
+                    """,
+                    id="kube_instructions_md"
+                )
+        ],
+        variations=[
         StepsModel(
             env="linux",
             label="debian",
             steps=[
+                StepRefModel(ref="kube_instructions_md"),
                 StepModel(
                     title="Install kubectl",
                     description="This will install kubectl on your machine",
@@ -64,7 +79,7 @@ rm -rf kubectl kubectl.sha256
                     content="""brew install --cask lens"""
                 )
             ]),
-    ]
+    ])
 )
 
 io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/k8s/scripts/setup.yaml', data)
