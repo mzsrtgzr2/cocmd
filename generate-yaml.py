@@ -5,29 +5,63 @@ from ggist_cli_app.core.models.script_model import *
 
 data = ScriptModel(
     title="setup",
-    description="setup kubectl, kubectx and kubeenvs developer environment for desktop",
+    description="setup Kubernetes for desktop",
     spec=[
         StepsModel(
             env="linux",
             label="debian",
             steps=[
                 StepModel(
+                    title="Install kubectl",
+                    description="This will install kubectl on your machine",
                     runner="shell",
-                    content="command 1"
+                    content="""
+curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"
+curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\"
+echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+rm -rf kubectl kubectl.sha256
+"""
+                ),
+                StepModel(
+                    title="Install kubectx",
+                    description="",
+                    runner="shell",
+                    content="""sudo apt install kubectx"""
                 )
             ]),
 
         StepsModel(
             env="osx",
             label=">10.x.x",
+            depends=[
+                "installed:brew",
+            ],
             steps=[
                 StepModel(
+                    title="Install kubectl",
+                    description="This will install kubectl on your machine",
                     runner="python",
-                    content="""bla bal
-bla bla
-more bla 
-more bla
+                    content="""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"
+curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\"
+echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check
+sudo install -o root -g root -m 0755 kubectl /usr/local/bin/kubectl
+kubectl version --client
+rm -rf kubectl kubectl.sha256
 """
+                ),
+                StepModel(
+                    title="Install kubectx",
+                    description="",
+                    runner="shell",
+                    content="""brew install kubectx"""
+                ),
+                StepModel(
+                    title="Install kubectx",
+                    description="",
+                    runner="shell",
+                    content="""brew install --cask lens"""
                 )
             ]),
     ]

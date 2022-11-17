@@ -9,7 +9,6 @@ from ggist_cli_app.utils.console import console, error_console
 
 FLOWS = {
     'k8s-setup': Workflow([
-        WorkflowStep(title='Say Hello', description='', cmd={OS.any: WorkflowCommand("echo 'hello'")}),
         WorkflowStep(title='Download the latest release with the command', description='', cmd={
             OS.linux: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
             OS.osx: WorkflowCommand("""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\""""),
