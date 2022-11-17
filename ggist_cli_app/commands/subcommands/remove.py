@@ -13,4 +13,4 @@ def remove_source(context, source: str):
     remove a source
     """
     source = Source(source, context)
-    context.sources.remove_source(source)
+    context.sources_manager.remove_source(source)

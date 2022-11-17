@@ -4,7 +4,8 @@ from ggist_cli_app.utils import io
 from ggist_cli_app.core.models.script_model import *
 
 data = ScriptModel(
-    title="setup",
+    name="setup",
+    title="Setup Kubernetes",
     description="setup Kubernetes for desktop",
     spec=SpecModel(
         globals=[

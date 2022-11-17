@@ -1,4 +1,5 @@
 description: setup Kubernetes for desktop
+name: setup
 spec:
   globals:
   - content: "\n# Kubernetes is awesome\n## cheers\n### all good\n               \
@@ -64,4 +65,4 @@ spec:
       description: ''
       runner: shell
       title: Install kubectx
-title: setup
+title: Setup Kubernetes

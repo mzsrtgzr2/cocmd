@@ -17,4 +17,4 @@ def profile_loader(context):
 @click.command()
 @click_pass_context
 def refresh(context):
-    context.sources.save()
+    context.sources_manager.save()

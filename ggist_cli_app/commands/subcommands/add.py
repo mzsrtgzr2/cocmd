@@ -27,7 +27,7 @@ def source(context, source: str):
     answers = inquirer.prompt(questions)
 
     if answers['sure']:        
-        context.sources.add_source(source)
+        context.sources_manager.add_source(source)
         console.print(f"[bold green]Source '{source}' added")
         console.print(f"open a new terminal session and you can use:")
         for alias in source.aliases[:10]:

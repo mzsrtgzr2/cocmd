@@ -4,7 +4,7 @@ from ggist_cli_app.utils import git
 from ggist_cli_app.core.source import Source
 from ggist_cli_app.core.aliases import Aliases
 
-class Sources:
+class SourcesManager:
 
     def __init__(self, context: 'Context'):
         self.context = context
