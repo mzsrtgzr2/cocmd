@@ -1,20 +1,20 @@
 import click
-from ggist_cli_app.context import click_pass_context
+from ggist_cli_app.settings import click_pass_settings
 
 
 @click.command()
-@click_pass_context
+@click_pass_settings
 def profile_loader(context):
     # apply it in bashrc with 
     # cd /workspaces/ggist/ && eval "$(python -m ggist_cli_app apply)"
 
     # apply aliases
-    with open(context.aliases_file, 'r') as fin:
+    with open(settings.aliases_file, 'r') as fin:
         line = fin.read()
         print(line)
 
 
 @click.command()
-@click_pass_context
+@click_pass_settings
 def refresh(context):
-    context.sources_manager.save()
+    settings.sources_manager.save()

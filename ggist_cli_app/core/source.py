@@ -9,8 +9,8 @@ from functools import partial
 
 class Source:
 
-    def __init__(self, _location: str, context: 'Context'):
-        self.context = context
+    def __init__(self, _location: str, settings: 'Settings'):
+        self.settings = settings
         self._location = _location.lower()
 
         if _location.startswith('demo/'):
@@ -21,7 +21,7 @@ class Source:
             self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
             self._scripts = self.read_scripts(os.path.join(self._location, Consts.SCRIPTS_DIR))
         elif self._location.endswith('.git'):
-            local_repo = os.path.join(context.home, git.get_repo_name(self._location))
+            local_repo = os.path.join(settings.home, git.get_repo_name(self._location))
             if not exists(local_repo):
                 git.clone(
                     self._location, 

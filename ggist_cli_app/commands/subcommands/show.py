@@ -1,16 +1,16 @@
 import click
-from ggist_cli_app.context import click_pass_context
+from ggist_cli_app.settings import click_pass_settings
 from ggist_cli_app.core.sources_manager import SourcesManager
 from ggist_cli_app.utils.io import file_write_lines
 from ggist_cli_app.commands.groups import show
 
 @show.command()
-@click_pass_context
+@click_pass_settings
 def sources(context):
     """
     Show sources
     """
-    sources = SourcesManager.load_sources(context.sources_file, context)
+    sources = SourcesManager.load_sources(settings.sources_file, context)
 
     print('sources:')
     for source in sources:
@@ -19,26 +19,26 @@ def sources(context):
 
 
 @show.command()
-@click_pass_context
+@click_pass_settings
 def aliases(context):
     """
     Show aliases
     """
     
-    with open(context.aliases_file, 'r') as fin:
+    with open(settings.aliases_file, 'r') as fin:
         line = fin.read()
         print(line)
 
 
 @show.command()
-@click_pass_context
+@click_pass_settings
 def scripts(context):
     """
     Show scripts
     """
     available_scripts = tuple(
         f'{source._location}.{script.name}'
-        for source in context.sources_manager.sources
+        for source in settings.sources_manager.sources
         for script in source._scripts
         if source._scripts
     )

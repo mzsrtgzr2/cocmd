@@ -5,7 +5,7 @@ from ggist_cli_app.utils.io import mkdir, touch
 from ggist_cli_app.utils.sys import get_os
 from ggist_cli_app.core.sources_manager import SourcesManager
 
-class Context:
+class Settings:
     def __init__(self, home=None, terminal=None):
         self.home = os.path.abspath(home or Consts.HOME)
         self.terminal = terminal or Consts.DEFAULT_TERMINAL
@@ -23,4 +23,4 @@ class Context:
         self.sources_manager = SourcesManager(self)
 
 # from https://click.palletsprojects.com/en/8.1.x/complex/
-click_pass_context = click.make_pass_decorator(Context, ensure=True)
+click_pass_settings = click.make_pass_decorator(Settings, ensure=True)

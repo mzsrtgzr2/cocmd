@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["run", "script"]
+            "args": ["run", "/workspaces/ggist/ggist_cli_app/resources/demo/docker.setup", "arg2"]
         },
         {
             "name": "generate-yaml",
