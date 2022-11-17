@@ -40,7 +40,7 @@ class YamlIO:
             obj = yaml.safe_load(text)
         
         if cls:
-            obj = cls(obj)
+            obj = cls.from_dict(obj)
         return obj
 
     @staticmethod

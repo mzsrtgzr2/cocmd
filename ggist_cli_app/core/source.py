@@ -1,9 +1,11 @@
 import os
+import glob
 from typing import Sequence
 from ggist_cli_app.consts import Consts
-from ggist_cli_app.utils.io import exists, file_read_lines
+from ggist_cli_app.core.models.script_model import ScriptModel
+from ggist_cli_app.utils.io import YamlIO, exists, file_read_lines
 from ggist_cli_app.utils import git
-
+from functools import partial
 
 class Source:
 
@@ -17,6 +19,7 @@ class Source:
 
         if exists(self._location):
             self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
+            self._scripts = self.read_scripts(os.path.join(self._location, Consts.SCRIPTS_DIR))
         elif self._location.endswith('.git'):
             local_repo = os.path.join(context.home, git.get_repo_name(self._location))
             if not exists(local_repo):
@@ -25,9 +28,12 @@ class Source:
                     local_repo
                 )
             self._aliases = self.read_aliases(os.path.join(local_repo, Consts.ALIASES_FILE))
+            self._scripts = self.read_scripts(os.path.join(local_repo, Consts.SCRIPTS_DIR))
         else:
 
             raise RuntimeError(f'path {self._location} not exists. edit `~/.ggist/sources.txt` and remove it manually')
+        
+        
 
     @property
     def is_exists_locally(self):
@@ -56,3 +62,10 @@ class Source:
             return s
 
         return tuple(filter(bool, map(_clean, file_read_lines(file))))
+
+    
+    @staticmethod
+    def read_scripts(scripts_path)->Sequence[str]:
+        
+        files_it = glob.glob(os.path.join(scripts_path, "*.yaml"))
+        return tuple(map(partial(YamlIO.from_file, cls=ScriptModel), files_it))
