@@ -42,6 +42,10 @@ class Source:
     @property
     def aliases(self):
         return self._aliases
+
+    @property
+    def scripts(self):
+        return self._scripts
     
     def __repr__(self):
         return str(self._location)

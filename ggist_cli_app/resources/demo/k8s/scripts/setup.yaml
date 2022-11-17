@@ -39,6 +39,21 @@ spec:
       description: ''
       runner: shell
       title: Install kubectx
+    - content: "\n                    \n                    sudo apt-get install -y\
+        \ conntrack\n\n                    # Download minikube\n                 \
+        \   wget https://github.com/kubernetes/minikube/releases/download/v0.24.0/minikube_0.24-0.deb\n\
+        \n                    # Install minikube\n                    sudo dpkg -i\
+        \ minikube_0.24-0.deb\n\n                    rm -rf minikube_0.24-0.deb\n\n\
+        \                    # Start minikube vm-driver=none option\n\n          \
+        \          sudo minikube start --vm-driver=none\n\n                    # Change\
+        \ permission\n                    sudo chown -R $USER $HOME/.kube\n      \
+        \              sudo chgrp -R $USER $HOME/.kube\n                    sudo chown\
+        \ -R $USER $HOME/.minikube\n                    sudo chgrp -R $USER $HOME/.minikube\n\
+        \n                    # Make sure that minikube is running\n             \
+        \       kubectl get pods --all-namespaces\n                    "
+      description: ''
+      runner: shell
+      title: Install Minikube
   - depends:
     - installed:brew
     env: osx

@@ -9,11 +9,6 @@ def remove():
     pass
 
 
-@click.group(name='run')
-def play():
-    pass
-
-
 @click.group()
 def show():
     pass

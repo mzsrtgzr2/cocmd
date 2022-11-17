@@ -19,6 +19,7 @@ def source(context, source: str):
     source = Source(source_label, context)
     console.print(f'''This will add:
     - {len(source.aliases)} aliases
+    - {len(source.scripts)} scripts
     ''')
     questions = [
         inquirer.Confirm("sure", message="Continue?", default=True),
@@ -29,12 +30,13 @@ def source(context, source: str):
     if answers['sure']:        
         context.sources_manager.add_source(source)
         console.print(f"[bold green]Source '{source}' added")
-        console.print(f"open a new terminal session and you can use:")
-        for alias in source.aliases[:10]:
-            console.print(f'-{alias}')
+        if source.aliases:
+            console.print(f"open a new terminal session and you can use:")
+            for alias in source.aliases[:10]:
+                console.print(f'-{alias}')
 
-        if len(source.aliases) > 10:
-            console.print('...\n(partial)')
-        console.print('[blue] to see the full list run `ggist show aliases`')
+            if len(source.aliases) > 10:
+                console.print('...\n(partial)')
+            console.print('[blue] to see the full list run `ggist show aliases`')
     else:
         console.print("[bold red]Skipped. you answered 'NO'")

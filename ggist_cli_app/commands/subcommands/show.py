@@ -24,7 +24,24 @@ def aliases(context):
     """
     Show aliases
     """
-    print('aliases:')
+    
     with open(context.aliases_file, 'r') as fin:
         line = fin.read()
         print(line)
+
+
+@show.command()
+@click_pass_context
+def scripts(context):
+    """
+    Show scripts
+    """
+    available_scripts = tuple(
+        f'{source._location}.{script.name}'
+        for source in context.sources_manager.sources
+        for script in source._scripts
+        if source._scripts
+    )
+    
+    for script in available_scripts:
+        print(f'ggist run script {script}')
