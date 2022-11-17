@@ -4,7 +4,7 @@ from ggist_cli_app.context import click_pass_context
 from ggist_cli_app.core.source import Source
 from ggist_cli_app.utils.fs import file_write_lines
 import inquirer
-from rich.console import Console
+from ggist_cli_app.utils.console import console, error_console
 
 
 @add.command()
@@ -14,11 +14,10 @@ def source(context, source: str):
     """
     add a source
     """
-    console = Console()
 
     source_label = source
     source = Source(source_label, context)
-    console.print(f'''Source '{source_label}' contains:
+    console.print(f'''This will add:
     - {len(source.aliases)} aliases
     ''')
     questions = [

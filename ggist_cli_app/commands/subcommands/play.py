@@ -5,7 +5,7 @@ from ggist_cli_app.core.workflow import WorkflowStep, Workflow
 from ggist_cli_app.core.os import OS
 from ggist_cli_app.core.workflow import WorkflowCommand
 import inquirer
-from rich.console import Console
+from ggist_cli_app.utils.console import console, error_console
 
 FLOWS = {
     'k8s-setup': Workflow([
@@ -55,11 +55,11 @@ FLOWS = {
 
 }
 @play.command()
-@click.argument('flow_name',  required=False)
+@click.argument('name',  required=False)
 @click_pass_context
-def flow(context, flow_name: str):
+def flow(context, name: str):
     """
-    Play a workflow
+    Run something
     """
     if not flow_name:
         questions = [
@@ -73,8 +73,7 @@ def flow(context, flow_name: str):
         answers = inquirer.prompt(questions)
         flow_name = answers['flow']
 
-    console = Console()
-    error_console = Console(stderr=True, style="bold red")
+    
 
     if flow_name in FLOWS:
         wf = FLOWS[flow_name]

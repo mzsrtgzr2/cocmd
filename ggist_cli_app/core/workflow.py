@@ -1,12 +1,11 @@
 
-import threading
 from typing import Sequence, Mapping, Optional
 from dataclasses import dataclass
 from rich.console import Console
 
 from ggist_cli_app.core.os import OS
-from subprocess import PIPE, run
 import subprocess
+from ggist_cli_app.utils.console import console, error_console
 
 
 @dataclass(frozen=True)
@@ -26,11 +25,7 @@ class Workflow:
         self.os = os
 
     
-    def play(self):
-        console = Console()
-        error_console = Console(stderr=True, style="bold red")
-
-        
+    def play(self):        
 
         def out(command):
             p = subprocess.run(command, shell=True)           
@@ -45,9 +40,6 @@ class Workflow:
             if r.returncode:
                 error_console.print("failed to run step")
                 return
-
-            # subprocess.Popen([step.cmd], stdout=subprocess.PIPE)
-            # console.log(f"step {ii+1} complete")
             
                 
         console.print("[bold green]Flow completed")
@@ -55,8 +47,6 @@ class Workflow:
     @property
     def commands(self)->Optional[Sequence[WorkflowCommand]]:
         commands = []
-        console = Console()
-        error_console = Console(stderr=True, style="bold red")
         for ii, step in enumerate(self.steps):
             if self.os in step.cmd:
                 commands.append(step.cmd[self.os])

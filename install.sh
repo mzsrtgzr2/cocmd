@@ -195,10 +195,19 @@ emph "Installing GGIST CLI:"
 pip install ggist1 --upgrade
 echo 'Installation OK'
 
-echo 'eval "$(ggist apply)"' >> ~/.bashrc
-echo 'updated bash'
-echo 'eval "$(ggist apply)"' >> ~/.zshrc
-echo 'updated zsh'
+if grep -q "ggist" ~/.bashrc; then
+  echo 'bash already updated'
+else
+  echo 'eval "$(ggist profile_loader)"' >> ~/.bashrc
+  echo 'updated bash'
+fi
+
+if grep -q "ggist" ~/.zshrc; then
+  echo 'zsh already updated'
+else
+  echo 'eval "$(ggist profile_loader)"' >> ~/.zshrc
+  echo 'updated zsh'
+fi
 
 echo
 emph "Next steps:"
