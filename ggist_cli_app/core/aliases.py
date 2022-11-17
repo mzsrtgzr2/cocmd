@@ -4,7 +4,7 @@
 import itertools
 from typing import Sequence
 from ggist_cli_app.core.source import Source
-from ggist_cli_app.utils.fs import file_write_lines
+from ggist_cli_app.utils.io import file_write_lines
 
 
 class Aliases:

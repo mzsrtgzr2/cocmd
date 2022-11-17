@@ -1,7 +1,7 @@
 import os
 from typing import Sequence
 from ggist_cli_app.consts import Consts
-from ggist_cli_app.utils.fs import exists, file_read_lines
+from ggist_cli_app.utils.io import exists, file_read_lines
 from ggist_cli_app.utils import git
 
 

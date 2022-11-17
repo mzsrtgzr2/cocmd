@@ -1,7 +1,7 @@
 import os
 import click
 from ggist_cli_app.consts import Consts
-from ggist_cli_app.utils.fs import mkdir, touch
+from ggist_cli_app.utils.io import mkdir, touch
 from ggist_cli_app.utils.sys import get_os
 from ggist_cli_app.core.sources import Sources
 

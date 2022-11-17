@@ -1,6 +1,6 @@
 
 
-from ggist_cli_app.utils import readers
+from ggist_cli_app.utils import io
 from ggist_cli_app.core.models.script_model import *
 
 data = ScriptModel(
@@ -33,5 +33,5 @@ more bla
     ]
 )
 
-readers.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/k8s/scripts/setup.yaml', data)
+io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/k8s/scripts/setup.yaml', data)
 

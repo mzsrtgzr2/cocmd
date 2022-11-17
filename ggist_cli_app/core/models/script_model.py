@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from ggist_cli_app.utils.readers import DictLoader
+from ggist_cli_app.utils.io import DictLoader
 from typing import List
 
 
