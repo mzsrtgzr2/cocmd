@@ -1,10 +1,12 @@
-from dacite import from_dict
+from enum import Enum
+from dacite import from_dict, Config
 from dataclasses import asdict, dataclass
 import yaml
 from typing import Dict
 import os
 from pathlib import Path
 from typing import Sequence
+from ggist_cli_app.core.os import OS
 
 def exists(path)->bool:
     return os.path.exists(path)
@@ -27,10 +29,17 @@ def file_write_lines(file, lines):
 class DictLoader:
     @classmethod
     def from_dict(cls, data):
-        return from_dict(data_class=cls, data=data)
+        return from_dict(data_class=cls, data=data, config=Config(cast=[Enum], type_hooks={OS: OS.from_str}))
 
     def to_dict(self):
-        return asdict(self)
+        
+        def _dict_factory(data):
+            return {
+                field: value.value if isinstance(value, Enum) else value
+                for field, value in data
+            }
+
+        return asdict(self, dict_factory=_dict_factory)
 
 class YamlIO:
     @staticmethod

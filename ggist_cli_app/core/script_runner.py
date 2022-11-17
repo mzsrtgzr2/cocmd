@@ -1,7 +1,7 @@
 
 from typing import Sequence, Optional
 import inquirer
-from ggist_cli_app.core.models.script_model import ScriptModel, StepRunnerType
+from ggist_cli_app.core.models.script_model import ScriptModel, StepRunnerType, StepRefModel
 from rich.markdown import Markdown
 
 from ggist_cli_app.core.os import OS
@@ -45,17 +45,28 @@ class ScriptRunner:
         console.print(f'Executing {len(variation.steps)} steps:')
 
         for ii, step in enumerate(variation.steps):
-            
-            console.print(f'Step {ii+1}/{len(variation.steps)}: {step.title}', style="blue on white")
-            if step.description:
-                console.print(step.description)
-            
-            questions = [
-                inquirer.Confirm("sure", message="Continue?", default=True)]
 
-            answers = inquirer.prompt(questions)
+            if isinstance(step, StepRefModel):
+                step = next(
+                    global_step
+                    for global_step in script.spec.globals
+                    if global_step.id == step.ref
+                )
+            
+            is_mark_down = False
+            if step.runner != StepRunnerType.MARKDOWN:
+                console.print(f'Step {ii+1}/{len(variation.steps)}: {step.title}', style="blue on white")
+                if step.description:
+                    console.print(step.description)
+                
+                questions = [
+                    inquirer.Confirm("sure", message="Continue?", default=True)]
 
-            if answers['sure']: 
+                answers = inquirer.prompt(questions)
+            else:
+                is_mark_down = True
+
+            if is_mark_down or answers['sure']: 
                 if step.runner == StepRunnerType.SHELL:
                     r = out(step.content)
 

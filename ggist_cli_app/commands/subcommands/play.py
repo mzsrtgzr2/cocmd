@@ -86,7 +86,7 @@ def script(context, name: str):
             error_console.print('This script not supporting your os') 
             return
 
-        ScriptRunner.run(script)
+        ScriptRunner.run(script, context.os)
 
     else:
         error_console.print('I don\'t know this script')        

@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["run", "flow", "awscli-setup"]
+            "args": ["run", "script"]
         },
         {
             "name": "generate-yaml",

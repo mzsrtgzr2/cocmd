@@ -6,7 +6,7 @@ spec:
       \     "
     description: ''
     id: kube_instructions_md
-    runner: readme
+    runner: markdown
     title: Instructions
   variations:
   - depends: []
@@ -55,7 +55,7 @@ spec:
 
         '
       description: This will install kubectl on your machine
-      runner: python
+      runner: shell
       title: Install kubectl
     - content: brew install kubectx
       description: ''

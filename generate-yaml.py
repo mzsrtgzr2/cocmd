@@ -1,5 +1,6 @@
 
 
+import pprint
 from ggist_cli_app.utils import io
 from ggist_cli_app.core.models.script_model import *
 
@@ -12,7 +13,7 @@ data = ScriptModel(
             StepGlobalModel(
                     title="Instructions",
                     description="",
-                    runner="readme",
+                    runner=StepRunnerType.MARKDOWN,
                     content="""
 # Kubernetes is awesome
 ## cheers
@@ -23,14 +24,14 @@ data = ScriptModel(
         ],
         variations=[
         StepsModel(
-            env="linux",
+            env=OS.LINUX,
             label="debian",
             steps=[
                 StepRefModel(ref="kube_instructions_md"),
                 StepModel(
                     title="Install kubectl",
                     description="This will install kubectl on your machine",
-                    runner="shell",
+                    runner=StepRunnerType.SHELL,
                     content="""
 curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"
 curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\"
@@ -43,13 +44,13 @@ rm -rf kubectl kubectl.sha256
                 StepModel(
                     title="Install kubectx",
                     description="",
-                    runner="shell",
+                    runner=StepRunnerType.SHELL,
                     content="""sudo apt install kubectx"""
                 )
             ]),
 
         StepsModel(
-            env="osx",
+            env=OS.OSX,
             label=">10.x.x",
             depends=[
                 "installed:brew",
@@ -58,7 +59,7 @@ rm -rf kubectl kubectl.sha256
                 StepModel(
                     title="Install kubectl",
                     description="This will install kubectl on your machine",
-                    runner="python",
+                    runner=StepRunnerType.SHELL,
                     content="""curl -LO \"https://dl.k8s.io/release/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl\"
 curl -LO \"https://dl.k8s.io/$(curl -L -s https://dl.k8s.io/release/stable.txt)/bin/linux/amd64/kubectl.sha256\"
 echo \"$(cat kubectl.sha256)  kubectl\" | sha256sum --check
@@ -70,18 +71,19 @@ rm -rf kubectl kubectl.sha256
                 StepModel(
                     title="Install kubectx",
                     description="",
-                    runner="shell",
+                    runner=StepRunnerType.SHELL,
                     content="""brew install kubectx"""
                 ),
                 StepModel(
                     title="Install kubectx",
                     description="",
-                    runner="shell",
+                    runner=StepRunnerType.SHELL,
                     content="""brew install --cask lens"""
                 )
             ]),
     ])
 )
 
+pprint.pprint(data.to_dict())
 io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/k8s/scripts/setup.yaml', data)
 

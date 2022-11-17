@@ -8,6 +8,7 @@ from enum import Enum
 class StepRunnerType(Enum):
     SHELL="shell"
     MARKDOWN="markdown"
+    PYTHON="python"
 
 
 @dataclass(frozen=True)
