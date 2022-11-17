@@ -21,4 +21,5 @@ cli.add_command(commands.groups.play)
 cli.add_command(commands.stubs.profile_loader)
 cli.add_command(commands.stubs.refresh)
 
-cli()
+if __name__=='__main__':
+    cli()

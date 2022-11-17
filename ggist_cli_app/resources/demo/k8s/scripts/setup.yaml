@@ -1,0 +1,13 @@
+description: setup kubectl, kubectx and kubeenvs developer environment for desktop
+spec:
+- env: linux
+  label: debian
+  steps:
+  - content: command 1
+    runner: shell
+- env: osx
+  label: '>10.x.x'
+  steps:
+  - content: "bla bal\nbla bla\nmore bla \nmore bla\n"
+    runner: python
+title: setup

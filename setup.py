@@ -8,7 +8,9 @@ with open('README.md') as readme_file:
 requirements = [
     'Click>=6.0',
     'rich',
-    'inquirer'
+    'inquirer',
+    'dacite',
+    'pyyaml'
 ]
 
 setup(

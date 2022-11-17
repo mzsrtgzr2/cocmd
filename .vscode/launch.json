@@ -11,6 +11,13 @@
             "module": "ggist_cli_app",
             "justMyCode": true,
             "args": ["play", "flow", "awscli-setup"]
+        },
+        {
+            "name": "generate-yaml",
+            "type": "python",
+            "request": "launch",
+            "program": "generate-yaml.py",
+            "console": "integratedTerminal"
         }
     ]
 }
