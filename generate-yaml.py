@@ -45,7 +45,10 @@ rm -rf kubectl kubectl.sha256
                     title="Install kubectx",
                     description="",
                     runner=StepRunnerType.SHELL,
-                    content="""sudo apt install kubectx"""
+                    content="""
+                    sudo echo \"deb [trusted=yes] http://ftp.de.debian.org/debian buster main\" >> /etc/apt/sources.list
+                    sudo apt-get update
+                    sudo apt install kubectx"""
                 )
             ]),
 
