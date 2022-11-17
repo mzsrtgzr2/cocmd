@@ -32,9 +32,10 @@ spec:
       description: This will install kubectl on your machine
       runner: shell
       title: Install kubectl
-    - content: "\n                    sudo echo \"deb [trusted=yes] http://ftp.de.debian.org/debian\
-        \ buster main\" >> /etc/apt/sources.list\n                    sudo apt-get\
-        \ update\n                    sudo apt install kubectx"
+    - content: "\n                    sudo git clone https://github.com/ahmetb/kubectx\
+        \ /usr/local/kubectx\n                    sudo ln -s /usr/local/kubectx/kubectx\
+        \ /usr/local/bin/kubectx\n                    sudo ln -s /usr/local/kubectx/kubens\
+        \ /usr/local/bin/kubens\n                    "
       description: ''
       runner: shell
       title: Install kubectx

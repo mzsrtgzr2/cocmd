@@ -46,9 +46,10 @@ rm -rf kubectl kubectl.sha256
                     description="",
                     runner=StepRunnerType.SHELL,
                     content="""
-                    sudo echo \"deb [trusted=yes] http://ftp.de.debian.org/debian buster main\" >> /etc/apt/sources.list
-                    sudo apt-get update
-                    sudo apt install kubectx"""
+                    sudo git clone https://github.com/ahmetb/kubectx /usr/local/kubectx
+                    sudo ln -s /usr/local/kubectx/kubectx /usr/local/bin/kubectx
+                    sudo ln -s /usr/local/kubectx/kubens /usr/local/bin/kubens
+                    """
                 )
             ]),
 
