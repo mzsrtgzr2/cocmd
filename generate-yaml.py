@@ -7,6 +7,109 @@ from ggist_cli_app.core.models.script_model import *
 
 
 
+data_onboarding = ScriptModel(
+    name="onboarding",
+    title="New Developer onboarding ",
+    description="Welcome to the team!",
+    spec=SpecModel(
+        globals=[
+            
+        ],
+        variations=[
+        StepsModel(
+            env=OS.LINUX,
+            label="debian",
+            steps=[
+                StepModel(
+                    title="Install docker",
+                    description="This will install docker on your machine",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+                        # Update instance
+                        sudo apt update -y
+                        sudo apt upgrade -y
+
+                        # Install docker
+                        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+                        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+                        apt-cache policy docker-ce
+                        sudo apt install docker-ce -y
+
+                        # Automatically start Docker and Containerd on boot for non debian or ubuntu distros.
+                        sudo systemctl enable docker
+                        sudo systemctl enable containerd.service
+
+                        # Add possibility to call docker without sudo
+                        sudo usermod -aG docker ${USER}
+
+                        # Check is instalation successful
+                        docker --version
+                        """
+                ),
+                StepModel(
+                    title="Install docker-compose",
+                    description="This will install docker-compose on your machine",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                        sudo chmod +x /usr/local/bin/docker-compose
+                        docker-compose version
+                        """
+                ),
+            ]),
+
+        StepsModel(
+            env=OS.OSX,
+            label=">10.x.x",
+            depends=[
+                "installed:brew",
+            ],
+            steps=[
+                StepModel(
+                    title="Install docker",
+                    description="This will install docker on your machine",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+                        # Update instance
+                        sudo apt update -y
+                        sudo apt upgrade -y
+
+                        # Install docker
+                        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
+                        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
+                        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
+                        apt-cache policy docker-ce
+                        sudo apt install docker-ce -y
+
+                        # Automatically start Docker and Containerd on boot for non debian or ubuntu distros.
+                        sudo systemctl enable docker
+                        sudo systemctl enable containerd.service
+
+                        # Add possibility to call docker without sudo
+                        sudo usermod -aG docker ${USER}
+
+                        # Check is instalation successful
+                        docker --version
+                        """
+                ),
+                StepModel(
+                    title="Install docker-compose",
+                    description="This will install docker-compose on your machine",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+                        sudo chmod +x /usr/local/bin/docker-compose
+                        docker-compose version
+                        """
+                ),
+            ]),
+    ])
+)
+
+io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/team1/scripts/onboarding.yaml', data_onboarding)
+
+
 data_docker = ScriptModel(
     name="setup",
     title="Setup AwsCli ",
@@ -285,10 +388,10 @@ rm -rf kubectl kubectl.sha256
                     content="""brew install kubectx"""
                 ),
                 StepModel(
-                    title="Install kubectx",
+                    title="Install Minikube",
                     description="",
                     runner=StepRunnerType.SHELL,
-                    content="""brew install --cask lens"""
+                    content="""brew install minikube"""
                 )
             ]),
     ])
