@@ -116,6 +116,7 @@ data_docker_clean = ScriptModel(
     title="clean docker script",
     description="clean clean clean",
     spec=SpecModel(
+        alias="dkclean",
         globals=[
             
         ],

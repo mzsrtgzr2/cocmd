@@ -38,6 +38,7 @@ class StepsModel(DictLoader):
 class SpecModel(DictLoader):
     variations: List[StepsModel]
     globals: Optional[List[StepGlobalModel]] = field(default=None)
+    alias: Optional[str] = field(default=None)
 
 @dataclass(frozen=True)
 class ScriptModel(DictLoader):
