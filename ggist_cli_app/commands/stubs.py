@@ -4,7 +4,7 @@ from ggist_cli_app.settings import click_pass_settings
 
 @click.command()
 @click_pass_settings
-def profile_loader(context):
+def profile_loader(settings):
     # apply it in bashrc with 
     # cd /workspaces/ggist/ && eval "$(python -m ggist_cli_app apply)"
 
@@ -16,5 +16,5 @@ def profile_loader(context):
 
 @click.command()
 @click_pass_settings
-def refresh(context):
+def refresh(settings):
     settings.sources_manager.save()

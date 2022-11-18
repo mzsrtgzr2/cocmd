@@ -6,7 +6,7 @@ from ggist_cli_app.commands.groups import show
 
 @show.command()
 @click_pass_settings
-def sources(context):
+def sources(settings):
     """
     Show sources
     """
@@ -20,7 +20,7 @@ def sources(context):
 
 @show.command()
 @click_pass_settings
-def aliases(context):
+def aliases(settings):
     """
     Show aliases
     """
@@ -32,7 +32,7 @@ def aliases(context):
 
 @show.command()
 @click_pass_settings
-def scripts(context):
+def scripts(settings):
     """
     Show scripts
     """
