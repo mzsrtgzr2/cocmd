@@ -3,6 +3,7 @@ import glob
 from typing import Sequence
 from ggist_cli_app.consts import Consts
 from ggist_cli_app.core.models.script_model import ScriptModel
+from ggist_cli_app.core.models.source_config_model import SourceConfigModel
 from ggist_cli_app.utils.io import YamlIO, exists, file_read_lines
 from ggist_cli_app.utils import git
 from functools import partial
@@ -20,6 +21,7 @@ class Source:
         if exists(self._location):
             self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
             self._scripts = self.read_scripts(os.path.join(self._location, Consts.SCRIPTS_DIR))
+            self._ggist_config = YamlIO.from_file(os.path.join(self._location, Consts.SOURCE_CONFIG_FILE), cls=SourceConfigModel)
         elif self._location.endswith('.git'):
             local_repo = os.path.join(settings.home, git.get_repo_name(self._location))
             if not exists(local_repo):
@@ -29,6 +31,7 @@ class Source:
                 )
             self._aliases = self.read_aliases(os.path.join(local_repo, Consts.ALIASES_FILE))
             self._scripts = self.read_scripts(os.path.join(local_repo, Consts.SCRIPTS_DIR))
+            self._ggist_config = YamlIO.from_file(os.path.join(local_repo, Consts.SOURCE_CONFIG_FILE), cls=SourceConfigModel)
         else:
 
             raise RuntimeError(f'path {self._location} not exists. edit `~/.ggist/sources.txt` and remove it manually')
@@ -42,6 +45,10 @@ class Source:
     @property
     def aliases(self):
         return self._aliases
+
+    @property
+    def name(self):
+        return self._ggist_config.name
 
     @property
     def scripts(self):
