@@ -49,8 +49,8 @@ class ScriptModel(DictLoader):
 
     description: Optional[str] = field(default=None)
     def supports_os(self, os: OS)->bool:
-        return any(os==variation.env for variation in  self.spec.variations)
+        return any(os==variation.env or variation.env==OS.ANY for variation in  self.spec.variations)
 
     def get_variations_for_os(self, os: OS)->bool:
-        return tuple(variation for variation in  self.spec.variations if os==variation.env)
+        return tuple(variation for variation in  self.spec.variations if os==variation.env or variation.env==OS.ANY)
 

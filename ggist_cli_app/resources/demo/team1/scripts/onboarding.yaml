@@ -1,5 +1,5 @@
-description: setup docker for desktop
-name: setup
+description: Welcome to the team!
+name: onboarding
 spec:
   alias: null
   globals: []
@@ -65,4 +65,4 @@ spec:
       description: This will install docker-compose on your machine
       runner: shell
       title: Install docker-compose
-title: 'Setup Docker '
+title: 'New Developer onboarding '

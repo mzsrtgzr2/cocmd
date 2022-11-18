@@ -107,7 +107,7 @@ data_onboarding = ScriptModel(
     ])
 )
 
-io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/team1/scripts/onboarding.yaml', data_onboarding)
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/team1/scripts/onboarding.yaml', data_onboarding)
 
 
 
@@ -125,7 +125,7 @@ data_docker_clean = ScriptModel(
             env=OS.ANY,
             steps=[
                 StepModel(
-                    title="Install docker",
+                    title="clean docker",
                     description="This will install docker on your machine",
                     runner=StepRunnerType.SHELL,
                     content="""
@@ -141,6 +141,9 @@ data_docker_clean = ScriptModel(
 #   $ dkcleanup --purge {image}
 # everything
 #   $ dkcleanup --nuclear
+
+echo "moshe"
+echo "$1"
 
 if [ "$1" == "--reset" ]; then
     # Remove all containers regardless of state
@@ -171,7 +174,7 @@ exit 0
     ])
 )
 
-io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/docker/scripts/clean.yaml', data_docker_clean)
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/docker/scripts/clean.yaml', data_docker_clean)
 
 data_docker = ScriptModel(
     name="setup",
@@ -273,7 +276,7 @@ data_docker = ScriptModel(
     ])
 )
 
-io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/docker/scripts/setup.yaml', data_docker)
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/docker/scripts/setup.yaml', data_docker)
 
 
 data_awscli = ScriptModel(
@@ -341,7 +344,7 @@ data_awscli = ScriptModel(
     ])
 )
 
-io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/awscli/scripts/setup.yaml', data_awscli)
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/awscli/scripts/setup.yaml', data_awscli)
 
 
 
@@ -460,5 +463,5 @@ rm -rf kubectl kubectl.sha256
     ])
 )
 
-io.YamlIO.to_file('/workspaces/ggist/ggist_cli_app/resources/demo/k8s/scripts/setup.yaml', data_k8s)
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/k8s/scripts/setup.yaml', data_k8s)
 

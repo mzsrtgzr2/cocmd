@@ -13,6 +13,9 @@ def profile_loader(settings):
         line = fin.read()
         print(line)
 
+    for name in settings.sources_manager.scripts.keys():
+        print(f'alias {name}="ggist run {name}"')
+
 
 @click.command()
 @click_pass_settings

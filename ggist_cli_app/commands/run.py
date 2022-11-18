@@ -16,12 +16,7 @@ def run(ctx, settings, name: str):
     Run something
     """
 
-    available_scripts = {
-        f'{source._location}.{script.name}': script
-        for source in settings.sources_manager.sources
-        for script in source._scripts
-        if source._scripts
-    }
+    available_scripts = settings.sources_manager.scripts
 
     if not name:
         questions = [
@@ -44,6 +39,7 @@ def run(ctx, settings, name: str):
             return
 
         script_args = ctx.args
+        print('args=', script_args)
         ScriptRunner.run(script, settings.os, script_args)
 
     else:

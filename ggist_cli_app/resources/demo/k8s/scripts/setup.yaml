@@ -1,6 +1,7 @@
 description: setup Kubernetes for desktop
 name: setup
 spec:
+  alias: null
   globals:
   - content: "\n# Kubernetes is awesome\n## cheers\n### all good\n               \
       \     "
@@ -79,8 +80,8 @@ spec:
       description: ''
       runner: shell
       title: Install kubectx
-    - content: brew install --cask lens
+    - content: brew install minikube
       description: ''
       runner: shell
-      title: Install kubectx
+      title: Install Minikube
 title: Setup Kubernetes

@@ -32,3 +32,11 @@ class SourcesManager:
     @staticmethod
     def save_sources(sources_file, sources: Sequence[Source]):
         file_write_lines(sources_file, tuple(map(str, sources)))
+
+    @property
+    def scripts(self):
+        scripts = {}
+        for source in self.sources:
+            for script in source.scripts:
+                scripts[f'{source.name}.{script.name}'] = script
+        return scripts

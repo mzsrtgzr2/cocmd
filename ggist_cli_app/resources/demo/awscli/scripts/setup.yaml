@@ -1,6 +1,7 @@
 description: setup awscli for desktop
 name: setup
 spec:
+  alias: null
   globals: []
   variations:
   - depends: []
