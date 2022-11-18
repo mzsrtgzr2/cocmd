@@ -29,8 +29,8 @@ class StepRefModel(DictLoader):
 @dataclass(frozen=True)
 class StepsModel(DictLoader):
     steps: List[Union[StepModel, StepRefModel]]
-    env: OS
-    label: str
+    env: Optional[OS] = field(default=OS.ANY)
+    label: Optional[str] = field(default=None)
     depends: Optional[List[str]] = field(default_factory=list)
 
 
@@ -43,9 +43,10 @@ class SpecModel(DictLoader):
 class ScriptModel(DictLoader):
     name: str
     title: str
-    description: str
+    
     spec: SpecModel
 
+    description: Optional[str] = field(default=None)
     def supports_os(self, os: OS)->bool:
         return any(os==variation.env for variation in  self.spec.variations)
 
