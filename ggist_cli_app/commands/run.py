@@ -43,7 +43,8 @@ def run(ctx, settings, name: str):
             error_console.print('This script not supporting your os') 
             return
 
-        ScriptRunner.run(script, settings.os)
+        script_args = ctx.args
+        ScriptRunner.run(script, settings.os, script_args)
 
     else:
         error_console.print('I don\'t know this script')        

@@ -10,7 +10,7 @@ def sources(settings):
     """
     Show sources
     """
-    sources = SourcesManager.load_sources(settings.sources_file, context)
+    sources = SourcesManager.load_sources(settings.sources_file, settings)
 
     print('sources:')
     for source in sources:
@@ -44,4 +44,4 @@ def scripts(settings):
     )
     
     for script in available_scripts:
-        print(f'ggist run script {script}')
+        print(f'ggist run {script}')

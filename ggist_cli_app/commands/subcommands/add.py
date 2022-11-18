@@ -10,13 +10,13 @@ from ggist_cli_app.utils.console import console, error_console
 @add.command()
 @click.argument('source')
 @click_pass_settings
-def source(context, source: str):
+def source(settings, source: str):
     """
     add a source
     """
 
     source_label = source
-    source = Source(source_label, context)
+    source = Source(source_label, settings)
     console.print(f'''This will add:
     - {len(source.aliases)} aliases
     - {len(source.scripts)} scripts

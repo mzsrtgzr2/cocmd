@@ -1,27 +1,28 @@
 
 from typing import Sequence, Optional
 import inquirer
-from ggist_cli_app.core.models.script_model import ScriptModel, StepRunnerType, StepRefModel
+from ggist_cli_app.core.models.script_model import ScriptModel, StepRunnerType, StepRefModel, StepsModel
 from rich.markdown import Markdown
 
 from ggist_cli_app.core.os import OS
 import subprocess
 from ggist_cli_app.utils.console import console, error_console
+from collections import OrderedDict
 
 
 class ScriptRunner:
     
     @staticmethod
-    def run(script: ScriptModel, os: OS):        
+    def run(script: ScriptModel, os: OS, script_args: Sequence[str]):
 
-        def out(command):
-            p = subprocess.run(command, shell=True)           
+        def out(command, *script_args):
+            p = subprocess.run(command + ' ' + ' '.join(script_args), shell=True)           
             return p
 
-        console.print(script.title, style="frame")
+        console.print(script.title, style="frame white on blue")
         
         if script.description:
-            console.print(script.description, style="frame")
+            console.print(script.description, style="blue")
 
         variations_for_os = script.get_variations_for_os(os)
 
@@ -42,20 +43,35 @@ class ScriptRunner:
         else:
             variation = variations_for_os[0]
 
-        console.print(f'Executing {len(variation.steps)} steps:')
+        
 
-        for ii, step in enumerate(variation.steps):
+        steps_choices = OrderedDict()
+        for ii, step in enumerate(ScriptRunner.iterate_steps(script, variation)):
+            steps_choices[f'{ii} - {step.title}'] = step
 
-            if isinstance(step, StepRefModel):
-                step = next(
-                    global_step
-                    for global_step in script.spec.globals
-                    if global_step.id == step.ref
-                )
-            
+        questions = [
+            inquirer.Checkbox(
+                "steps",
+                message="Select what to execute: (all by default)",
+                choices=steps_choices.keys(),
+                default=steps_choices.keys(),
+            ),
+        ]
+
+        answers = inquirer.prompt(questions)
+
+        chosen_steps = tuple(
+            step
+            for label, step in steps_choices.items()
+            if label in answers['steps']
+        )
+        
+        console.print(f'Executing {len(chosen_steps)} steps:')
+
+        for step in chosen_steps:
             is_mark_down = False
             if step.runner != StepRunnerType.MARKDOWN:
-                console.print(f'Step {ii+1}/{len(variation.steps)}: {step.title}', style="blue on white")
+                console.print(f'{step.title}', style="frame white on blue")
                 if step.description:
                     console.print(step.description)
                 
@@ -68,7 +84,8 @@ class ScriptRunner:
 
             if is_mark_down or answers['sure']: 
                 if step.runner == StepRunnerType.SHELL:
-                    r = out(step.content)
+
+                    r = out(step.content, *script_args)
 
                     if r.returncode:
                         error_console.print("failed to run step")
@@ -82,3 +99,14 @@ class ScriptRunner:
                 console.print("[gray] Skipped")
                 
         console.print("[bold green]Script completed")
+
+    @staticmethod
+    def iterate_steps(script: ScriptModel, variation: StepsModel):
+        for step in variation.steps:
+            if isinstance(step, StepRefModel):
+                step = next(
+                    global_step
+                    for global_step in script.spec.globals
+                    if global_step.id == step.ref
+                )
+            yield step

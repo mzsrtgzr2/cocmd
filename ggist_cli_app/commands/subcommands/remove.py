@@ -8,9 +8,9 @@ from ggist_cli_app.core.source import Source
 @remove.command(name="source")
 @click.argument('source')
 @click_pass_settings
-def remove_source(context, source: str):
+def remove_source(settings, source: str):
     """
     remove a source
     """
-    source = Source(source, context)
+    source = Source(source, settings)
     settings.sources_manager.remove_source(source)
