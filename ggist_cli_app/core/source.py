@@ -53,6 +53,12 @@ class Source:
     @property
     def scripts(self):
         return self._scripts
+
+    @property
+    def location(self):
+        return self._location
+
+            
     
     def __repr__(self):
         return str(self._location)

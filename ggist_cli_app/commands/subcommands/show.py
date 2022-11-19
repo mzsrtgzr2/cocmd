@@ -3,6 +3,7 @@ from ggist_cli_app.settings import click_pass_settings
 from ggist_cli_app.core.sources_manager import SourcesManager
 from ggist_cli_app.utils.io import file_write_lines
 from ggist_cli_app.commands.groups import show
+from ggist_cli_app.utils.console import console, error_console
 
 @show.command()
 @click_pass_settings
@@ -10,11 +11,11 @@ def sources(settings):
     """
     Show sources
     """
-    sources = SourcesManager.load_sources(settings.sources_file, settings)
+    sources = settings.sources_manager.sources
 
-    print('sources:')
     for source in sources:
-        print(f' - {source}')
+        console.print(f'{source.name}', style="white on blue")
+        console.print(f' - {source.location}', style="blue")
 
 
 
@@ -36,12 +37,8 @@ def scripts(settings):
     """
     Show scripts
     """
-    available_scripts = tuple(
-        f'{source._location}.{script.name}'
-        for source in settings.sources_manager.sources
-        for script in source._scripts
-        if source._scripts
-    )
+    available_scripts = settings.sources_manager.scripts.keys()
+
     
     for script in available_scripts:
-        print(f'ggist run {script}')
+        console.print(f'ggist run {script}')

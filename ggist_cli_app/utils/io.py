@@ -2,6 +2,9 @@ from enum import Enum
 from dacite import from_dict, Config
 from dataclasses import asdict, dataclass
 import yaml
+import stat
+
+import tempfile
 from typing import Dict
 import os
 from pathlib import Path
@@ -24,6 +27,20 @@ def file_read_lines(file) -> Sequence[str]:
 def file_write_lines(file, lines):
     with open(file, 'w') as fp:
         fp.writelines(map(lambda s: f'{s}\n', lines))
+
+def file_write(file, content):
+    with open(file, 'w') as fp:
+        fp.write(content)
+
+def get_tmp_file():
+    return tempfile.NamedTemporaryFile()
+
+def get_tmp():
+    return tempfile.gettempdir()
+
+def chmod_x(file):
+    st = os.stat(file)
+    os.chmod(file, st.st_mode | stat.S_IEXEC)
 
 @dataclass(frozen=True)
 class DictLoader:

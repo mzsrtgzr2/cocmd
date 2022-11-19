@@ -8,7 +8,7 @@ from ggist_cli_app.utils.console import console, error_console
     ignore_unknown_options=True,
     allow_extra_args=True,
 ))
-@click.argument('name',  required=True)
+@click.argument('name',  required=False)
 @click_pass_settings
 @click.pass_context
 def run(ctx, settings, name: str):

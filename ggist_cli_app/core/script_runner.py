@@ -1,10 +1,13 @@
 
+from os import path
 from typing import Sequence, Optional
 import inquirer
+from ggist_cli_app.consts import Consts
 from ggist_cli_app.core.models.script_model import ScriptModel, StepRunnerType, StepRefModel, StepsModel
 from rich.markdown import Markdown
 
 from ggist_cli_app.core.os import OS
+from ggist_cli_app.utils import io
 import subprocess
 from ggist_cli_app.utils.console import console, error_console
 from collections import OrderedDict
@@ -16,7 +19,10 @@ class ScriptRunner:
     def run(script: ScriptModel, os: OS, script_args: Sequence[str]):
 
         def out(command, *script_args):
-            p = subprocess.run(command + ' ' + ' '.join(script_args), shell=True)           
+            exec_file = path.join(io.get_tmp(), Consts.TMP_EXEC_FILE_NAME)
+            io.file_write(exec_file, command)
+            io.chmod_x(exec_file)
+            p = subprocess.run(exec_file + ' ' + ' '.join(script_args), shell=True)           
             return p
 
         console.print(script.title, style="frame white on blue")
