@@ -81,21 +81,57 @@ print('Close and reopen your terminal')
 print('Have a nice day!')                    
                     """
                 ),
-
-                StepsModel(
-            env=OS.OSX,
-            steps=[
-                StepModel(
-                    title="install-zsh",
-                    description="install and setup zsh on your computer",
-                    runner=StepRunnerType.PYTHON,
-                    content="""
-           
-                    """
-                ),
-                
             ]),
-        ],
+
+        StepsModel(
+                env=OS.OSX,
+                steps=[
+                    StepModel(
+                        title="install zsh",
+                        description="install  zsh on your computer",
+                        runner=StepRunnerType.SHELL,
+                        content="""
+
+    echo '💻 Installing: zsh'
+    brew install zsh
+    chsh -s $(which zsh)
+    curl -sS https://starship.rs/install.sh | sh
+    touch ~/.zshrc
+                        """
+                    ),
+                    StepModel(
+                        title="configure zsh",
+                        description="configure  zsh on your computer",
+                        runner=StepRunnerType.SHELL,
+                        content="""
+    echo '💻 Installing: antigen'
+    mkdir ~/.antigen
+    curl -L git.io/antigen > ~/.antigen/config.zsh
+
+    echo '💻 Configuring: ZSH'
+    echo '
+    # antigen 
+    source ~/.antigen/config.zsh
+    antigen use oh-my-zsh
+    antigen bundle git
+    antigen bundle github
+    antigen bundle git-flow
+    antigen bundle docker
+    antigen bundle docker-compose
+    antigen bundle asdf
+    antigen bundle node
+    antigen bundle npm
+    antigen bundle elixir
+    antigen bundle zsh-users/zsh-syntax-highlighting
+    antigen bundle zsh-users/zsh-autosuggestions
+    antigen bundle zsh-users/zsh-completions
+    antigen apply
+    # spaceship theme
+    eval "$(starship init zsh)"
+    ' >> ~/.zshrc"""
+                    )])
+            ]
+                
     )
 )
 
@@ -132,6 +168,7 @@ Welcome! We choose our new team members carefully and we’re proud to welcome y
             env=OS.ANY,
             steps=[
                StepRefModel(ref="welcome_md"),
+               StepRefModel(ref="zsh.setup"), 
                StepRefModel(ref="docker.setup"), 
                StepRefModel(ref="k8s.setup"),
                StepRefModel(ref="awscli.setup"),

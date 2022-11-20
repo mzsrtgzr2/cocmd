@@ -21,6 +21,7 @@ spec:
     label: null
     steps:
     - ref: welcome_md
+    - ref: zsh.setup
     - ref: docker.setup
     - ref: k8s.setup
     - ref: awscli.setup
