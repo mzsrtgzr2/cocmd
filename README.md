@@ -3,7 +3,6 @@
 **ggist** is a terminal utility to find and create:
 - aliases
 - scripts
-- playbooks
 
 
 ## Getting Started
@@ -18,21 +17,22 @@ bash -c "$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/ggist/main/ins
 # Add new aliases and scripts
 Currently only demo - 
 
-add kubernetes goodies:
 ```
 ggist add source demo/k8s
-```
-
-add git goodies:
-```
 ggist add source demo/git
-```
-
-add docker goodies:
-```
 ggist add source demo/docker
+ggist add source demo/awscli
+ggist add source demo/zsh
+ggist add source demo/team1
+ggist add source demo/osx
 ```
 
+### Run scripts
+for example, Team1 have an onboarding script.
+run it, you will be prompt to approve every step:
+```
+ggist run team1.onboarding
+```
 
 ** Make sure you open a new terminal to see the changes **
 
@@ -42,6 +42,11 @@ ggist show sources
 ```
 
 ### See all your aliases
+```
+ggist show aliases
+```
+
+### See all your scripts
 ```
 ggist show aliases
 ```

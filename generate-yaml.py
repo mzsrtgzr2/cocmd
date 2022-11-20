@@ -6,6 +6,88 @@ from ggist_cli_app.core.models.script_model import *
 
 
 
+data_osx = ScriptModel(
+    name="devmachine",
+    title="setup osx dev machine",
+    description="setup",
+    spec=SpecModel(
+        alias="osx",
+        globals=[
+            
+        ],
+        variations=[
+        StepsModel(
+            env=OS.OSX,
+            steps=[
+                StepModel(
+                    title="install homebrew",
+                    description="---",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+/bin/bash -c "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/HEAD/install.sh)"
+
+echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~.zprofile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.zprofile
+
+
+
+echo '# Set PATH, MANPATH, etc., for Homebrew.' >> ~.bash_profile
+echo 'eval "$(/opt/homebrew/bin/brew shellenv)"' >> ~/.bash_profile
+
+
+"""
+                ),
+                StepModel(
+                    title="install basics (curl, wget, unzip, git etc)",
+                    description="---",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+echo '💻 Installing: basic'
+brew install curl
+brew install wget
+brew install unzip
+brew install tree
+brew install neofetch
+brew install wxwidgets
+brew install libxslt fop
+
+echo '💻 Installing: CLI tools'
+brew install git
+
+
+echo '💻 Configuring: git'
+git config --global user.name "$MY_NAME"
+git config --global user.email "$MY_EMAIL"
+
+"""
+                ),
+                
+                StepModel(
+                    title="install python essentials",
+                    description="---",
+                    runner=StepRunnerType.SHELL,
+                    content="""
+
+if ! pip3 help > /dev/null; then
+  echo "installing python & pip ..."
+  #brew install python2
+  brew install python3
+fi
+
+
+wget https://repo.anaconda.com/miniconda/Miniconda3-latest-MacOSX-x86_64.sh -O ~/miniconda.sh
+bash ~/miniconda.sh -b -p $HOME/miniconda
+
+
+"""
+                ),
+                
+            ]),
+    ])
+)
+
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/osx/scripts/devmachine.yaml', data_osx)
+
 
 data_zsh_setup = ScriptModel(
     name="setup",
@@ -168,6 +250,7 @@ Welcome! We choose our new team members carefully and we’re proud to welcome y
             env=OS.ANY,
             steps=[
                StepRefModel(ref="welcome_md"),
+               StepRefModel(ref="osx.devmachine"), 
                StepRefModel(ref="zsh.setup"), 
                StepRefModel(ref="docker.setup"), 
                StepRefModel(ref="k8s.setup"),

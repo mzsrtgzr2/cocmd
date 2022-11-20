@@ -21,6 +21,7 @@ spec:
     label: null
     steps:
     - ref: welcome_md
+    - ref: osx.devmachine
     - ref: zsh.setup
     - ref: docker.setup
     - ref: k8s.setup

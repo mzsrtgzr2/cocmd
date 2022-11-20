@@ -219,6 +219,7 @@ ggist add source demo/docker
 ggist add source demo/awscli
 ggist add source demo/zsh
 ggist add source demo/team1
+ggist add source demo/osx
 
 echo
 emph "Next steps:"
