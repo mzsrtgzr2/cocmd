@@ -78,50 +78,60 @@ class ScriptRunner:
 
         output = []
         for step in chosen_steps:
-            is_mark_down = False
-            if step.runner != StepRunnerType.MARKDOWN:
+
+
+            res = 'ok'
+            if step.runner == StepRunnerType.SHELL:
                 
                 console.print(f'{step.title}', style="blue")
-                
+            
                 questions = [
                     inquirer.Confirm("sure", message="Execute step?", default=True)]
 
                 answers = inquirer.prompt(questions)
-            else:
-                is_mark_down = True
-
-            res = 'skipped'
-
-            if is_mark_down or answers['sure']: 
-                res = 'ok'
-                if step.runner == StepRunnerType.SHELL:
-
+                
+                
+                if answers['sure']:
                     r = out('set -x\n' + step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
                         error_console.print("failed to run step")
                         res = 'failed'
-                elif step.runner == StepRunnerType.PYTHON:
+                else:
+                    res = 'skipped'
+            elif step.runner == StepRunnerType.PYTHON:
+                console.print(f'{step.title}', style="blue")
+            
+                questions = [
+                    inquirer.Confirm("sure", message="Execute step?", default=True)]
+
+                answers = inquirer.prompt(questions)
+                
+                
+                if answers['sure']:
                     r = out(step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
                         error_console.print("failed to run step")
                         res = 'failed'
-                elif step.runner == StepRunnerType.MARKDOWN:
-                    markdown = Markdown(step.content)
-                    console.print(markdown)
-                elif step.runner == StepRunnerType.GGIST_SCRIPT:
-                    nested_script = settings.sources_manager.scripts[step.content]
-                    ScriptRunner.run(nested_script, os, [], settings)
                 else:
-                    raise NotImplementedError()
-
-            if res == 'skipped':
-                output.append(f'skipped [strike]"{step.title}"')
-            elif res == 'failed':
-                output.append(f'[red] x "{step.title}"')
+                    res = 'skipped'
+            elif step.runner == StepRunnerType.MARKDOWN:
+                markdown = Markdown(step.content)
+                console.print(markdown)
+            elif step.runner == StepRunnerType.GGIST_SCRIPT:
+                nested_script = settings.sources_manager.scripts[step.content]
+                output.extend(ScriptRunner.run(nested_script, os, [], settings))
             else:
-                output.append(f'[green] ✓ "{step.title}"')
+                raise NotImplementedError()
+
+            if step.runner != StepRunnerType.GGIST_SCRIPT:
+                if res == 'skipped':
+                    output.append(f'skipped [strike]"{step.title}"')
+                elif res == 'failed':
+                    output.append(f'[red] x "{step.title}"')
+                else:
+                    output.append(f'[green] ✓ "{step.title}"')
                 
                 
         
