@@ -90,7 +90,7 @@ print('Have a nice day!')
                     description="install and setup zsh on your computer",
                     runner=StepRunnerType.PYTHON,
                     content="""
-'''                   
+           
                     """
                 ),
                 

@@ -1,6 +1,6 @@
 
 from os import path
-from typing import Sequence, Optional
+from typing import Sequence, Optional, List
 import inquirer
 from ggist_cli_app.consts import Consts
 from ggist_cli_app.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
@@ -15,7 +15,7 @@ from collections import OrderedDict
 class ScriptRunner:
     
     @staticmethod
-    def run(script: ScriptModel, os: OS, script_args: Sequence[str], settings: 'Settings'):
+    def run(script: ScriptModel, os: OS, script_args: Sequence[str], settings: 'Settings')->List[str]:
 
         def out(command, *script_args, runner: StepRunnerType):
             exec_file = path.join(io.get_tmp(), Consts.TMP_EXEC_FILE_NAME)
@@ -28,10 +28,8 @@ class ScriptRunner:
                 p = subprocess.run(exec_file + ' ' + ' '.join(script_args), shell=True)           
             return p
 
+                
         console.print(script.title, style="frame white on blue")
-        
-        if script.description:
-            console.print(script.description, style="blue")
 
         variations_for_os = script.get_variations_for_os(os)
 
@@ -78,14 +76,12 @@ class ScriptRunner:
         
         # console.print(f'Executing {len(chosen_steps)} steps:')
 
+        output = []
         for step in chosen_steps:
             is_mark_down = False
             if step.runner != StepRunnerType.MARKDOWN:
                 
-                if step.description:
-                    console.print(step.description, style="blue")
-                else:
-                    console.print(f'{step.title}', style="blue")
+                console.print(f'{step.title}', style="blue")
                 
                 questions = [
                     inquirer.Confirm("sure", message="Execute step?", default=True)]
@@ -94,20 +90,23 @@ class ScriptRunner:
             else:
                 is_mark_down = True
 
+            res = 'skipped'
+
             if is_mark_down or answers['sure']: 
+                res = 'ok'
                 if step.runner == StepRunnerType.SHELL:
 
                     r = out('set -x\n' + step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
                         error_console.print("failed to run step")
-                        return
-                if step.runner == StepRunnerType.PYTHON:
+                        res = 'failed'
+                elif step.runner == StepRunnerType.PYTHON:
                     r = out(step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
                         error_console.print("failed to run step")
-                        return
+                        res = 'failed'
                 elif step.runner == StepRunnerType.MARKDOWN:
                     markdown = Markdown(step.content)
                     console.print(markdown)
@@ -115,11 +114,18 @@ class ScriptRunner:
                     nested_script = settings.sources_manager.scripts[step.content]
                     ScriptRunner.run(nested_script, os, [], settings)
                 else:
-                    raise NotImplemented()
+                    raise NotImplementedError()
+
+            if res == 'skipped':
+                output.append(f'skipped [strike]"{step.title}"')
+            elif res == 'failed':
+                output.append(f'[red] x "{step.title}"')
             else:
-                console.print("[gray] Skipped")
+                output.append(f'[green] ✓ "{step.title}"')
                 
-        console.print(f"[bold green]Script {script.name} completed")
+                
+        
+        return output
 
     @staticmethod
     def iterate_steps(script: ScriptModel, variation: StepsModel, settings: 'Settings'):

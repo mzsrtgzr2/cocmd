@@ -40,7 +40,12 @@ def run(ctx, settings, name: str):
 
         script_args = ctx.args
         # print('args=', script_args)
-        ScriptRunner.run(script, settings.os, script_args, settings)
+        output = ScriptRunner.run(script, settings.os, script_args, settings)
 
+        console.print("[blue] Script executed:")
+        for line in output:
+            console.print(f' - {line}')
+
+        console.print(f"[bold green]Script {script.name} completed")
     else:
         error_console.print('I don\'t know this script')        

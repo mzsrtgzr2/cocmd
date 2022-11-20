@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["run", "team1.onboarding"]
+            "args": ["run", "k8s.setup"]
         },
         {
             "name": "generate-yaml",
