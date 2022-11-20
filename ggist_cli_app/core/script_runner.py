@@ -76,17 +76,19 @@ class ScriptRunner:
         # )
         chosen_steps = tuple(steps_choices.values())
         
-        console.print(f'Executing {len(chosen_steps)} steps:')
+        # console.print(f'Executing {len(chosen_steps)} steps:')
 
         for step in chosen_steps:
             is_mark_down = False
             if step.runner != StepRunnerType.MARKDOWN:
-                console.print(f'{step.title}', style="frame white on blue")
+                
                 if step.description:
-                    console.print(step.description)
+                    console.print(step.description, style="blue")
+                else:
+                    console.print(f'{step.title}', style="blue")
                 
                 questions = [
-                    inquirer.Confirm("sure", message="Continue?", default=True)]
+                    inquirer.Confirm("sure", message="Execute step?", default=True)]
 
                 answers = inquirer.prompt(questions)
             else:
@@ -95,7 +97,7 @@ class ScriptRunner:
             if is_mark_down or answers['sure']: 
                 if step.runner == StepRunnerType.SHELL:
 
-                    r = out(step.content, *script_args, runner=step.runner)
+                    r = out('set -x\n' + step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
                         error_console.print("failed to run step")

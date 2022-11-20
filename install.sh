@@ -209,6 +209,10 @@ else
   echo 'updated zsh'
 fi
 
+# cleanup
+rm -rf ~/.ggist
+
+# add demo sources
 ggist add source demo/k8s
 ggist add source demo/git
 ggist add source demo/docker

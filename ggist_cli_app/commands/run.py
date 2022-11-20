@@ -39,7 +39,7 @@ def run(ctx, settings, name: str):
             return
 
         script_args = ctx.args
-        print('args=', script_args)
+        # print('args=', script_args)
         ScriptRunner.run(script, settings.os, script_args, settings)
 
     else:
