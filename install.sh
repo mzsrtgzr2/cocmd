@@ -198,14 +198,14 @@ echo 'Installation OK'
 if grep -q "ggist" ~/.bashrc; then
   echo 'bash already updated'
 else
-  echo 'eval "$(ggist profile_loader)"' >> ~/.bashrc
+  echo 'eval "$(ggist profile-loader)"' >> ~/.bashrc
   echo 'updated bash'
 fi
 
 if grep -q "ggist" ~/.zshrc; then
   echo 'zsh already updated'
 else
-  echo 'eval "$(ggist profile_loader)"' >> ~/.zshrc
+  echo 'eval "$(ggist profile-loader)"' >> ~/.zshrc
   echo 'updated zsh'
 fi
 
