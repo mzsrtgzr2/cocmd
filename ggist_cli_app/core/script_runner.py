@@ -58,22 +58,23 @@ class ScriptRunner:
         for ii, step in enumerate(ScriptRunner.iterate_steps(script, variation, settings)):
             steps_choices[f'{ii} - {step.title}'] = step
 
-        questions = [
-            inquirer.Checkbox(
-                "steps",
-                message="Select what to execute: (all by default)",
-                choices=steps_choices.keys(),
-                default=steps_choices.keys(),
-            ),
-        ]
+        # questions = [
+        #     inquirer.Checkbox(
+        #         "steps",
+        #         message="Select what to execute: (all by default)",
+        #         choices=steps_choices.keys(),
+        #         default=steps_choices.keys(),
+        #     ),
+        # ]
 
-        answers = inquirer.prompt(questions)
+        # answers = inquirer.prompt(questions)
 
-        chosen_steps = tuple(
-            step
-            for label, step in steps_choices.items()
-            if label in answers['steps']
-        )
+        # chosen_steps = tuple(
+        #     step
+        #     for label, step in steps_choices.items()
+        #     if label in answers['steps']
+        # )
+        chosen_steps = tuple(steps_choices.values())
         
         console.print(f'Executing {len(chosen_steps)} steps:')
 

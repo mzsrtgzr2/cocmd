@@ -16,7 +16,7 @@ data_zsh_setup = ScriptModel(
         ],
         variations=[
         StepsModel(
-            env=OS.ANY,
+            env=OS.LINUX,
             steps=[
                 StepModel(
                     title="install-zsh",
@@ -25,6 +25,7 @@ data_zsh_setup = ScriptModel(
                     content="""
 '''
 ### Installation script ###
+https://gist.github.com/headrockz/8959b18d7ae69bb45e4b7421ace54fa0
 Shell -> zsh, oh-my-zsh
 Theme -> spaceship
 plugins -> git docker python zsh-syntax-highlighting zsh-autosuggstions web-search ssh-agent
@@ -78,6 +79,18 @@ zshrc()
 
 print('Close and reopen your terminal')
 print('Have a nice day!')                    
+                    """
+                ),
+
+                StepsModel(
+            env=OS.OSX,
+            steps=[
+                StepModel(
+                    title="install-zsh",
+                    description="install and setup zsh on your computer",
+                    runner=StepRunnerType.PYTHON,
+                    content="""
+'''                   
                     """
                 ),
                 

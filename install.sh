@@ -209,14 +209,17 @@ else
   echo 'updated zsh'
 fi
 
+ggist add source demo/k8s
+ggist add source demo/git
+ggist add source demo/docker
+ggist add source demo/awscli
+ggist add source demo/zsh
+ggist add source demo/team1
+
 echo
 emph "Next steps:"
 cat << EOS
 
-add aliases and goodies, for example:
-- ggist add source demo/k8s
-- ggist add source demo/git
-- ggist add source demo/docker
 
 run playbooks:
 - ggist play flow k8s-setup
