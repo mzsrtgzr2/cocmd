@@ -34,6 +34,8 @@ run it, you will be prompt to approve every step:
 ggist run team1.onboarding
 ```
 
+to see all available scripts run `ggist show scripts`
+
 ** Make sure you open a new terminal to see the changes **
 
 ### to see all your sources
@@ -51,26 +53,12 @@ ggist show aliases
 ggist show aliases
 ```
 
-# Run playbooks
-playbook can be really anthing:
-- installation logic
-- onboarding steps
-
-it can be applied depending on Operating System and environment conditions.
-
-For example:
-```
-ggist play flow k8s-setup
-ggist play flow awscli-setup
-```
-
 
 ## Vision 
-- manage your aliases and helper scripts
+
+manage your aliases and scripts
     - get new from community 
     - create your own
-
-- manage terminal playbooks
     - complicated installations in one command
     - synchronize in your team
 
