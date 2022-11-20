@@ -15,9 +15,9 @@ class StepRunnerType(Enum):
 @dataclass(frozen=True)
 class StepModel(DictLoader):
     title: str
-    description: str
     runner: StepRunnerType
     content: str
+    description: str
 
 @dataclass(frozen=True)    
 class StepGlobalModel(StepModel):

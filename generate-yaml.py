@@ -7,6 +7,89 @@ from ggist_cli_app.core.models.script_model import *
 
 
 
+data_zsh_setup = ScriptModel(
+    name="setup",
+    title="Setup zsh",
+    spec=SpecModel(
+        globals=[
+            
+        ],
+        variations=[
+        StepsModel(
+            env=OS.ANY,
+            steps=[
+                StepModel(
+                    title="install-zsh",
+                    description="install and setup zsh on your computer",
+                    runner=StepRunnerType.PYTHON,
+                    content="""
+'''
+### Installation script ###
+Shell -> zsh, oh-my-zsh
+Theme -> spaceship
+plugins -> git docker python zsh-syntax-highlighting zsh-autosuggstions web-search ssh-agent
+'''
+
+import os
+
+
+def installZsh():
+    print("Installing zsh, git and curl")
+    os.system('sudo apt install zsh git curl -y && echo "ZSH successfully installed"')
+    print()
+
+def installOhMyZsh():
+    print("installing oh-my-zsh")
+    os.system('git clone https://github.com/ohmyzsh/ohmyzsh.git ~/.oh-my-zsh && echo "oh-my-zsh successfully installed"')
+    print()
+
+
+def installZshSyntaxHighlighting():
+    print("Installing zsh-syntax-highlighting")
+    os.system(r'git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting && echo "zsh-syntax-highlighting successfully installed"')
+    print()
+
+def installZshAutosuggestions():
+    print("Installing zsh-autosuggestions")
+    os.system(r'git clone https://github.com/zsh-users/zsh-autosuggestions ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-autosuggestions && echo "zsh-autosuggestions successfully installed"')
+    print()
+
+
+
+def installSpaceShip():
+    print("Installing spaceship theme")
+    os.system(r'git clone https://github.com/spaceship-prompt/spaceship-prompt.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt --depth=1')
+    print("Creating symbolic link")
+    os.system(r'ln -s ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship-prompt/spaceship.zsh-theme ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/themes/spaceship.zsh-theme')
+    print()
+
+def zshrc():
+    print("Cloning my .zshrc")
+    os.system('git clone https://gist.github.com/28f52538d94785d737d852f938da7fde.git')
+    os.system('mv 28f52538d94785d737d852f938da7fde/.zshrc ~/')
+    os.system('sudo usermod --shell $(which zsh) $USER')
+
+installZsh()
+installOhMyZsh()
+installZshSyntaxHighlighting()
+installZshAutosuggestions()
+installSpaceShip()
+zshrc()
+
+print('Close and reopen your terminal')
+print('Have a nice day!')                    
+                    """
+                ),
+                
+            ]),
+        ],
+    )
+)
+
+io.YamlIO.to_file('./ggist_cli_app/resources/demo/zsh/scripts/setup.yaml', data_zsh_setup)
+
+
+
 data_onboarding = ScriptModel(
     name="onboarding",
     title="New Developer onboarding ",

@@ -17,11 +17,15 @@ class ScriptRunner:
     @staticmethod
     def run(script: ScriptModel, os: OS, script_args: Sequence[str], settings: 'Settings'):
 
-        def out(command, *script_args):
+        def out(command, *script_args, runner: StepRunnerType):
             exec_file = path.join(io.get_tmp(), Consts.TMP_EXEC_FILE_NAME)
             io.file_write(exec_file, command)
-            io.chmod_x(exec_file)
-            p = subprocess.run(exec_file + ' ' + ' '.join(script_args), shell=True)           
+            
+            if runner==StepRunnerType.PYTHON:
+                p = subprocess.run('python ' + exec_file + ' ' + ' '.join(script_args), shell=True)           
+            else:
+                io.chmod_x(exec_file)
+                p = subprocess.run(exec_file + ' ' + ' '.join(script_args), shell=True)           
             return p
 
         console.print(script.title, style="frame white on blue")
@@ -90,7 +94,13 @@ class ScriptRunner:
             if is_mark_down or answers['sure']: 
                 if step.runner == StepRunnerType.SHELL:
 
-                    r = out(step.content, *script_args)
+                    r = out(step.content, *script_args, runner=step.runner)
+
+                    if r.returncode:
+                        error_console.print("failed to run step")
+                        return
+                if step.runner == StepRunnerType.PYTHON:
+                    r = out(step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
                         error_console.print("failed to run step")
@@ -102,7 +112,7 @@ class ScriptRunner:
                     nested_script = settings.sources_manager.scripts[step.content]
                     ScriptRunner.run(nested_script, os, [], settings)
                 else:
-                    raise NotImplemented
+                    raise NotImplemented()
             else:
                 console.print("[gray] Skipped")
                 
