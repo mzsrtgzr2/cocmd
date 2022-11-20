@@ -224,10 +224,18 @@ echo
 emph "Next steps:"
 cat << EOS
 
+see all your aliases:
+ggist show aliases
 
-run playbooks:
-- ggist play flow k8s-setup
-- ggist play flow awscli-setup
-- ggist play flow zsh-setup
+see all your scripts:
+ggist show scripts
+
+run scripts:
+- ggist run k8s.setup
+- ggist run awscli.setup
+- ggist run docker.setup
+- ggist run git.setup
+- ggist run zsh.setup
+- ggist run team1.onboarding
 
 EOS
