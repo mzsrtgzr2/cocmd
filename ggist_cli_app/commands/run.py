@@ -40,7 +40,7 @@ def run(ctx, settings, name: str):
 
         script_args = ctx.args
         print('args=', script_args)
-        ScriptRunner.run(script, settings.os, script_args)
+        ScriptRunner.run(script, settings.os, script_args, settings)
 
     else:
         error_console.print('I don\'t know this script')        

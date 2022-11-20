@@ -3,7 +3,7 @@ from os import path
 from typing import Sequence, Optional
 import inquirer
 from ggist_cli_app.consts import Consts
-from ggist_cli_app.core.models.script_model import ScriptModel, StepRunnerType, StepRefModel, StepsModel
+from ggist_cli_app.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
 from rich.markdown import Markdown
 
 from ggist_cli_app.core.os import OS
@@ -12,11 +12,10 @@ import subprocess
 from ggist_cli_app.utils.console import console, error_console
 from collections import OrderedDict
 
-
 class ScriptRunner:
     
     @staticmethod
-    def run(script: ScriptModel, os: OS, script_args: Sequence[str]):
+    def run(script: ScriptModel, os: OS, script_args: Sequence[str], settings: 'Settings'):
 
         def out(command, *script_args):
             exec_file = path.join(io.get_tmp(), Consts.TMP_EXEC_FILE_NAME)
@@ -52,7 +51,7 @@ class ScriptRunner:
         
 
         steps_choices = OrderedDict()
-        for ii, step in enumerate(ScriptRunner.iterate_steps(script, variation)):
+        for ii, step in enumerate(ScriptRunner.iterate_steps(script, variation, settings)):
             steps_choices[f'{ii} - {step.title}'] = step
 
         questions = [
@@ -99,20 +98,41 @@ class ScriptRunner:
                 elif step.runner == StepRunnerType.MARKDOWN:
                     markdown = Markdown(step.content)
                     console.print(markdown)
+                elif step.runner == StepRunnerType.GGIST_SCRIPT:
+                    nested_script = settings.sources_manager.scripts[step.content]
+                    ScriptRunner.run(nested_script, os, [], settings)
                 else:
                     raise NotImplemented
             else:
                 console.print("[gray] Skipped")
                 
-        console.print("[bold green]Script completed")
+        console.print(f"[bold green]Script {script.name} completed")
 
     @staticmethod
-    def iterate_steps(script: ScriptModel, variation: StepsModel):
+    def iterate_steps(script: ScriptModel, variation: StepsModel, settings: 'Settings'):
         for step in variation.steps:
             if isinstance(step, StepRefModel):
-                step = next(
-                    global_step
-                    for global_step in script.spec.globals
-                    if global_step.id == step.ref
-                )
+                
+                try:
+                    step = next(
+                        global_step
+                        for global_step in script.spec.globals
+                        if global_step.id == step.ref
+                    )
+                except StopIteration:
+                    # no results from globals                
+                    try:
+                        ref_script = settings.sources_manager.scripts[step.ref]
+                        step = StepModel(
+                            title=ref_script.title,
+                            description=ref_script.description,
+                            runner=StepRunnerType.GGIST_SCRIPT,
+                            content=step.ref
+                        )
+                    except KeyError:
+                        # can't find the script in ggist or script globals
+                        raise ValueError(f"unable to find reference {step.ref}")
+
+                
+                
             yield step

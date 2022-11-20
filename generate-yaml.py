@@ -13,96 +13,32 @@ data_onboarding = ScriptModel(
     description="Welcome to the team!",
     spec=SpecModel(
         globals=[
-            
+            StepGlobalModel(
+                    title="Welcome",
+                    description="",
+                    runner=StepRunnerType.MARKDOWN,
+                    content="""
+# Welcome to Team1
+## happy to have you on the team!
+
+This will take you through the onboarding
+
+We value the talents and ideas of everyone on our team, especially our new hires. We can’t wait to see what you’ll make happen
+
+Welcome! We choose our new team members carefully and we’re proud to welcome you, with all of your talents and ideas and faults. Yes, faults — making mistakes is an important part of growth, and we hope you’ll never worry about trying to be perfect on the job. We sure aren’t
+
+                    """,
+                    id="welcome_md"
+                )
         ],
         variations=[
         StepsModel(
-            env=OS.LINUX,
-            label="debian",
+            env=OS.ANY,
             steps=[
-                StepModel(
-                    title="Install docker",
-                    description="This will install docker on your machine",
-                    runner=StepRunnerType.SHELL,
-                    content="""
-                        # Update instance
-                        sudo apt update -y
-                        sudo apt upgrade -y
-
-                        # Install docker
-                        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-                        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-                        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-                        apt-cache policy docker-ce
-                        sudo apt install docker-ce -y
-
-                        # Automatically start Docker and Containerd on boot for non debian or ubuntu distros.
-                        sudo systemctl enable docker
-                        sudo systemctl enable containerd.service
-
-                        # Add possibility to call docker without sudo
-                        sudo usermod -aG docker ${USER}
-
-                        # Check is instalation successful
-                        docker --version
-                        """
-                ),
-                StepModel(
-                    title="Install docker-compose",
-                    description="This will install docker-compose on your machine",
-                    runner=StepRunnerType.SHELL,
-                    content="""
-                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                        sudo chmod +x /usr/local/bin/docker-compose
-                        docker-compose version
-                        """
-                ),
-            ]),
-
-        StepsModel(
-            env=OS.OSX,
-            label=">10.x.x",
-            depends=[
-                "installed:brew",
-            ],
-            steps=[
-                StepModel(
-                    title="Install docker",
-                    description="This will install docker on your machine",
-                    runner=StepRunnerType.SHELL,
-                    content="""
-                        # Update instance
-                        sudo apt update -y
-                        sudo apt upgrade -y
-
-                        # Install docker
-                        sudo apt install apt-transport-https ca-certificates curl software-properties-common -y
-                        curl -fsSL https://download.docker.com/linux/ubuntu/gpg | sudo apt-key add -
-                        sudo add-apt-repository "deb [arch=amd64] https://download.docker.com/linux/ubuntu bionic stable"
-                        apt-cache policy docker-ce
-                        sudo apt install docker-ce -y
-
-                        # Automatically start Docker and Containerd on boot for non debian or ubuntu distros.
-                        sudo systemctl enable docker
-                        sudo systemctl enable containerd.service
-
-                        # Add possibility to call docker without sudo
-                        sudo usermod -aG docker ${USER}
-
-                        # Check is instalation successful
-                        docker --version
-                        """
-                ),
-                StepModel(
-                    title="Install docker-compose",
-                    description="This will install docker-compose on your machine",
-                    runner=StepRunnerType.SHELL,
-                    content="""
-                        sudo curl -L "https://github.com/docker/compose/releases/download/1.26.0/docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
-                        sudo chmod +x /usr/local/bin/docker-compose
-                        docker-compose version
-                        """
-                ),
+               StepRefModel(ref="welcome_md"),
+               StepRefModel(ref="docker.setup"), 
+               StepRefModel(ref="k8s.setup"),
+               StepRefModel(ref="awscli.setup"),
             ]),
     ])
 )

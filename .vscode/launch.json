@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "ggist_cli_app",
             "justMyCode": true,
-            "args": ["run", "docker.clean", "--nuclear"]
+            "args": ["run", "team1.onboarding"]
         },
         {
             "name": "generate-yaml",
