@@ -171,10 +171,9 @@ echo "${tty_green}${ggist_BANNER}${tty_reset}"
 
 emph "Info:"
 cat << EOS
-ggist is a terminal utility to find and create:
+ggist is a platform to to create and share:
 - aliases
 - scripts
-- terminal playbooks
 
 Docs:
   ${tty_underline}https://${CLOUD_ADDR}/docs${tty_reset}

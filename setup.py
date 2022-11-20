@@ -15,13 +15,13 @@ requirements = [
 
 setup(
     name='ggist1',
-    version='0.1.16',
+    version='0.1.18',
     description="CLI tool boilerplate using click, please replace!",
     long_description='bla bla',
     author="Moshe Ro",
     author_email='mzsrtgzr2@gmail.com',
     url='https://github.com/mzsrtgzr2/ggist',
-    packages=find_packages(),
+    packages=['ggist_cli_app'],
     entry_points={
         'console_scripts': [
             'ggist=ggist_cli_app:cli'
