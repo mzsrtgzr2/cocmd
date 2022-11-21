@@ -19,6 +19,7 @@ class Source:
             self._location = os.path.join(os.path.dirname(resources.__file__), self._location)
 
         if exists(self._location):
+            self._location = os.path.abspath(self._location)  # convert to abs path
             self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
             self._scripts = self.read_scripts(os.path.join(self._location, Consts.SCRIPTS_DIR))
             self._ggist_config = YamlIO.from_file(os.path.join(self._location, Consts.SOURCE_CONFIG_FILE), cls=SourceConfigModel)
