@@ -1,6 +1,7 @@
 
 from os import path
 from typing import Sequence, Optional, List
+import webbrowser
 import inquirer
 from ggist_cli_app.consts import Consts
 from ggist_cli_app.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
@@ -77,13 +78,13 @@ class ScriptRunner:
         # console.print(f'Executing {len(chosen_steps)} steps:')
 
         output = []
-        for step in chosen_steps:
+        for ii, step in enumerate(chosen_steps):
 
 
             res = 'ok'
             if step.runner == StepRunnerType.SHELL:
                 
-                console.print(f'{step.title}', style="blue")
+                console.print(f'step {ii} - {step.title}', style="blue")
             
                 questions = [
                     inquirer.Confirm("sure", message="Execute step?", default=True)]
@@ -100,7 +101,7 @@ class ScriptRunner:
                 else:
                     res = 'skipped'
             elif step.runner == StepRunnerType.PYTHON:
-                console.print(f'{step.title}', style="blue")
+                console.print(f'step {ii} - {step.title}', style="blue")
             
                 questions = [
                     inquirer.Confirm("sure", message="Execute step?", default=True)]
@@ -119,6 +120,20 @@ class ScriptRunner:
             elif step.runner == StepRunnerType.MARKDOWN:
                 markdown = Markdown(step.content)
                 console.print(markdown)
+            elif step.runner == StepRunnerType.LINK:
+                console.print(f'step {ii} - {step.title} -> link to {step.content}', style="blue")
+                questions = [
+                    inquirer.Confirm("sure", message="Open Link?", default=True)]
+
+                answers = inquirer.prompt(questions)
+                
+                
+                if answers['sure']:
+                    webbrowser.open(step.content, new=2)
+                    console.print()
+                else:
+                    res = 'skipped'
+                
             elif step.runner == StepRunnerType.GGIST_SCRIPT:
                 nested_script = settings.sources_manager.scripts[step.content]
                 output.extend(ScriptRunner.run(nested_script, os, [], settings))

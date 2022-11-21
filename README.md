@@ -62,3 +62,7 @@ manage your aliases and scripts
     - complicated installations in one command
     - synchronize in your team
 
+
+## TODO:
+- grafana runner - query
+- jenkins runner - query

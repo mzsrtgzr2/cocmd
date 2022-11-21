@@ -10,6 +10,7 @@ class StepRunnerType(Enum):
     MARKDOWN="markdown"
     PYTHON="python"
     GGIST_SCRIPT="ggist_script"
+    LINK="link"
 
 
 @dataclass(frozen=True)
