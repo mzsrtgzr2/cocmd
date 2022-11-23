@@ -9,9 +9,10 @@ from ggist_cli_app.utils.console import console, error_console
     allow_extra_args=True,
 ))
 @click.argument('name',  required=False)
+@click.option('-y', '--yes', is_flag=True, default=False, help="Don't ask 'are you sure' for every step")
 @click_pass_settings
 @click.pass_context
-def run(ctx, settings, name: str):
+def run(ctx, settings, name: str, yes: bool):
     """
     Run something
     """
@@ -40,7 +41,7 @@ def run(ctx, settings, name: str):
 
         script_args = ctx.args
         # print('args=', script_args)
-        output = ScriptRunner.run(script, settings.os, script_args, settings)
+        output = ScriptRunner.run(script, settings.os, script_args, settings, auto_yes=yes)
 
         console.print("[blue] Script executed:")
         for line in output:

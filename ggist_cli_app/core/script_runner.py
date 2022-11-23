@@ -16,7 +16,7 @@ from collections import OrderedDict
 class ScriptRunner:
     
     @staticmethod
-    def run(script: ScriptModel, os: OS, script_args: Sequence[str], settings: 'Settings')->List[str]:
+    def run(script: ScriptModel, os: OS, script_args: Sequence[str], settings: 'Settings', auto_yes: bool = False)->List[str]:
 
         def out(command, *script_args, runner: StepRunnerType):
             exec_file = path.join(io.get_tmp(), Consts.TMP_EXEC_FILE_NAME)
@@ -84,15 +84,7 @@ class ScriptRunner:
             res = 'ok'
             if step.runner == StepRunnerType.SHELL:
                 
-                console.print(f'step {ii} - {step.title}', style="blue")
-            
-                questions = [
-                    inquirer.Confirm("sure", message="Execute step?", default=True)]
-
-                answers = inquirer.prompt(questions)
-                
-                
-                if answers['sure']:
+                if ScriptRunner.ask_if_ok_to_execute(f'step {ii} - {step.title}', 'Execute?', auto_yes):
                     r = out('set -x\n' + step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
@@ -101,15 +93,7 @@ class ScriptRunner:
                 else:
                     res = 'skipped'
             elif step.runner == StepRunnerType.PYTHON:
-                console.print(f'step {ii} - {step.title}', style="blue")
-            
-                questions = [
-                    inquirer.Confirm("sure", message="Execute step?", default=True)]
-
-                answers = inquirer.prompt(questions)
-                
-                
-                if answers['sure']:
+                if ScriptRunner.ask_if_ok_to_execute(f'step {ii} - {step.title}', 'Execute?', auto_yes):
                     r = out(step.content, *script_args, runner=step.runner)
 
                     if r.returncode:
@@ -120,15 +104,8 @@ class ScriptRunner:
             elif step.runner == StepRunnerType.MARKDOWN:
                 markdown = Markdown(step.content)
                 console.print(markdown)
-            elif step.runner == StepRunnerType.LINK:
-                console.print(f'step {ii} - {step.title} -> link to {step.content}', style="blue")
-                questions = [
-                    inquirer.Confirm("sure", message="Open Link?", default=True)]
-
-                answers = inquirer.prompt(questions)
-                
-                
-                if answers['sure']:
+            elif step.runner == StepRunnerType.LINK:                
+                if ScriptRunner.ask_if_ok_to_execute(f'step {ii} - {step.title} -> link to {step.content}', 'Open Link?', auto_yes):
                     webbrowser.open(step.content, new=2)
                     console.print()
                 else:
@@ -180,3 +157,16 @@ class ScriptRunner:
                 
                 
             yield step
+            
+    @staticmethod
+    def ask_if_ok_to_execute(text: str, question: str, auto_yes: bool)->bool:
+        if auto_yes:
+            return True
+        
+        console.print(text, style="blue")
+        questions = [
+            inquirer.Confirm("sure", message=question, default=True)]
+
+        answers = inquirer.prompt(questions)
+        
+        return answers['sure']
