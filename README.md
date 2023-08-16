@@ -1,8 +1,10 @@
 # Hi 
 
 **cocmd** is a terminal utility to find and create:
-- aliases
-- scripts
+- shared aliases
+- shared scripts
+- onboarding sequences
+- oncall sequences
 
 
 ## Getting Started
