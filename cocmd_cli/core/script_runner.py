@@ -1,6 +1,6 @@
 
 from os import path
-from typing import Sequence, Optional, List
+from typing import Sequence, List
 import webbrowser
 import inquirer
 from cocmd_cli.consts import Consts

@@ -2,9 +2,8 @@ import click
 from ..groups import add
 from cocmd_cli.settings import click_pass_settings
 from cocmd_cli.core.source import Source
-from cocmd_cli.utils.io import file_write_lines
 import inquirer
-from cocmd_cli.utils.console import console, error_console
+from cocmd_cli.utils.console import console
 
 
 @add.command()
@@ -31,7 +30,7 @@ def source(settings, source: str):
         settings.sources_manager.add_source(source)
         console.print(f"[bold green]Source '{source}' added")
         if source.aliases:
-            console.print(f"open a new terminal session and you can use:")
+            console.print("open a new terminal session and you can use:")
             for alias in source.aliases[:10]:
                 console.print(f'-{alias}')
 

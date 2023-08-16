@@ -4,8 +4,7 @@ from cocmd_cli.core.models.creds_config_model import CredsConfigModel
 from cocmd_cli.utils.io import YamlIO, mkdir, touch
 from cocmd_cli.utils.sys import get_os
 from cocmd_cli.core.sources_manager import SourcesManager
-from cocmd_cli.utils.console import console, error_console
-from functools import wraps
+from cocmd_cli.utils.console import error_console
 
 
 class Settings:
@@ -24,12 +23,14 @@ class Settings:
         self.os = get_os()
 
         self.sources_manager = SourcesManager(self)
-        
+
         try:
             self.credentials = self.read_creds()
-        except Exception as e:
-            error_console.print('failed to read credentials')
+        except Exception:
+            error_console.print("failed to read credentials")
             self.credentials = CredsConfigModel()
-        
+
     def read_creds(self):
-        return YamlIO.from_file(os.path.join(self.home, Consts.CREDENTIALS_FILE), cls=CredsConfigModel)
+        return YamlIO.from_file(
+            os.path.join(self.home, Consts.CREDENTIALS_FILE), cls=CredsConfigModel
+        )

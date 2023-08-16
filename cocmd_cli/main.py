@@ -1,13 +1,12 @@
 import typer
 
-from typer import Typer
 from cocmd_cli.settings import Settings
-from typer.models import Context
 
 
 app = typer.Typer()
 
 settings: Settings = None
+
 
 @app.callback()
 def main_callback(
@@ -26,6 +25,6 @@ def shoot():
     """
     Shoot the portal gun
     """
-    typer.echo(f"Shooting portal gun with settings: {settings.home}, {settings.terminal}")
-
-
+    typer.echo(
+        f"Shooting portal gun with settings: {settings.home}, {settings.terminal}"
+    )

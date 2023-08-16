@@ -5,7 +5,6 @@ import yaml
 import stat
 
 import tempfile
-from typing import Dict
 import os
 from pathlib import Path
 from typing import Sequence
