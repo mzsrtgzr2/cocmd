@@ -8,9 +8,9 @@
             "name": "add",
             "type": "python",
             "request": "launch",
-            "module": "cocmd_cli_app",
-            "justMyCode": true,
-            "args": ["run", "k8s.setup"]
+            "module": "cocmd_cli",
+            "justMyCode": false,
+            "args": ["shoot"]
         },
         {
             "name": "generate-yaml",
