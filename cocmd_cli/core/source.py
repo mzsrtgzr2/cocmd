@@ -1,11 +1,11 @@
 import os
 import glob
 from typing import Sequence
-from cocmd_cli_app.consts import Consts
-from cocmd_cli_app.core.models.script_model import ScriptModel
-from cocmd_cli_app.core.models.source_config_model import SourceConfigModel
-from cocmd_cli_app.utils.io import YamlIO, exists, file_read_lines
-from cocmd_cli_app.utils import git
+from cocmd_cli.consts import Consts
+from cocmd_cli.core.models.script_model import ScriptModel
+from cocmd_cli.core.models.source_config_model import SourceConfigModel
+from cocmd_cli.utils.io import YamlIO, exists, file_read_lines
+from cocmd_cli.utils import git
 from functools import partial
 
 class Source:
@@ -15,7 +15,7 @@ class Source:
         self._location = _location.lower()
 
         if _location.startswith('demo/'):
-            from cocmd_cli_app import resources
+            from cocmd_cli import resources
             self._location = os.path.join(os.path.dirname(resources.__file__), self._location)
 
         if exists(self._location):

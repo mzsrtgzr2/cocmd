@@ -9,7 +9,7 @@ from typing import Dict
 import os
 from pathlib import Path
 from typing import Sequence
-from cocmd_cli_app.core.os import OS
+from cocmd_cli.core.os import OS
 
 def exists(path)->bool:
     return os.path.exists(path)

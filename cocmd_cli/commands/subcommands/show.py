@@ -1,9 +1,9 @@
 import click
-from cocmd_cli_app.settings import click_pass_settings
-from cocmd_cli_app.core.sources_manager import SourcesManager
-from cocmd_cli_app.utils.io import file_write_lines
-from cocmd_cli_app.commands.groups import show
-from cocmd_cli_app.utils.console import console, error_console
+from cocmd_cli.settings import click_pass_settings
+from cocmd_cli.core.sources_manager import SourcesManager
+from cocmd_cli.utils.io import file_write_lines
+from cocmd_cli.commands.groups import show
+from cocmd_cli.utils.console import console, error_console
 
 @show.command()
 @click_pass_settings

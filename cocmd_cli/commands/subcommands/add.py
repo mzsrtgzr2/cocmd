@@ -1,10 +1,10 @@
 import click
 from ..groups import add
-from cocmd_cli_app.settings import click_pass_settings
-from cocmd_cli_app.core.source import Source
-from cocmd_cli_app.utils.io import file_write_lines
+from cocmd_cli.settings import click_pass_settings
+from cocmd_cli.core.source import Source
+from cocmd_cli.utils.io import file_write_lines
 import inquirer
-from cocmd_cli_app.utils.console import console, error_console
+from cocmd_cli.utils.console import console, error_console
 
 
 @add.command()

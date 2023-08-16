@@ -3,14 +3,14 @@ from os import path
 from typing import Sequence, Optional, List
 import webbrowser
 import inquirer
-from cocmd_cli_app.consts import Consts
-from cocmd_cli_app.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
+from cocmd_cli.consts import Consts
+from cocmd_cli.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
 from rich.markdown import Markdown
 
-from cocmd_cli_app.core.os import OS
-from cocmd_cli_app.utils import io
+from cocmd_cli.core.os import OS
+from cocmd_cli.utils import io
 import subprocess
-from cocmd_cli_app.utils.console import console, error_console
+from cocmd_cli.utils.console import console, error_console
 from collections import OrderedDict
 
 class ScriptRunner:

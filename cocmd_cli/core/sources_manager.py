@@ -1,8 +1,8 @@
 from typing import Sequence
-from cocmd_cli_app.utils.io import exists, file_read_lines, file_write_lines
-from cocmd_cli_app.utils import git
-from cocmd_cli_app.core.source import Source
-from cocmd_cli_app.core.aliases import Aliases
+from cocmd_cli.utils.io import exists, file_read_lines, file_write_lines
+from cocmd_cli.utils import git
+from cocmd_cli.core.source import Source
+from cocmd_cli.core.aliases import Aliases
 
 class SourcesManager:
 

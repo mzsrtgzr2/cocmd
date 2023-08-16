@@ -1,8 +1,8 @@
 import click
-from cocmd_cli_app.settings import click_pass_settings
-from cocmd_cli_app.core.script_runner import ScriptRunner
+from cocmd_cli.settings import click_pass_settings
+from cocmd_cli.core.script_runner import ScriptRunner
 import inquirer
-from cocmd_cli_app.utils.console import console, error_console
+from cocmd_cli.utils.console import console, error_console
 
 @click.command(context_settings=dict(
     ignore_unknown_options=True,
