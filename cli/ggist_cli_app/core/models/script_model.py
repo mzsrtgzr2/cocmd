@@ -1,6 +1,6 @@
 from dataclasses import dataclass, field
-from ggist_cli_app.core.os import OS
-from ggist_cli_app.utils.io import DictLoader
+from cocmd_cli_app.core.os import OS
+from cocmd_cli_app.utils.io import DictLoader
 from typing import List, Optional, Union
 from enum import Enum
 
@@ -9,7 +9,7 @@ class StepRunnerType(Enum):
     SHELL="shell"
     MARKDOWN="markdown"
     PYTHON="python"
-    GGIST_SCRIPT="ggist_script"
+    COCMD_SCRIPT="cocmd_script"
     LINK="link"
 
 

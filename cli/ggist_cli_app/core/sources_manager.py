@@ -1,8 +1,8 @@
 from typing import Sequence
-from ggist_cli_app.utils.io import exists, file_read_lines, file_write_lines
-from ggist_cli_app.utils import git
-from ggist_cli_app.core.source import Source
-from ggist_cli_app.core.aliases import Aliases
+from cocmd_cli_app.utils.io import exists, file_read_lines, file_write_lines
+from cocmd_cli_app.utils import git
+from cocmd_cli_app.core.source import Source
+from cocmd_cli_app.core.aliases import Aliases
 
 class SourcesManager:
 

@@ -1,12 +1,12 @@
 import click
-from ggist_cli_app.settings import click_pass_settings
+from cocmd_cli_app.settings import click_pass_settings
 
 
 @click.command()
 @click_pass_settings
 def profile_loader(settings):
     # apply it in bashrc with 
-    # cd /workspaces/ggist/ && eval "$(python -m ggist_cli_app apply)"
+    # cd /workspaces/cocmd/ && eval "$(python -m cocmd_cli_app apply)"
 
     # apply aliases
     with open(settings.aliases_file, 'r') as fin:
@@ -14,7 +14,7 @@ def profile_loader(settings):
         print(line)
 
     for name in settings.sources_manager.scripts.keys():
-        print(f'alias {name}="ggist run {name}"')
+        print(f'alias {name}="cocmd run {name}"')
 
 
 @click.command()

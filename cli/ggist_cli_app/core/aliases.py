@@ -3,8 +3,8 @@
 
 import itertools
 from typing import Sequence
-from ggist_cli_app.core.source import Source
-from ggist_cli_app.utils.io import file_write_lines
+from cocmd_cli_app.core.source import Source
+from cocmd_cli_app.utils.io import file_write_lines
 
 
 class Aliases:

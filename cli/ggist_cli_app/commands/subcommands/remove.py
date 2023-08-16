@@ -1,7 +1,7 @@
 import click
-from ggist_cli_app.settings import click_pass_settings
-from ggist_cli_app.commands.groups import remove
-from ggist_cli_app.core.source import Source
+from cocmd_cli_app.settings import click_pass_settings
+from cocmd_cli_app.commands.groups import remove
+from cocmd_cli_app.core.source import Source
 
 
 

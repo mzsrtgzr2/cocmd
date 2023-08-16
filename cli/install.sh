@@ -1,6 +1,6 @@
 #!/usr/bin/env bash
 
-# Copyright 2018- The ggist Authors.
+# Copyright 2018- The cocmd Authors.
 #
 # Licensed under the Apache License, Version 2.0 (the "License");
 # you may not use this file except in compliance with the License.
@@ -17,24 +17,24 @@
 # SPDX-License-Identifier: Apache-2.0
 
 ################################################################
-# ggist Installer
+# cocmd Installer
 # This is inspired by the homebrew installer.
 ################################################################
 set -u
 
-CLOUD_ADDR=${PL_CLOUD_ADDR:-"ggist.io"}
+CLOUD_ADDR=${PL_CLOUD_ADDR:-"cocmd.io"}
 DEFAULT_INSTALL_PATH=/usr/local/bin
 ARTIFACT_NAME=cli_darwin_universal
 USE_VERSION=${PL_CLI_VERSION:-latest}
 USER_INSTALL_PATH="$HOME/bin"
-ARTIFACT_BUCKET="ggist-dev-public"
+ARTIFACT_BUCKET="cocmd-dev-public"
 if [[ $USE_VERSION == *"-"* ]]; then
-  ARTIFACT_BUCKET="ggist-prod-artifacts"
+  ARTIFACT_BUCKET="cocmd-prod-artifacts"
 fi
 ARTIFACT_BASE_PATH="https://storage.googleapis.com/${ARTIFACT_BUCKET}/cli"
 
 
-ggist_BANNER="
+cocmd_BANNER="
 
  ██████╗  ██████╗ ██╗███████╗████████╗
 ██╔════╝ ██╔════╝ ██║██╔════╝╚══██╔══╝
@@ -167,11 +167,11 @@ if exists_but_not_writable "${DEFAULT_INSTALL_PATH}"; then
     DEFAULT_INSTALL_PATH=${USER_INSTALL_PATH}
 fi
 
-echo "${tty_green}${ggist_BANNER}${tty_reset}"
+echo "${tty_green}${cocmd_BANNER}${tty_reset}"
 
 emph "Info:"
 cat << EOS
-ggist is a platform to to create and share:
+cocmd is a platform to to create and share:
 - aliases
 - scripts
 
@@ -181,61 +181,61 @@ EOS
 
 
 printf "\n\n"
-emph "Terms and Conditions ${tty_underline}https://www.ggistlabs.ai/terms${tty_reset}"
+emph "Terms and Conditions ${tty_underline}https://www.cocmdlabs.ai/terms${tty_reset}"
 read -r -p "I have read and accepted the Terms & Conditions [y/n]: " READ_TERMS
 printf "\n\n"
 
 READ_TERMS=${READ_TERMS:0:1}
 if ! [[ "$READ_TERMS" == 'Y' || "$READ_TERMS" == 'y' ]]; then
-    abort "Cannot install GGIST CLI until you accept the Terms & Conditions."
+    abort "Cannot install COCMD CLI until you accept the Terms & Conditions."
 fi
 
-emph "Installing GGIST CLI:"
-pip install ggist1 --upgrade
+emph "Installing COCMD CLI:"
+pip install cocmd1 --upgrade
 echo 'Installation OK'
 
-if grep -q "ggist" ~/.bashrc; then
+if grep -q "cocmd" ~/.bashrc; then
   echo 'bash already updated'
 else
-  echo 'eval "$(ggist profile-loader)"' >> ~/.bashrc
+  echo 'eval "$(cocmd profile-loader)"' >> ~/.bashrc
   echo 'updated bash'
 fi
 
-if grep -q "ggist" ~/.zshrc; then
+if grep -q "cocmd" ~/.zshrc; then
   echo 'zsh already updated'
 else
-  echo 'eval "$(ggist profile-loader)"' >> ~/.zshrc
+  echo 'eval "$(cocmd profile-loader)"' >> ~/.zshrc
   echo 'updated zsh'
 fi
 
 # cleanup
-rm -rf ~/.ggist
+rm -rf ~/.cocmd
 
 # add demo sources
-ggist add source demo/k8s
-ggist add source demo/git
-ggist add source demo/docker
-ggist add source demo/awscli
-ggist add source demo/zsh
-ggist add source demo/team1
-ggist add source demo/osx
+cocmd add source demo/k8s
+cocmd add source demo/git
+cocmd add source demo/docker
+cocmd add source demo/awscli
+cocmd add source demo/zsh
+cocmd add source demo/team1
+cocmd add source demo/osx
 
 echo
 emph "Next steps:"
 cat << EOS
 
 see all your aliases:
-ggist show aliases
+cocmd show aliases
 
 see all your scripts:
-ggist show scripts
+cocmd show scripts
 
 run scripts:
-- ggist run k8s.setup
-- ggist run awscli.setup
-- ggist run docker.setup
-- ggist run git.setup
-- ggist run zsh.setup
-- ggist run team1.onboarding
+- cocmd run k8s.setup
+- cocmd run awscli.setup
+- cocmd run docker.setup
+- cocmd run git.setup
+- cocmd run zsh.setup
+- cocmd run team1.onboarding
 
 EOS

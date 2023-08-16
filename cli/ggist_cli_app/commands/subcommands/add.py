@@ -1,10 +1,10 @@
 import click
 from ..groups import add
-from ggist_cli_app.settings import click_pass_settings
-from ggist_cli_app.core.source import Source
-from ggist_cli_app.utils.io import file_write_lines
+from cocmd_cli_app.settings import click_pass_settings
+from cocmd_cli_app.core.source import Source
+from cocmd_cli_app.utils.io import file_write_lines
 import inquirer
-from ggist_cli_app.utils.console import console, error_console
+from cocmd_cli_app.utils.console import console, error_console
 
 
 @add.command()
@@ -37,6 +37,6 @@ def source(settings, source: str):
 
             if len(source.aliases) > 10:
                 console.print('...\n(partial)')
-            console.print('[blue] to see the full list run `ggist show aliases`')
+            console.print('[blue] to see the full list run `cocmd show aliases`')
     else:
         console.print("[bold red]Skipped. you answered 'NO'")

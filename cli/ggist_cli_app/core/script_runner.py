@@ -3,14 +3,14 @@ from os import path
 from typing import Sequence, Optional, List
 import webbrowser
 import inquirer
-from ggist_cli_app.consts import Consts
-from ggist_cli_app.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
+from cocmd_cli_app.consts import Consts
+from cocmd_cli_app.core.models.script_model import ScriptModel, StepModel, StepRunnerType, StepRefModel, StepsModel
 from rich.markdown import Markdown
 
-from ggist_cli_app.core.os import OS
-from ggist_cli_app.utils import io
+from cocmd_cli_app.core.os import OS
+from cocmd_cli_app.utils import io
 import subprocess
-from ggist_cli_app.utils.console import console, error_console
+from cocmd_cli_app.utils.console import console, error_console
 from collections import OrderedDict
 
 class ScriptRunner:
@@ -111,13 +111,13 @@ class ScriptRunner:
                 else:
                     res = 'skipped'
                 
-            elif step.runner == StepRunnerType.GGIST_SCRIPT:
+            elif step.runner == StepRunnerType.COCMD_SCRIPT:
                 nested_script = settings.sources_manager.scripts[step.content]
                 output.extend(ScriptRunner.run(nested_script, os, [], settings))
             else:
                 raise NotImplementedError()
 
-            if step.runner != StepRunnerType.GGIST_SCRIPT:
+            if step.runner != StepRunnerType.COCMD_SCRIPT:
                 if res == 'skipped':
                     output.append(f'skipped [strike]"{step.title}"')
                 elif res == 'failed':
@@ -147,11 +147,11 @@ class ScriptRunner:
                         step = StepModel(
                             title=ref_script.title,
                             description=ref_script.description,
-                            runner=StepRunnerType.GGIST_SCRIPT,
+                            runner=StepRunnerType.COCMD_SCRIPT,
                             content=step.ref
                         )
                     except KeyError:
-                        # can't find the script in ggist or script globals
+                        # can't find the script in cocmd or script globals
                         raise ValueError(f"unable to find reference {step.ref}")
 
                 

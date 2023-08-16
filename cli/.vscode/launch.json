@@ -8,7 +8,7 @@
             "name": "add",
             "type": "python",
             "request": "launch",
-            "module": "ggist_cli_app",
+            "module": "cocmd_cli_app",
             "justMyCode": true,
             "args": ["run", "k8s.setup"]
         },

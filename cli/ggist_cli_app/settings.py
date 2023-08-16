@@ -1,11 +1,11 @@
 import os
 import click
-from ggist_cli_app.consts import Consts
-from ggist_cli_app.core.models.creds_config_model import CredsConfigModel
-from ggist_cli_app.utils.io import YamlIO, mkdir, touch
-from ggist_cli_app.utils.sys import get_os
-from ggist_cli_app.core.sources_manager import SourcesManager
-from ggist_cli_app.utils.console import console, error_console
+from cocmd_cli_app.consts import Consts
+from cocmd_cli_app.core.models.creds_config_model import CredsConfigModel
+from cocmd_cli_app.utils.io import YamlIO, mkdir, touch
+from cocmd_cli_app.utils.sys import get_os
+from cocmd_cli_app.core.sources_manager import SourcesManager
+from cocmd_cli_app.utils.console import console, error_console
 
 class Settings:
     def __init__(self, home=None, terminal=None):

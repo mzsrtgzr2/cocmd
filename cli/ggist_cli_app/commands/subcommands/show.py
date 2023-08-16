@@ -1,9 +1,9 @@
 import click
-from ggist_cli_app.settings import click_pass_settings
-from ggist_cli_app.core.sources_manager import SourcesManager
-from ggist_cli_app.utils.io import file_write_lines
-from ggist_cli_app.commands.groups import show
-from ggist_cli_app.utils.console import console, error_console
+from cocmd_cli_app.settings import click_pass_settings
+from cocmd_cli_app.core.sources_manager import SourcesManager
+from cocmd_cli_app.utils.io import file_write_lines
+from cocmd_cli_app.commands.groups import show
+from cocmd_cli_app.utils.console import console, error_console
 
 @show.command()
 @click_pass_settings
@@ -41,4 +41,4 @@ def scripts(settings):
 
     
     for script in available_scripts:
-        console.print(f'ggist run {script}')
+        console.print(f'cocmd run {script}')
