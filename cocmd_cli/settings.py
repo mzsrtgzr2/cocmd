@@ -1,10 +1,11 @@
 import os
-from cocmd_cli.consts import Consts
-from cocmd_cli.core.models.creds_config_model import CredsConfigModel
-from cocmd_cli.utils.io import YamlIO, mkdir, touch
-from cocmd_cli.utils.sys import get_os
-from cocmd_cli.core.sources_manager import SourcesManager
-from cocmd_cli.utils.console import error_console
+import click
+from .consts import Consts
+from .core.models.creds_config_model import CredsConfigModel
+from .utils.io import YamlIO, mkdir, touch
+from .utils.sys import get_os
+from .core.sources_manager import SourcesManager
+from .utils.console import error_console
 
 
 class Settings:
@@ -34,3 +35,7 @@ class Settings:
         return YamlIO.from_file(
             os.path.join(self.home, Consts.CREDENTIALS_FILE), cls=CredsConfigModel
         )
+
+
+# from https://click.palletsprojects.com/en/8.1.x/complex/
+click_pass_settings = click.make_pass_decorator(Settings, ensure=True)

@@ -1,3 +1,4 @@
-from .main import app
+if __name__ == "__main__":
+    from . import cli
 
-app(prog_name="cocmd")
+    cli()
