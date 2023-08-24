@@ -63,6 +63,10 @@ const config = {
     ({
       // Replace with your project's social card
       image: 'img/docusaurus-social-card.jpg',
+      colorMode: {
+        disableSwitch: true,
+        
+      },
       navbar: {
         title: 'CoCMD',
         logo: {
@@ -78,9 +82,9 @@ const config = {
           },
           {to: '/blog', label: 'Blog', position: 'left'},
           {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/mzsrtgzr2/cocmd',
             label: 'GitHub',
-            position: 'right',
+            position: 'left',
           },
         ],
       },
