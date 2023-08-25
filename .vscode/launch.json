@@ -31,7 +31,7 @@
                 "--baseCommand=cli",
                 "--docsPath=./website/docs/cli"
             ],
-            "cwd": "${fileDirname}/..",
+            "cwd": "${workspaceFolder}",
             "justMyCode": false,
             "console": "integratedTerminal"
         }
