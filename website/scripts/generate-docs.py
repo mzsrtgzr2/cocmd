@@ -2,7 +2,6 @@ from cocmd_cli import resources
 import os
 from cocmd_cli.core.source import Source
 from cocmd_cli.settings import Settings
-
 from cocmd_cli.utils.repository import find_cocmd_files
 
 MD_TECH = """---
