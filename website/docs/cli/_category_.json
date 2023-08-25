@@ -1,8 +1,8 @@
 {
-  "label": "Internals",
-  "position": 5,
+  "label": "Cli",
+  "position": 10,
   "link": {
     "type": "generated-index",
-    "description": "Internals of the system"
+    "description": "cli"
   }
 }

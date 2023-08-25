@@ -7,7 +7,7 @@ readme = "README.md"
 packages = [{include = "cocmd_cli"}]
 
 [tool.poetry.scripts]
-cocmd = "cocmd_cli.main:app"
+cocmd = "cocmd_cli:app"
 
 [tool.poetry.dependencies]
 python = "^3.8"

@@ -19,6 +19,21 @@
             "module": "cocmd_cli",
             "justMyCode": false,
             "args": ["profile-loader"]
+        },
+        {
+            "name": "mdclick",
+            "type": "python",
+            "request": "launch",
+            "program": "/Users/morot/workspace/md-click/md_click/main.py",
+            "args": [
+                "dumps",
+                "--baseModule=cocmd_cli",
+                "--baseCommand=cli",
+                "--docsPath=./website/docs/cli"
+            ],
+            "cwd": "${fileDirname}/..",
+            "justMyCode": false,
+            "console": "integratedTerminal"
         }
     ]
 }
