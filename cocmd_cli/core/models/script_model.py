@@ -13,19 +13,15 @@ class StepRunnerType(Enum):
     LINK = "link"
 
 
-@dataclass(frozen=True)
+@dataclass
 class StepModel(DictLoader):
-    title: str
     runner: StepRunnerType
     content: str
     description: str
 
 
-@dataclass(frozen=True)
+@dataclass
 class ScriptModel(DictLoader):
     steps: List[StepModel]
     env: Optional[OS] = field(default=OS.ANY)
     description: Optional[str] = field(default=None)
-
-    def supports_os(self, os: OS) -> bool:
-        return os in (self.env, OS.ANY)

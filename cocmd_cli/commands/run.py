@@ -26,22 +26,22 @@ def run(ctx, settings, name: str, yes: bool):
     Run something
     """
 
-    available_scripts = settings.sources_manager.automations
+    avilable_automations = settings.sources_manager.automations
 
     if not name:
         questions = [
             inquirer.List(
                 "script",
                 message="What script to run?",
-                choices=tuple(available_scripts.keys()),
+                choices=tuple(avilable_automations.keys()),
             ),
         ]
 
         answers = inquirer.prompt(questions)
         name = answers["script"]
 
-    if name in available_scripts:
-        script = available_scripts[name]
+    if name in avilable_automations:
+        script = avilable_automations[name]
 
         if not script.supports_os(settings.os):
             error_console.print("This script not supporting your os")

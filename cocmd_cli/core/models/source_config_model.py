@@ -1,4 +1,5 @@
 from dataclasses import dataclass, field
+from cocmd_cli.core.os import OS
 from cocmd_cli.utils.io import DictLoader, YamlIO, normalize_path
 from typing import List, Optional
 from .script_model import ScriptModel
@@ -17,8 +18,11 @@ class Automation:
                 cls=ScriptModel,
             )
 
+    def supports_os(self, os: OS) -> bool:
+        return os in (self.content.env, OS.ANY)
 
-@dataclass(frozen=True)
+
+@dataclass
 class SourceConfigModel(DictLoader):
     name: str
     aliases: Optional[str] = field(default_factory=str)

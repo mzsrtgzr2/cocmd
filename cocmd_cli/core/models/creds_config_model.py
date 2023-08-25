@@ -3,7 +3,7 @@ from cocmd_cli.utils.io import DictLoader
 from typing import Optional
 
 
-@dataclass(frozen=True)
+@dataclass
 class CredsConfigModel(DictLoader):
     token: Optional[str] = field(default=None)
 

@@ -59,7 +59,7 @@ def chmod_x(file):
     os.chmod(file, st.st_mode | stat.S_IEXEC)
 
 
-@dataclass(frozen=True)
+@dataclass
 class DictLoader:
     @classmethod
     def from_dict(cls, data):

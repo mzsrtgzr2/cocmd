@@ -19,5 +19,3 @@ paths:
 automations: 
     - name: setup
       file: ./cocmd.setup.yaml
-    - name: clean
-      file: ./cocmd.clean.yaml
