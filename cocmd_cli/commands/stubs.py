@@ -9,12 +9,14 @@ def profile_loader(settings):
     # cd /workspaces/cocmd/ && eval "$(python -m cocmd_cli profile-loader)"
 
     # apply aliases
-    with open(settings.aliases_file, "r") as fin:
-        line = fin.read()
-        print(line)
+    sources = settings.sources_manager.sources
 
-    for name in settings.sources_manager.scripts.keys():
-        print(f'alias {name}="cocmd run {name}"')
+    for source in sources:
+        # console.print(f"loading {source.name}", style="white on blue")
+        print(source.aliases)
+
+    # for name in settings.sources_manager.scripts.keys():
+    #     print(f'alias {name}="cocmd run {name}"')
 
 
 @click.command()

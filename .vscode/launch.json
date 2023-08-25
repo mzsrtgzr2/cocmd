@@ -13,11 +13,12 @@
             "args": ["add", "source", "demo"]
         },
         {
-            "name": "generate-yaml",
+            "name": "profile-loader",
             "type": "python",
             "request": "launch",
-            "program": "generate-yaml.py",
-            "console": "integratedTerminal"
+            "module": "cocmd_cli",
+            "justMyCode": false,
+            "args": ["profile-loader"]
         }
     ]
 }
