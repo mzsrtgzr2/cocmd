@@ -143,6 +143,13 @@ Upon finishing a command that should change any of the sources content
 like
 - adding a new source
 - cocmd setup
-- running `cocmd sources refresh`
+- running `cocmd refresh`
 cocmd scans the sources again and updates your rc file for the shell you configured. 
-for example it will update
+What is added to the shell rc file?
+```
+eval "$(cocmd profile-loader)"
+```
+
+this addes aliases, automations and paths to the environment.
+
+

@@ -8,41 +8,43 @@ from cocmd_cli.utils.io import YamlIO, exists, file_read_lines
 from cocmd_cli.utils import git
 from functools import partial
 
-class Source:
 
-    def __init__(self, _location: str, settings: 'Settings'):
+class Source:
+    def __init__(self, _location: str, settings: "Settings"):
         self.settings = settings
         self._location = _location.lower()
 
-        if _location.startswith('demo/'):
+        if _location.startswith("demo/"):
             from cocmd_cli import resources
-            self._location = os.path.join(os.path.dirname(resources.__file__), self._location)
+
+            self._location = os.path.join(
+                os.path.dirname(resources.__file__), self._location
+            )
 
         if exists(self._location):
             self._location = os.path.abspath(self._location)  # convert to abs path
-            self._aliases = self.read_aliases(os.path.join(self._location, Consts.ALIASES_FILE))
-            self._scripts = self.read_scripts(os.path.join(self._location, Consts.SCRIPTS_DIR))
-            self._cocmd_config = YamlIO.from_file(os.path.join(self._location, Consts.SOURCE_CONFIG_FILE), cls=SourceConfigModel)
-        elif self._location.endswith('.git'):
+            self._cocmd_config = YamlIO.from_file(
+                os.path.join(self._location, Consts.SOURCE_CONFIG_FILE),
+                cls=SourceConfigModel,
+            )
+        elif self._location.endswith(".git"):
             local_repo = os.path.join(settings.home, git.get_repo_name(self._location))
             if not exists(local_repo):
-                git.clone(
-                    self._location, 
-                    local_repo
-                )
-            self._aliases = self.read_aliases(os.path.join(local_repo, Consts.ALIASES_FILE))
-            self._scripts = self.read_scripts(os.path.join(local_repo, Consts.SCRIPTS_DIR))
-            self._cocmd_config = YamlIO.from_file(os.path.join(local_repo, Consts.SOURCE_CONFIG_FILE), cls=SourceConfigModel)
-        else:
+                git.clone(self._location, local_repo)
 
-            raise RuntimeError(f'path {self._location} not exists. edit `~/.cocmd/sources.txt` and remove it manually')
-        
-        
+            self._cocmd_config = YamlIO.from_file(
+                os.path.join(local_repo, Consts.SOURCE_CONFIG_FILE),
+                cls=SourceConfigModel,
+            )
+        else:
+            raise RuntimeError(
+                f"path {self._location} not exists. edit `~/.cocmd/sources.txt` and remove it manually"
+            )
 
     @property
     def is_exists_locally(self):
         return False
-    
+
     @property
     def aliases(self):
         return self._aliases
@@ -59,8 +61,6 @@ class Source:
     def location(self):
         return self._location
 
-            
-    
     def __repr__(self):
         return str(self._location)
 
@@ -74,16 +74,14 @@ class Source:
         return hash((type(self), self._location))
 
     @staticmethod
-    def read_aliases(file)->Sequence[str]:
+    def read_aliases(file) -> Sequence[str]:
         def _clean(s):
             s = s.strip()
             return s
 
         return tuple(filter(bool, map(_clean, file_read_lines(file))))
 
-    
     @staticmethod
-    def read_scripts(scripts_path)->Sequence[str]:
-        
+    def read_scripts(scripts_path) -> Sequence[str]:
         files_it = glob.glob(os.path.join(scripts_path, "*.yaml"))
         return tuple(map(partial(YamlIO.from_file, cls=ScriptModel), files_it))

@@ -1,11 +1,10 @@
 from typing import Sequence
 from cocmd_cli.utils.io import file_read_lines, file_write_lines
 from cocmd_cli.core.source import Source
-from cocmd_cli.core.aliases import Aliases
+
 
 class SourcesManager:
-
-    def __init__(self, settings: 'Settings'):
+    def __init__(self, settings: "Settings"):
         self.settings = settings
         self.sources_file = settings.sources_file
         self.sources = self.load_sources(self.sources_file, settings)
@@ -18,11 +17,8 @@ class SourcesManager:
         self.sources.add(source)
         self.save()
 
-
     def save(self):
         self.save_sources(self.sources_file, self.sources)
-        # update aliases file
-        Aliases.recreate_aliases(self.settings.aliases_file, self.sources)
 
     @staticmethod
     def load_sources(sources_file, settings):
@@ -37,5 +33,5 @@ class SourcesManager:
         scripts = {}
         for source in self.sources:
             for script in source.scripts:
-                scripts[f'{source.name}.{script.name}'] = script
+                scripts[f"{source.name}.{script.name}"] = script
         return scripts
