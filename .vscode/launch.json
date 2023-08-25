@@ -42,6 +42,13 @@
             "cwd": "${workspaceFolder}",
             "justMyCode": false,
             "console": "integratedTerminal"
-        }
+        },
+        {
+            "name": "generate-docs",
+            "type": "python",
+            "request": "launch",
+            "program": "website/scripts/generate-docs.py",
+            "justMyCode": false
+        },
     ]
 }
