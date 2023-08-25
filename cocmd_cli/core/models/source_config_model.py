@@ -19,7 +19,7 @@ class Automation:
             )
 
     def supports_os(self, os: OS) -> bool:
-        return os in (self.content.env, OS.ANY)
+        return self.content.env in (os, OS.ANY)
 
 
 @dataclass

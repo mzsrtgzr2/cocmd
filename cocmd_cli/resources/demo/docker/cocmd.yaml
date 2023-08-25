@@ -21,3 +21,10 @@ automations:
       file: ./cocmd.setup.osx.yaml
     - name: setup
       file: ./cocmd.setup.debian.yaml
+    - name: cleanup
+      file: ./cocmd.clean.yaml
+    - name: monitor
+      file: ./cocmd.monitor.yaml
+    - name: build-run
+      file: ./cocmd.buildrun.yaml
+    

@@ -18,8 +18,9 @@ def profile_loader(settings):
     # apply path
     for p in source.paths:
         print(f'export PATH="{p}:$PATH"')
-    # for name in settings.sources_manager.scripts.keys():
-    #     print(f'alias {name}="cocmd run {name}"')
+
+    for name in settings.sources_manager.automations.keys():
+        print(f'alias {name}="cocmd run {name}"')
 
 
 @click.command()
