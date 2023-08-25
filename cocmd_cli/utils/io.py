@@ -11,6 +11,14 @@ from typing import Sequence
 from cocmd_cli.core.os import OS
 
 
+def normalize_path(relative_path: str, base_path: str = None) -> str:
+    if base_path:
+        # Join the base_path with the relative_path and then resolve to an absolute path
+        return os.path.abspath(os.path.join(base_path, relative_path))
+    # Resolve the relative_path to an absolute path using the current working directory
+    return os.path.abspath(relative_path)
+
+
 def exists(path) -> bool:
     return os.path.exists(path)
 
