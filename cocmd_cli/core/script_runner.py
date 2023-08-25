@@ -35,46 +35,26 @@ class ScriptRunner:
                 p = subprocess.run(exec_file + " " + " ".join(script_args), shell=True)
             return p
 
-        console.print(script.title, style="frame white on blue")
-
-        variations_for_os = script.get_variations_for_os(os)
-
-        if len(variations_for_os) > 1:
-            questions = [
-                inquirer.List(
-                    "variation",
-                    message="What variations to run?",
-                    choices=tuple(variation.label for variation in variations_for_os),
-                ),
-            ]
-
-            answers = inquirer.prompt(questions)
-            variation = answers["variation"]
-        else:
-            variation = variations_for_os[0]
+        console.print(script.name, style="frame white on blue")
 
         steps_choices = OrderedDict()
-        for ii, step in enumerate(
-            ScriptRunner.iterate_steps(script, variation, settings)
-        ):
+        for ii, step in enumerate(script.content.steps):
             steps_choices[f"{ii} - {step.title}"] = step
 
-        # questions = [
-        #     inquirer.Checkbox(
-        #         "steps",
-        #         message="Select what to execute: (all by default)",
-        #         choices=steps_choices.keys(),
-        #         default=steps_choices.keys(),
-        #     ),
-        # ]
+        questions = [
+            inquirer.Checkbox(
+                "steps",
+                message="Select what to execute: (all by default)",
+                choices=list(steps_choices.keys()),
+                default=list(steps_choices.keys()),
+            ),
+        ]
 
-        # answers = inquirer.prompt(questions)
+        answers = inquirer.prompt(questions)
 
-        # chosen_steps = tuple(
-        #     step
-        #     for label, step in steps_choices.items()
-        #     if label in answers['steps']
-        # )
+        chosen_steps = tuple(
+            step for label, step in steps_choices.items() if label in answers["steps"]
+        )
         chosen_steps = tuple(steps_choices.values())
 
         # console.print(f'Executing {len(chosen_steps)} steps:')

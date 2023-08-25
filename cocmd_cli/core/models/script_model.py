@@ -17,7 +17,7 @@ class StepRunnerType(Enum):
 class StepModel(DictLoader):
     runner: StepRunnerType
     content: str
-    description: str
+    title: str
 
 
 @dataclass

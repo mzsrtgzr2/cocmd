@@ -43,10 +43,6 @@ def run(ctx, settings, name: str, yes: bool):
     if name in avilable_automations:
         script = avilable_automations[name]
 
-        if not script.supports_os(settings.os):
-            error_console.print("This script not supporting your os")
-            return
-
         script_args = ctx.args
         # print('args=', script_args)
         output = ScriptRunner.run(

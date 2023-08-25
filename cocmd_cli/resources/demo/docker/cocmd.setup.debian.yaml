@@ -1,5 +1,4 @@
 description: setup docker for desktop
-
 env: debian
 steps:
 - content: |

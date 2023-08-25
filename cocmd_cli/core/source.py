@@ -52,7 +52,8 @@ class Source:
     def automations(self):
         for automation in self._cocmd_config.automations:
             automation.load_content(self._location)
-            yield automation
+            if automation.supports_os(self.settings.os):
+                yield automation
 
     @property
     def location(self):

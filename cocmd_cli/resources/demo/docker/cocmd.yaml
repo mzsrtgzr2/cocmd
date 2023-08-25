@@ -18,4 +18,6 @@ paths:
     - ./bin/
 automations: 
     - name: setup
-      file: ./cocmd.setup.yaml
+      file: ./cocmd.setup.osx.yaml
+    - name: setup
+      file: ./cocmd.setup.debian.yaml
