@@ -49,8 +49,8 @@ class Source:
         )
 
     @property
-    def scripts(self):
-        return self._cocmd_config.scripts
+    def automations(self):
+        return self._cocmd_config.automations
 
     @property
     def location(self):

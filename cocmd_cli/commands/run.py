@@ -26,7 +26,7 @@ def run(ctx, settings, name: str, yes: bool):
     Run something
     """
 
-    available_scripts = settings.sources_manager.scripts
+    available_scripts = settings.sources_manager.automations
 
     if not name:
         questions = [

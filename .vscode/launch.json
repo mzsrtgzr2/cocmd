@@ -5,12 +5,20 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "add",
+            "name": "add source demo",
             "type": "python",
             "request": "launch",
             "module": "cocmd_cli",
             "justMyCode": false,
             "args": ["add", "source", "demo"]
+        },
+        {
+            "name": "run",
+            "type": "python",
+            "request": "launch",
+            "module": "cocmd_cli",
+            "justMyCode": false,
+            "args": ["run"]
         },
         {
             "name": "profile-loader",

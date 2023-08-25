@@ -1,5 +1,4 @@
-from typing import Sequence
-from cocmd_cli.utils.io import file_read_lines, file_write_lines
+from cocmd_cli.utils.io import file_read_lines
 from cocmd_cli.core.source import Source
 
 
@@ -24,14 +23,10 @@ class SourcesManager:
     def load_sources(sources_file, settings):
         return set(map(lambda s: Source(s, settings), file_read_lines(sources_file)))
 
-    @staticmethod
-    def save_sources(sources_file, sources: Sequence[Source]):
-        file_write_lines(sources_file, tuple(map(str, sources)))
-
     @property
-    def scripts(self):
-        scripts = {}
+    def automations(self):
+        automations = {}
         for source in self.sources:
-            for script in source.scripts:
-                scripts[f"{source.name}.{script.name}"] = script
-        return scripts
+            for automation in source.automations:
+                automations[f"{source.name}.{automation.name}"] = automation
+        return automations
