@@ -4,8 +4,7 @@ from typing import Sequence
 from cocmd_cli.consts import Consts
 from cocmd_cli.core.models.script_model import ScriptModel
 from cocmd_cli.core.models.source_config_model import SourceConfigModel
-from cocmd_cli.utils.io import YamlIO, exists, file_read_lines
-from cocmd_cli.utils import git
+from cocmd_cli.utils.io import YamlIO, exists
 from functools import partial
 
 
@@ -14,28 +13,22 @@ class Source:
         self.settings = settings
         self._location = _location.lower()
 
-        if _location.startswith("demo/"):
-            from cocmd_cli import resources
-
-            self._location = os.path.join(
-                os.path.dirname(resources.__file__), self._location
-            )
-
         if exists(self._location):
             self._location = os.path.abspath(self._location)  # convert to abs path
             self._cocmd_config = YamlIO.from_file(
                 os.path.join(self._location, Consts.SOURCE_CONFIG_FILE),
                 cls=SourceConfigModel,
             )
-        elif self._location.endswith(".git"):
-            local_repo = os.path.join(settings.home, git.get_repo_name(self._location))
-            if not exists(local_repo):
-                git.clone(self._location, local_repo)
 
-            self._cocmd_config = YamlIO.from_file(
-                os.path.join(local_repo, Consts.SOURCE_CONFIG_FILE),
-                cls=SourceConfigModel,
-            )
+        # elif self._location.endswith(".git"):
+        #     local_repo = os.path.join(settings.home, git.get_repo_name(self._location))
+        #     if not exists(local_repo):
+        #         git.clone(self._location, local_repo)
+
+        #     self._cocmd_config = YamlIO.from_file(
+        #         os.path.join(local_repo, Consts.SOURCE_CONFIG_FILE),
+        #         cls=SourceConfigModel,
+        #     )
         else:
             raise RuntimeError(
                 f"path {self._location} not exists. edit `~/.cocmd/sources.txt` and remove it manually"
@@ -47,15 +40,19 @@ class Source:
 
     @property
     def aliases(self):
-        return self._aliases
+        return self._cocmd_config.aliases
 
     @property
     def name(self):
         return self._cocmd_config.name
 
     @property
+    def paths(self):
+        return self._cocmd_config.paths
+
+    @property
     def scripts(self):
-        return self._scripts
+        return self._cocmd_config.scripts
 
     @property
     def location(self):
@@ -72,14 +69,6 @@ class Source:
 
     def __hash__(self):
         return hash((type(self), self._location))
-
-    @staticmethod
-    def read_aliases(file) -> Sequence[str]:
-        def _clean(s):
-            s = s.strip()
-            return s
-
-        return tuple(filter(bool, map(_clean, file_read_lines(file))))
 
     @staticmethod
     def read_scripts(scripts_path) -> Sequence[str]:

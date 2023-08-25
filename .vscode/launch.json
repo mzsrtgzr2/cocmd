@@ -10,7 +10,7 @@
             "request": "launch",
             "module": "cocmd_cli",
             "justMyCode": false,
-            "args": ["profile_loader"]
+            "args": ["add", "source", "demo"]
         },
         {
             "name": "generate-yaml",

@@ -12,13 +12,10 @@ class Settings:
     def __init__(self, home=None, terminal=None):
         self.home = os.path.abspath(home or Consts.HOME)
         self.terminal = terminal or Consts.DEFAULT_TERMINAL
-        self.aliases_file = os.path.join(self.home, Consts.ALIASES_FILE)
-        self.scripts_dir = os.path.join(self.home, Consts.SCRIPTS_DIR)
         self.config_file = os.path.join(self.home, Consts.CONFIG_FILE)
         self.sources_file = os.path.join(self.home, Consts.SOURCES_FILE)
+        self.scan_depth = 2
         mkdir(self.home)
-        touch(self.aliases_file)
-        mkdir(self.scripts_dir)
         touch(self.sources_file)
 
         self.os = get_os()
