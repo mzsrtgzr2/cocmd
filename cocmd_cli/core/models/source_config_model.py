@@ -1,12 +1,12 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from cocmd_cli.utils.io import DictLoader, YamlIO, normalize_path
 from typing import List, Optional
 from .script_model import ScriptModel
 
 
-@dataclass(frozen=True)
+@dataclass
 class Automation:
-    subcommand: str
+    name: str
     file: Optional[str]
     content: Optional[ScriptModel]
 
@@ -21,6 +21,6 @@ class Automation:
 @dataclass(frozen=True)
 class SourceConfigModel(DictLoader):
     name: str
-    aliases: str
-    paths: List[str]
-    automations: List[Automation]
+    aliases: Optional[str] = field(default_factory=str)
+    paths: Optional[List[str]] = field(default_factory=list)
+    automations: Optional[List[Automation]] = field(default_factory=list)

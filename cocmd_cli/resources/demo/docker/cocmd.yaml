@@ -17,5 +17,7 @@ paths:
     - ./scripts/
     - ./bin/
 automations: 
-    - subcommand: setup
+    - name: setup
       file: ./cocmd.setup.yaml
+    - name: clean
+      file: ./cocmd.clean.yaml

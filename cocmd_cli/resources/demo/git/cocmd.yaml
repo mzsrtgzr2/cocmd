@@ -14,6 +14,3 @@ aliases: |
 paths:
     - ./scripts/
     - ./bin/
-automations: 
-    - subcommand: setup
-      file: ./cocmd.setup.yaml
