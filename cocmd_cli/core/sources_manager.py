@@ -1,4 +1,5 @@
-from cocmd_cli.utils.io import file_read_lines
+from typing import Sequence
+from cocmd_cli.utils.io import file_read_lines, file_write_lines
 from cocmd_cli.core.source import Source
 
 
@@ -18,6 +19,10 @@ class SourcesManager:
 
     def save(self):
         self.save_sources(self.sources_file, self.sources)
+
+    @staticmethod
+    def save_sources(sources_file, sources: Sequence[Source]):
+        file_write_lines(sources_file, tuple(map(str, sources)))
 
     @staticmethod
     def load_sources(sources_file, settings):
