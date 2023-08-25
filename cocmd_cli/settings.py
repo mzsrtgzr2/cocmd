@@ -5,7 +5,6 @@ from .core.models.creds_config_model import CredsConfigModel
 from .utils.io import YamlIO, mkdir, touch
 from .utils.sys import get_os
 from .core.sources_manager import SourcesManager
-from .utils.console import error_console
 
 
 class Settings:
@@ -25,7 +24,7 @@ class Settings:
         try:
             self.credentials = self.read_creds()
         except Exception:
-            error_console.print("failed to read credentials")
+            # error_console.print("failed to read credentials")
             self.credentials = CredsConfigModel()
 
     def read_creds(self):

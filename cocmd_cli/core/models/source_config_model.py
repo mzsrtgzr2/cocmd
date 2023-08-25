@@ -5,7 +5,7 @@ from typing import List
 
 @dataclass(frozen=True)
 class Automation:
-    command: str
+    subcommand: str
     file: str
 
 
