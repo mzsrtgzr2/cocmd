@@ -1,11 +1,7 @@
 import os
-import glob
-from typing import Sequence
 from cocmd_cli.consts import Consts
-from cocmd_cli.core.models.script_model import ScriptModel
 from cocmd_cli.core.models.source_config_model import SourceConfigModel
 from cocmd_cli.utils.io import YamlIO, exists, normalize_path
-from functools import partial
 
 
 class Source:
@@ -71,8 +67,3 @@ class Source:
 
     def __hash__(self):
         return hash((type(self), self._location))
-
-    @staticmethod
-    def read_scripts(scripts_path) -> Sequence[str]:
-        files_it = glob.glob(os.path.join(scripts_path, "*.yaml"))
-        return tuple(map(partial(YamlIO.from_file, cls=ScriptModel), files_it))

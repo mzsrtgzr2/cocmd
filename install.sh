@@ -35,13 +35,8 @@ ARTIFACT_BASE_PATH="https://storage.googleapis.com/${ARTIFACT_BUCKET}/cli"
 
 
 cocmd_BANNER="
-
- ██████╗  ██████╗ ██╗███████╗████████╗
-██╔════╝ ██╔════╝ ██║██╔════╝╚══██╔══╝
-██║  ███╗██║  ███╗██║███████╗   ██║   
-██║   ██║██║   ██║██║╚════██║   ██║   
-╚██████╔╝╚██████╔╝██║███████║   ██║   
- ╚═════╝  ╚═════╝ ╚═╝╚══════╝   ╚═╝                        
+COCMD INSTALLER
+=================                      
 "
 
 # Check if the OS is Linux.
@@ -212,13 +207,7 @@ fi
 rm -rf ~/.cocmd
 
 # add demo sources
-cocmd add source demo/k8s
-cocmd add source demo/git
-cocmd add source demo/docker
-cocmd add source demo/awscli
-cocmd add source demo/zsh
-cocmd add source demo/team1
-cocmd add source demo/osx
+cocmd add source demo
 
 echo
 emph "Next steps:"
