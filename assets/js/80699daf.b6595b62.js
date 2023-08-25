@@ -1,0 +1,1 @@
+"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[851],{4658:e=>{e.exports=JSON.parse('{"label":"hola","permalink":"/cocmd/blog/tags/hola","allTagsPath":"/cocmd/blog/tags","count":1}')}}]);
