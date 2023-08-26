@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "cocmd"
-version = "0.1.0"
+version = "0.1.1"
 description = ""
 authors = ["Moshe Roth <mzsrtgzr2@gmail.com>"]
 readme = "README.md"

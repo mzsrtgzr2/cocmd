@@ -7,6 +7,8 @@ import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import TechnologiesSection from '@site/src/components/Techs';
 import styles from './index.module.css';
 import HeroFeatures from '@site/src/components/HeroFeatures';
+import Terminal from '@site/src/components/Terminal';
+
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
   return (
@@ -15,6 +17,7 @@ function HomepageHeader() {
         <h1 className="hero__title">{siteConfig.title}</h1>
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
+          <Terminal text="pip install cocmd"/>
           <Link
             className="button button--primary button--lg"
             to="/docs/intro">

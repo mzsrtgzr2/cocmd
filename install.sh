@@ -166,9 +166,10 @@ echo "${tty_green}${cocmd_BANNER}${tty_reset}"
 
 emph "Info:"
 cat << EOS
-cocmd is a platform to to create and share:
-- aliases
+cocmd is a cli tool to to create and share:
+- automations
 - scripts
+- aliases
 
 Docs:
   ${tty_underline}https://${CLOUD_ADDR}/docs${tty_reset}
@@ -186,7 +187,7 @@ if ! [[ "$READ_TERMS" == 'Y' || "$READ_TERMS" == 'y' ]]; then
 fi
 
 emph "Installing COCMD CLI:"
-pip install cocmd1 --upgrade
+pip install cocmd --upgrade
 echo 'Installation OK'
 
 if grep -q "cocmd" ~/.bashrc; then
@@ -213,11 +214,8 @@ echo
 emph "Next steps:"
 cat << EOS
 
-see all your aliases:
-cocmd show aliases
-
-see all your scripts:
-cocmd show scripts
+see all your sources:
+cocmd show sources
 
 run scripts:
 - cocmd run k8s.setup
