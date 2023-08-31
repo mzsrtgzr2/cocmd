@@ -1,1 +1,0 @@
-"use strict";(self.webpackChunkwebsite=self.webpackChunkwebsite||[]).push([[1945],{2067:e=>{e.exports=JSON.parse('{"title":"Technologies","slug":"/category/technologies","permalink":"/cocmd/docs/category/technologies","navigation":{"previous":{"title":"Getting Started","permalink":"/cocmd/docs/intro"},"next":{"title":"Git","permalink":"/cocmd/docs/technologies/base"}}}')}}]);
