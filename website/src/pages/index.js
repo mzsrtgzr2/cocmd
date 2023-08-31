@@ -58,7 +58,9 @@ function HomepageHeader() {
         <div className={null}>
           <UseCases/>
         </div>
-
+        <h2>
+          Install with one line:
+        </h2>
         <div className={styles.terminal}>
           <Terminal text={"bash -c \"$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/cocmd/main/install.sh)\""}/>
         </div>
@@ -81,19 +83,19 @@ export default function Home() {
       <HomepageHeader />
       {/* <HeroFeatures/> */}
 
-      <div className={styles.buttons}>
+      {/* <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg"
             to="/docs/intro">
             Read the Docs
           </Link>
-      </div>
+      </div> */}
 
       <main>
 
         <TechnologiesSection />
       </main>
-      <a href="https://www.flaticon.com/free-icons/leadership" title="leadership icons">Leadership icons created by HAJICON - Flaticon</a>
+      {/* <a href="https://www.flaticon.com/free-icons/leadership" title="leadership icons">Leadership icons created by HAJICON - Flaticon</a> */}
     </Layout>
   );
 }

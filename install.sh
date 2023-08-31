@@ -20,7 +20,7 @@
 # cocmd Installer
 # This is inspired by the homebrew installer.
 ################################################################
-set -u
+set -ue
 
 CLOUD_ADDR=${PL_CLOUD_ADDR:-"cocmd.io"}
 DEFAULT_INSTALL_PATH=/usr/local/bin
