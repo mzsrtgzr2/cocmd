@@ -63,9 +63,9 @@ function HomepageHeader() {
           <Terminal text={"bash -c \"$(curl -fsSL https://raw.githubusercontent.com/mzsrtgzr2/cocmd/main/install.sh)\""}/>
         </div>
 
-        <div className={styles.terminal2}>
+        {/* <div className={styles.terminal2}>
           <Terminal text={"pip install cocmd"}/>
-        </div>
+        </div> */}
         
       </div>
     </header>
@@ -81,13 +81,13 @@ export default function Home() {
       <HomepageHeader />
       {/* <HeroFeatures/> */}
 
-      {/* <div className={styles.buttons}>
+      <div className={styles.buttons}>
           <Link
             className="button button--primary button--lg"
             to="/docs/intro">
-            See the docs
+            Read the Docs
           </Link>
-      </div> */}
+      </div>
 
       <main>
 
