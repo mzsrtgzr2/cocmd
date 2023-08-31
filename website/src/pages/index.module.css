@@ -21,3 +21,95 @@
   align-items: center;
   justify-content: center;
 }
+
+
+.terminal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 150px;
+
+}
+
+.terminal2 {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-top: 50px;
+
+}
+
+.titleWrapper{
+  margin-bottom: 20px; /* Space below the title */
+  text-align: center; /* Centered text */
+}
+.title {
+  /* margin: 100px; */
+  font-size: 60px; /* Large font size */
+  font-weight: bold; /* Bold text */
+  color: #813eff; /* White text */
+  margin:0;
+  
+}
+
+
+.title2 {
+  /* margin: 100px; */
+  font-size: 60px; /* Large font size */
+  color: #813eff; /* White text */
+  margin:0;
+}
+
+.Title {
+  font-size: 96px;
+    letter-spacing: 0;
+    line-height: 110px;
+    text-align: center;
+}
+
+.Line {
+  text-align: center;
+  align-items: center;
+  display: flex;
+  flex-wrap: nowrap;
+  justify-content: center;
+  
+}
+
+.important {
+  font-weight: bold;
+  color: #813eff; /* White text */
+}
+
+.fullsize {
+  
+}
+
+.SecondLine {
+  align-items: center;
+  
+  flex: 1;
+  flex-wrap: nowrap;
+  justify-content: center;
+  display: flex;
+  flex-direction: row;
+}
+
+.TaglineBlock{
+  justify-content: flex-start;
+  display: flex;
+  flex-direction: row;
+  margin: 0px 50px 20px 10px;
+}
+
+.Tagline {
+  font-size: 30px;
+  font-weight: 400;
+  letter-spacing: .005em;
+  line-height: 45px;
+  margin: 50px 50px 20px 80px;
+  max-width: 500px;
+  text-align: left;
+}
+
+

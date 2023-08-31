@@ -7,7 +7,7 @@ const darkCodeTheme = require('prism-react-renderer/themes/dracula');
 /** @type {import('@docusaurus/types').Config} */
 const config = {
   title: 'CoCMD',
-  tagline: 'community power in your terminal',
+  tagline: 'community powered cmd shortcuts and automations',
   favicon: 'img/favicon.ico',
 
   // Set the production url of your site here
@@ -71,7 +71,7 @@ const config = {
         title: 'CoCMD',
         logo: {
           alt: 'My Site Logo',
-          src: 'img/happy.png',
+          src: 'img/cloud.png',
         },
         items: [
           {

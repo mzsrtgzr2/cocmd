@@ -21,7 +21,7 @@ function TechnologiesSection() {
 
   return (
     <div className="technologies-section">
-      <h2>Supports 800+ Technologies</h2>
+      <h2>Get Shortcuts and Scripts <br/>for 800+ Technologies</h2>
       <ul>
         {technologies.map((tech, index) => (
           <li key={index}>
@@ -37,7 +37,7 @@ function TechnologiesSection() {
       <Link
             className="button button--primary button--lg"
             to="/docs/intro">
-            Create your own
+            or Create your own
           </Link>
           </div>
     </div>
