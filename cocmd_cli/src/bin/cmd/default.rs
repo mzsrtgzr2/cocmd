@@ -1,11 +1,11 @@
 use anyhow::Result;
 use clap::{crate_version, ArgAction};
 use clap::{Arg, ArgMatches, Command};
-use starter_project;
+use cocmd;
 use tracing::info;
 
 pub fn command() -> Command {
-    Command::new("starter_project")
+    Command::new("cocmd")
         .version(crate_version!())
         .about("A starter project for Rust")
         .arg(
@@ -37,11 +37,11 @@ pub fn command() -> Command {
         )
 }
 
-pub fn run(matches: &ArgMatches) -> Result<starter_project::CmdExit> {
+pub fn run(matches: &ArgMatches) -> Result<cocmd::CmdExit> {
     info!("default cmd {:?}", matches.get_one::<String>("reporter"));
-    println!("going to run {}", starter_project::CMD);
-    starter_project::run();
-    Ok(starter_project::CmdExit {
+    println!("going to run {}", cocmd::CMD);
+    cocmd::run();
+    Ok(cocmd::CmdExit {
         code: exitcode::OK,
         message: None,
     })

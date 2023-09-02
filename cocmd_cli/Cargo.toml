@@ -1,5 +1,5 @@
 [package]
-name = "starter_project"
+name = "cocmd"
 version = "1.0.0"
 edition = "2021"
 
@@ -28,23 +28,23 @@ edition = "2021"
 #
 
 [package.metadata.binstall.overrides.x86_64-pc-windows-msvc]
-pkg-url = "{ repo }/releases/download/v{ version }/__V_PROJECT_NAME__-x86_64-windows.zip"
-bin-dir = "__V_PROJECT_NAME__-x86_64-windows/__V_BIN_NAME__.exe"
+pkg-url = "{ repo }/releases/download/v{ version }/cocmd-x86_64-windows.zip"
+bin-dir = "cocmd-x86_64-windows/cocmd.exe"
 pkg-fmt = "zip"
 
 [package.metadata.binstall.overrides.x86_64-apple-darwin]
-pkg-url = "{ repo }/releases/download/v{ version }/__V_PROJECT_NAME__-x86_64-macos.tar.xz"
-bin-dir = "__V_PROJECT_NAME__-x86_64-macos/__V_BIN_NAME__"
+pkg-url = "{ repo }/releases/download/v{ version }/cocmd-x86_64-macos.tar.xz"
+bin-dir = "cocmd-x86_64-macos/cocmd"
 pkg-fmt = "txz"
 
 [package.metadata.binstall.overrides.aarch64-apple-darwin]
-pkg-url = "{ repo }/releases/download/v{ version }/__V_PROJECT_NAME__-aarch64-macos.tar.xz"
-bin-dir = "__V_PROJECT_NAME__-x86_64-macos/__V_BIN_NAME__"
+pkg-url = "{ repo }/releases/download/v{ version }/cocmd-aarch64-macos.tar.xz"
+bin-dir = "cocmd-x86_64-macos/cocmd"
 pkg-fmt = "txz"
 
 [package.metadata.binstall.overrides.x86_64-unknown-linux-gnu]
-pkg-url = "{ repo }/releases/download/v{ version }/__V_PROJECT_NAME__-x86_64-linux.tar.xz"
-bin-dir = "__V_PROJECT_NAME__-x86_64-linux/__V_BIN_NAME__"
+pkg-url = "{ repo }/releases/download/v{ version }/cocmd-x86_64-linux.tar.xz"
+bin-dir = "cocmd-x86_64-linux/cocmd"
 pkg-fmt = "txz"
 
 # </cargo binstall>
@@ -70,7 +70,7 @@ default = ["cli"]
 cli = ["clap"]
 
 [[bin]]
-name = "__v_bin_name__"
+name = "cocmd"
 path = "src/bin/main.rs"
 
 required-features = ["cli"]

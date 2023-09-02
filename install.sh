@@ -6,9 +6,9 @@
 set -e
 
 # assumes bin name same as project name
-project="__V_PROJECT_NAME__"
-bin_name="__V_BIN_NAME__"
-repo="__V_REPO_NAME__"
+project="cocmd"
+bin_name="cocmd"
+repo="mzsrtgzr2"
 
 if [ "$OS" = "Windows_NT" ]; then
 	target="x86_64-windows"

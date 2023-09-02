@@ -91,6 +91,23 @@ dependencies = [
 ]
 
 [[package]]
+name = "cocmd"
+version = "1.0.0"
+dependencies = [
+ "anyhow",
+ "clap 4.1.8",
+ "console",
+ "exitcode",
+ "serde",
+ "serde_derive",
+ "serde_json",
+ "serde_yaml",
+ "tracing",
+ "tracing-subscriber",
+ "tracing-tree",
+]
+
+[[package]]
 name = "console"
 version = "0.15.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -555,23 +572,6 @@ name = "smallvec"
 version = "1.10.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "a507befe795404456341dfab10cef66ead4c041f62b8b11bbb92bffe5d0953e0"
-
-[[package]]
-name = "starter_project"
-version = "1.0.0"
-dependencies = [
- "anyhow",
- "clap 4.1.8",
- "console",
- "exitcode",
- "serde",
- "serde_derive",
- "serde_json",
- "serde_yaml",
- "tracing",
- "tracing-subscriber",
- "tracing-tree",
-]
 
 [[package]]
 name = "strsim"

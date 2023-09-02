@@ -4,8 +4,8 @@
 
 $ErrorActionPreference = 'Stop'
 
-$Project = "__V_PROJECT_NAME__"
-$Repo = "__V_REPO_NAME__"
+$Project = "cocmd"
+$Repo = "mzsrtgzr2"
 
 if ($v) {
   $Version = "v${v}"

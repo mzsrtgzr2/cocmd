@@ -14,9 +14,9 @@ on:
 
 # 2. fill these in and you're done.
 env:
-  BIN_NAME: __V_BIN_NAME__
-  PROJECT_NAME: __V_PROJECT_NAME__
-  REPO_NAME: __V_REPO_NAME__
+  BIN_NAME: cocmd
+  PROJECT_NAME: cocmd
+  REPO_NAME: mzsrtgzr2
 
 jobs:
   dist:

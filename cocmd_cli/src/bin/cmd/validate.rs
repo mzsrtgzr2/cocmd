@@ -21,8 +21,8 @@ pub fn command() -> Command {
 pub fn run(
     _matches: &ArgMatches,
     _subcommand_matches: &ArgMatches,
-) -> Result<starter_project::CmdExit> {
-    Ok(starter_project::CmdExit {
+) -> Result<cocmd::CmdExit> {
+    Ok(cocmd::CmdExit {
         code: exitcode::OK,
         message: None,
     })

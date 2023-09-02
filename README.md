@@ -22,9 +22,9 @@ $ bp new rusty-ferris-club/rust-starter my-project
 Then take an approach of _removing what you don't need_:
 
 ```
-`starter_project/` - a CLI with subcommands, based on clap
-`starter_project_simpler/` - a CLI with a simple flat structure, based on clap
-`starter_project_lib/` - a library-only starter project, with minimal dependencies
+`cocmd/` - a CLI with subcommands, based on clap
+`cocmd_simpler/` - a CLI with a simple flat structure, based on clap
+`cocmd_lib/` - a library-only starter project, with minimal dependencies
 ```
 Once that's done you can update `cargo.toml` and remove crates from the workspace.
 
@@ -36,7 +36,7 @@ cargo build
 
 ### Personalising
 
-Find where `starter_project` is and replace it with the name of your project. `$ rg starter_project`, `find . | grep starter_project`.
+Find where `cocmd` is and replace it with the name of your project. `$ rg cocmd`, `find . | grep cocmd`.
 Find which variables you need to swap. `$ rg __V_`, `$ rg __v_`.
   
 Update all snapshots:
@@ -53,7 +53,7 @@ $ cargo insta review
 ### README.md
 
 If you like, you can replace this file with a README from the sub-crates:
-* [Library README.md](starter_project_lib/README.md)
+* [Library README.md](cocmd_lib/README.md)
 
 
 # Workflow
@@ -96,7 +96,7 @@ Set up your [release.yml](.github/workflows/release.yml), replace the project na
 
 Then to release new versions:
 
-* Update [cargo.toml](starter_project/Cargo.toml) version.
+* Update [cargo.toml](cocmd/Cargo.toml) version.
 * `git tag v[your-new-version]`
 * push the new tag
 
