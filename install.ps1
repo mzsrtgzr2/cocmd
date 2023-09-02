@@ -5,7 +5,7 @@
 $ErrorActionPreference = 'Stop'
 
 $Project = "cocmd"
-$Repo = "mzsrtgzr2"
+$Repo = "mzsrtgzr2/cocmd"
 
 if ($v) {
   $Version = "v${v}"

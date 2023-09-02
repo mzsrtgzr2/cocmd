@@ -8,7 +8,7 @@ set -e
 # assumes bin name same as project name
 project="cocmd"
 bin_name="cocmd"
-repo="mzsrtgzr2"
+repo="mzsrtgzr2/cocmd"
 
 if [ "$OS" = "Windows_NT" ]; then
 	target="x86_64-windows"
