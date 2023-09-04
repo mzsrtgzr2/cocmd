@@ -1,7 +1,8 @@
 #![allow(clippy::unnecessary_wraps)]
 #![allow(clippy::missing_const_for_fn)]
-
+#![allow(unused_variables)]
 mod cmd;
+mod settings;
 use settings::Settings;
 
 fn main() {
@@ -10,7 +11,7 @@ fn main() {
     let v = app.render_version();
     let matches = app.get_matches();
 
-    let settings = Settings::new();
+    let settings = Settings::new(None, None);
 
     // use info! or trace! etc. to log
     // to instrument use `#[tracing::instrument(level = "trace", skip(session), err)]`

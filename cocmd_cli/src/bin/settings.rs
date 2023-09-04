@@ -1,20 +1,21 @@
 use cocmd;
 use dirs;
 use cocmd::Consts;
+use std::fs;
 
 pub struct Settings {
-    home: String,
-    terminal: String,
-    config_file: String,
-    sources_file: String,
-    scan_depth: i32,
-    os: String,
+    pub home: String,
+    pub terminal: String,
+    pub config_file: String,
+    pub sources_file: String,
+    pub scan_depth: i32,
+    pub os: String,
     // sources_manager: SourcesManager, // You'll need to define this
     // credentials: CredsConfigModel, // You'll need to define this
 }
 
 impl Settings {
-    fn new(home: Option<&str>, terminal: Option<&str>) -> Self {
+    pub fn new(home: Option<&str>, terminal: Option<&str>) -> Self {
         let consts = Consts {
             home: format!("{}/.cocmd", dirs::home_dir().unwrap().to_str().unwrap()),
             source_config_file: "cocmd.yaml",
