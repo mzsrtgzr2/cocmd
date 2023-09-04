@@ -2,12 +2,15 @@
 #![allow(clippy::missing_const_for_fn)]
 
 mod cmd;
+use settings::Settings;
 
 fn main() {
     let app = cmd::default::command().subcommand(cmd::validate::command());
 
     let v = app.render_version();
     let matches = app.get_matches();
+
+    let settings = Settings::new();
 
     // use info! or trace! etc. to log
     // to instrument use `#[tracing::instrument(level = "trace", skip(session), err)]`

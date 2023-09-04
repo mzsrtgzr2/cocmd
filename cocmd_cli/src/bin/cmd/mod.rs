@@ -63,3 +63,4 @@ pub fn result_exit(res: Result<CmdExit>) {
     };
     exit(exit_with)
 }
+
