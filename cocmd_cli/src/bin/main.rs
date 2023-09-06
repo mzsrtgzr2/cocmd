@@ -1,12 +1,15 @@
 mod cmd;
 
 use clap::{Parser, Subcommand};
-use cmd::Settings;
-
+use cmd::{Settings, add};
+use cmd::tracing;
 
 #[derive(Parser)]
 #[command(author = "Your Name", version = "1.0", about = "CoCmd CLI")]
 struct Cli {
+    #[arg(short, long)]
+    verbose: bool,
+
     #[command(subcommand)]
     command: Commands,
 }
@@ -17,8 +20,23 @@ enum Commands {
     Refresh,
     Run,
     Show(ShowArgs),
-    Add,
+    Add(AddArgs),
     Remove,
+}
+
+
+#[derive(Parser)]
+struct AddArgs {
+    #[command(subcommand)]
+    add_commands: AddCommands
+}
+
+
+#[derive(Subcommand)]
+enum AddCommands {
+    Source{
+        name: String
+    }
 }
 
 #[derive(Parser)]
@@ -61,6 +79,7 @@ fn main() {
     let cli = Cli::parse();
 
     let settings = Settings::new(None, None);
+    tracing(cli.verbose);
 
     match cli.command {
         Commands::ProfileLoader => {
@@ -80,9 +99,11 @@ fn main() {
                 println!("'cocmd show sources' was used");
             }
         },
-        Commands::Add => {
-            println!("'cocmd add' was used");
-        }
+        Commands::Add(args) => match args.add_commands {
+            AddCommands::Source { name } => {
+                add::add_source(&settings,&name);
+            }
+        },
         Commands::Remove => {
             println!("'cocmd remove' was used");
         }

@@ -1,5 +1,3 @@
-use cocmd;
-use dirs;
 use cocmd::consts;
 use std::fs;
 

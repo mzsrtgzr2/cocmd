@@ -19,7 +19,9 @@
                 }
             },
             "args": [
-                "show"
+                "add",
+                "source",
+                "ba",
                 // "user_arg1",
                 // "user_arg2"
             ],

@@ -4,6 +4,7 @@
   ],
   "rust-analyzer.linkedProjects": [
     "./cocmd_cli/Cargo.toml",
+    "./cocmd_cli/Cargo.toml",
     "./cocmd_cli/Cargo.toml"
   ],
 }

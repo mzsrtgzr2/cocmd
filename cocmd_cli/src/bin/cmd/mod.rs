@@ -1,7 +1,7 @@
-pub mod default;
-pub mod validate;
 pub mod settings;
 pub use settings::Settings;
+pub mod add;
+
 use std::process::exit;
 
 use anyhow::Result;
@@ -27,11 +27,11 @@ pub fn banner(v: &str, matches: &ArgMatches) {
     }
 }
 
-pub fn tracing(matches: &ArgMatches) {
-    let level = if matches.get_flag("verbose") {
-        LevelFilter::INFO
+pub fn tracing(verbose: bool) {
+    let level = if verbose {
+        LevelFilter::DEBUG
     } else {
-        LevelFilter::OFF
+        LevelFilter::INFO
     };
     Registry::default()
         .with(tracing_tree::HierarchicalLayer::new(2))
