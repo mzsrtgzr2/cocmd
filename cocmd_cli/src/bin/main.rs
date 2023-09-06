@@ -1,30 +1,74 @@
-#![allow(clippy::unnecessary_wraps)]
-#![allow(clippy::missing_const_for_fn)]
-#![allow(unused_variables)]
-mod cmd;
-mod settings;
-use settings::Settings;
+use clap::{Parser, Subcommand};
+
+#[derive(Parser)]
+#[command(author = "Your Name", version = "1.0", about = "CoCmd CLI")]
+struct Cli {
+    #[command(subcommand)]
+    command: Commands,
+}
+
+#[derive(Subcommand)]
+enum Commands {
+    ProfileLoader,
+    Refresh,
+    Run,
+    Source(SourceArgs),
+}
+
+#[derive(Parser)]
+struct SourceArgs {
+    #[command(subcommand)]
+    command: SourceCommands,
+}
+
+#[derive(Subcommand)]
+enum SourceCommands {
+    Add(AddSourceArgs),
+    Remove(RemoveSourceArgs),
+    Show(ShowArgs),
+}
+
+#[derive(Parser)]
+struct AddSourceArgs {
+    source: String,
+}
+
+#[derive(Parser)]
+struct RemoveSourceArgs {
+    source: String,
+}
+
+#[derive(Parser)]
+struct ShowArgs {
+    #[command(subcommand)]
+    command: ShowCommands,
+}
+
+#[derive(Subcommand)]
+enum ShowCommands {
+    Sources,
+    Source(ShowSourceArgs),
+}
+
+#[derive(Parser)]
+struct ShowSourceArgs {
+    source: String,
+}
 
 fn main() {
-    let app = cmd::default::command().subcommand(cmd::validate::command());
+    let cli = Cli::parse();
 
-    let v = app.render_version();
-    let matches = app.get_matches();
-
-    let settings = Settings::new(None, None);
-
-    // use info! or trace! etc. to log
-    // to instrument use `#[tracing::instrument(level = "trace", skip(session), err)]`
-    cmd::tracing(&matches);
-    cmd::banner(&v, &matches);
-
-    let res = matches.subcommand().map_or_else(
-        || cmd::default::run(&matches),
-        |tup| match tup {
-            ("validate", subcommand_matches) => cmd::validate::run(&matches, subcommand_matches),
-            _ => unreachable!(),
+    match cli.command {
+        Commands::ProfileLoader => println!("'cocmd profile_loader' was used"),
+        Commands::Refresh => println!("'cocmd refresh' was used"),
+        Commands::Run => println!("'cocmd run' was used"),
+        Commands::Source(args) => match args.command {
+            SourceCommands::Add(add_args) => println!("'cocmd source add' was used, source is: {}", add_args.source),
+            SourceCommands::Remove(remove_args) => println!("'cocmd source remove' was used, source is: {}", remove_args.source),
+            SourceCommands::Show(show_args) => match show_args.command {
+                ShowCommands::Sources => println!("'cocmd source show sources' was used"),
+                ShowCommands::Source(show_source_args) => println!("'cocmd source show source' was used, source is: {}", show_source_args.source),
+            },
         },
-    );
-
-    cmd::result_exit(res);
+    }
 }
