@@ -1,4 +1,8 @@
+mod cmd;
+
 use clap::{Parser, Subcommand};
+use cmd::Settings;
+
 
 #[derive(Parser)]
 #[command(author = "Your Name", version = "1.0", about = "CoCmd CLI")]
@@ -12,20 +16,30 @@ enum Commands {
     ProfileLoader,
     Refresh,
     Run,
-    Source(SourceArgs),
+    Show(ShowArgs),
+    Add,
+    Remove,
 }
 
 #[derive(Parser)]
-struct SourceArgs {
+struct ShowArgs {
     #[command(subcommand)]
-    command: SourceCommands,
+    show_commands: ShowCommands
 }
 
+
 #[derive(Subcommand)]
-enum SourceCommands {
-    Add(AddSourceArgs),
-    Remove(RemoveSourceArgs),
-    Show(ShowArgs),
+enum ShowCommands {
+    Source{
+        name: String
+    },
+    Sources
+}
+
+
+#[derive(Subcommand)]
+enum Remove {
+    Source(RemoveSourceArgs),
 }
 
 #[derive(Parser)]
@@ -39,18 +53,6 @@ struct RemoveSourceArgs {
 }
 
 #[derive(Parser)]
-struct ShowArgs {
-    #[command(subcommand)]
-    command: ShowCommands,
-}
-
-#[derive(Subcommand)]
-enum ShowCommands {
-    Sources,
-    Source(ShowSourceArgs),
-}
-
-#[derive(Parser)]
 struct ShowSourceArgs {
     source: String,
 }
@@ -58,17 +60,32 @@ struct ShowSourceArgs {
 fn main() {
     let cli = Cli::parse();
 
+    let settings = Settings::new(None, None);
+
     match cli.command {
-        Commands::ProfileLoader => println!("'cocmd profile_loader' was used"),
-        Commands::Refresh => println!("'cocmd refresh' was used"),
-        Commands::Run => println!("'cocmd run' was used"),
-        Commands::Source(args) => match args.command {
-            SourceCommands::Add(add_args) => println!("'cocmd source add' was used, source is: {}", add_args.source),
-            SourceCommands::Remove(remove_args) => println!("'cocmd source remove' was used, source is: {}", remove_args.source),
-            SourceCommands::Show(show_args) => match show_args.command {
-                ShowCommands::Sources => println!("'cocmd source show sources' was used"),
-                ShowCommands::Source(show_source_args) => println!("'cocmd source show source' was used, source is: {}", show_source_args.source),
-            },
+        Commands::ProfileLoader => {
+            println!("'cocmd profile_loader' was used");
+        }
+        Commands::Refresh => {
+            println!("'cocmd refresh' was used");
+        }
+        Commands::Run => {
+            println!("'cocmd run' was used");
+        }
+        Commands::Show(args) => match args.show_commands {
+            ShowCommands::Source { name } => {
+                println!("'cocmd show source' was used, name is: {}", name);
+            }
+            ShowCommands::Sources => {
+                println!("'cocmd show sources' was used");
+            }
         },
+        Commands::Add => {
+            println!("'cocmd add' was used");
+        }
+        Commands::Remove => {
+            println!("'cocmd remove' was used");
+        }
     }
 }
+

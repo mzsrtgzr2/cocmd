@@ -1,11 +1,9 @@
 #![allow(dead_code)]
 
-pub struct Consts {
-    pub home: String,
-    pub source_config_file: &'static str,
-    pub default_terminal: &'static str,
-    pub config_file: &'static str,
-    pub sources_file: &'static str,
-    pub tmp_exec_file_name: &'static str,
-    pub credentials_file: &'static str,
-}
+pub const HOME: &str = ".cocmd";
+pub const SOURCE_CONFIG_FILE: &str = "cocmd.yaml";
+pub const DEFAULT_TERMINAL: &str = "bash";
+pub const CONFIG_FILE: &str = "config.yaml";
+pub const SOURCES_FILE: &str = "sources.txt";
+pub const TMP_EXEC_FILE_NAME: &str = "cocmd-exec.sh";
+pub const CREDENTIALS_FILE: &str = "creds.yaml";

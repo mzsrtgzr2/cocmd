@@ -1,6 +1,6 @@
 use cocmd;
 use dirs;
-use cocmd::Consts;
+use cocmd::consts;
 use std::fs;
 
 pub struct Settings {
@@ -16,21 +16,12 @@ pub struct Settings {
 
 impl Settings {
     pub fn new(home: Option<&str>, terminal: Option<&str>) -> Self {
-        let consts = Consts {
-            home: format!("{}/.cocmd", dirs::home_dir().unwrap().to_str().unwrap()),
-            source_config_file: "cocmd.yaml",
-            default_terminal: "bash",
-            config_file: "config.yaml",
-            sources_file: "sources.txt",
-            tmp_exec_file_name: "cocmd-exec.sh",
-            credentials_file: "creds.yamal",
-        };
 
-        let home = home.unwrap_or(&consts.home);
-        let terminal = terminal.unwrap_or(consts.default_terminal);
+        let home = home.unwrap_or(&consts::HOME);
+        let terminal = terminal.unwrap_or(&consts::DEFAULT_TERMINAL);
 
-        let config_file = format!("{}/{}", home, consts.config_file);
-        let sources_file = format!("{}/{}", home, consts.sources_file);
+        let config_file = format!("{}/{}", home, consts::CONFIG_FILE);
+        let sources_file = format!("{}/{}", home, consts::SOURCES_FILE);
 
         // Create directories and files
         fs::create_dir_all(home).unwrap();

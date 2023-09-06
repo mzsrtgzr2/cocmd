@@ -1,6 +1,7 @@
 pub mod default;
 pub mod validate;
 pub mod settings;
+pub use settings::Settings;
 use std::process::exit;
 
 use anyhow::Result;
