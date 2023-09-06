@@ -113,6 +113,7 @@ dependencies = [
  "console",
  "dirs",
  "exitcode",
+ "lazy_static",
  "serde",
  "serde_derive",
  "serde_json",
