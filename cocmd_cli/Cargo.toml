@@ -64,6 +64,7 @@ tracing-tree = { version = "0.2.1" }
 tracing-subscriber = { version = "^0.3.11", features = ["env-filter"] }
 dirs = "5.0.1"
 lazy_static = "1.4.0"
+dialoguer = "0.10.4"
 
 
 [features]

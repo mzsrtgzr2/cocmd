@@ -1,7 +1,7 @@
 mod cmd;
-
+use cocmd::Settings;
 use clap::{Parser, Subcommand};
-use cmd::{Settings, add};
+use cmd::add;
 use cmd::tracing;
 
 #[derive(Parser)]

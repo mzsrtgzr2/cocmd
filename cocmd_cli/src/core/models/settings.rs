@@ -1,6 +1,6 @@
 use cocmd::consts;
 use std::fs;
-
+use cocmd::utils::sys::get_os;
 pub struct Settings {
     pub home: String,
     pub terminal: String,
@@ -32,7 +32,7 @@ impl Settings {
             config_file,
             sources_file,
             scan_depth: 2,
-            os: "your_os_here".to_string(), // Replace with actual OS info
+            os: get_os().to_string()
             // sources_manager: SourcesManager::new(), // Initialize this
             // credentials: CredsConfigModel::new(), // Initialize this
         }

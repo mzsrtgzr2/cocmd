@@ -3,7 +3,9 @@
 
 mod data;
 mod runner;
-mod core;
+pub mod core;
+pub mod utils;
 pub use data::{CmdExit, CMD};
 pub use self::core::consts;
 pub use self::runner::run;
+pub use self::core::models::settings::Settings;
