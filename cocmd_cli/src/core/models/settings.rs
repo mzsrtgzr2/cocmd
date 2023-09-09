@@ -1,13 +1,13 @@
-use cocmd::consts;
+use crate::{consts, utils::sys::OS};
 use std::fs;
-use cocmd::utils::sys::get_os;
+use crate::utils::sys::get_os;
 pub struct Settings {
     pub home: String,
     pub terminal: String,
     pub config_file: String,
     pub sources_file: String,
     pub scan_depth: i32,
-    pub os: String,
+    pub os: OS,
     // sources_manager: SourcesManager, // You'll need to define this
     // credentials: CredsConfigModel, // You'll need to define this
 }
@@ -32,7 +32,7 @@ impl Settings {
             config_file,
             sources_file,
             scan_depth: 2,
-            os: get_os().to_string()
+            os: get_os()
             // sources_manager: SourcesManager::new(), // Initialize this
             // credentials: CredsConfigModel::new(), // Initialize this
         }

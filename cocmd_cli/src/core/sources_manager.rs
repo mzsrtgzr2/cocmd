@@ -1,9 +1,11 @@
 use std::collections::HashSet;
-use std::path::Path;
-use std::fs;
+use std::collections::HashMap;
 
-use crate::cmd::Settings;
-use crate::cmd::Source;
+use crate::Settings;
+use crate::core::source::Source;
+use crate::utils::io::{file_write_lines, file_read_lines};
+
+use crate::core::models::source_config_model::Automation;
 
 pub struct SourcesManager {
     settings: Settings,

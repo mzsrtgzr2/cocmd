@@ -3,7 +3,7 @@ use std::fs;
 use crate::consts;
 use crate::core::models::source_config_model::SourceConfigModel;
 use crate::utils::io::{from_file, exists, normalize_path};
-use crate::cocmd::Settings;
+use crate::Settings;
 use crate::core::models::source_config_model::Automation;
 
 pub struct Source {
@@ -31,7 +31,7 @@ impl Source {
                 .join(consts::SOURCE_CONFIG_FILE);
             
             if config_file_path.exists() {
-                let config: SourceConfigModel = from_file(&config_file_path)
+                let config: SourceConfigModel = from_file(&config_file_path.to_str().unwrap())
                     .map_err(|e| e.to_string())?;
                 source.cocmd_config = Some(config);
             }
@@ -46,10 +46,10 @@ impl Source {
         false // Implement this logic as needed
     }
 
-    pub fn aliases(&self) -> Vec<String> {
+    pub fn aliases(&self) -> Option<String> {
         match &self.cocmd_config {
             Some(config) => config.aliases.clone(),
-            None => vec![], // or any other default behavior
+            None => None, // or any other default behavior
         }
     }
 
@@ -63,7 +63,7 @@ impl Source {
     pub fn paths(&self) -> Vec<String> {
         match &self.cocmd_config {
             Some(config) => {
-                config.paths.iter().map(|p| normalize_path(p, &self.location)).collect()
+                config.paths.unwrap_or_default().iter().map(|p| normalize_path(p, Some(&self.location))).collect()
             }
             None => vec![], // or any other default behavior
         }
@@ -72,7 +72,7 @@ impl Source {
     pub fn automations(&self) -> Vec<Automation> {
         let mut result = vec![];
         if let Some(config) = &self.cocmd_config {
-            for automation in &config.automations {
+            for automation in &config.automations.unwrap() {
                 automation.load_content(&self.location);
                 if automation.supports_os(&self.settings.os) {
                     result.push(automation.clone());

@@ -1,5 +1,5 @@
-use cocmd_cli::core::os::OS;
-use cocmd_cli::utils::io::{DictLoader, YamlIO, normalize_path};
+use crate::utils::sys::OS;
+use crate::utils::io::{normalize_path, from_file};
 use serde_derive::{Serialize, Deserialize};
 
 #[derive(Debug, Serialize, Deserialize)]
@@ -18,9 +18,10 @@ impl Automation {
     pub fn load_content(&mut self, location: &str) {
         if let Some(file) = &self.file {
             let normalized_path = normalize_path(file, Some(location));
-            match YamlIO::from_file(&normalized_path) {
+            
+            match from_file::<ScriptModel>(&normalized_path) {
                 Ok(script_model) => {
-                    self.content = Some(script_model);
+                    self.content = Some(script_model);    
                 }
                 Err(_) => {
                     // Handle the error if needed
@@ -29,7 +30,7 @@ impl Automation {
         }
     }
 
-    pub fn supports_os(&self, os: OS) -> bool {
+    pub fn supports_os(&self, os: &OS) -> bool {
         if let Some(content) = &self.content {
             // Assuming that content.env is the OS enum variant or a similar value
             return content.env == os || content.env == OS::ANY;
@@ -46,6 +47,3 @@ pub struct SourceConfigModel {
     pub automations: Option<Vec<Automation>>,
 }
 
-impl DictLoader for SourceConfigModel {
-    // Implement the DictLoader trait methods here
-}
