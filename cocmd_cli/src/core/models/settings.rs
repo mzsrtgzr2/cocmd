@@ -1,6 +1,8 @@
 use crate::{consts, utils::sys::OS};
 use std::fs;
 use crate::utils::sys::get_os;
+
+#[derive(PartialEq, Eq)]
 pub struct Settings {
     pub home: String,
     pub terminal: String,

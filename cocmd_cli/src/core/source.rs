@@ -6,16 +6,16 @@ use crate::utils::io::{from_file, exists, normalize_path};
 use crate::Settings;
 use crate::core::models::source_config_model::Automation;
 
+
+#[derive(PartialEq, Eq, Hash, Debug)]
 pub struct Source {
-    settings: Settings,
     location: String,
     cocmd_config: Option<SourceConfigModel>,
 }
 
 impl Source {
-    pub fn new(location: &str, settings: Settings) -> Result<Self, String> {
+    pub fn new(location: &str, _settings: &Settings) -> Result<Self, String> {
         let mut source = Source {
-            settings,
             location: location.to_lowercase(),
             cocmd_config: None,
         };
@@ -63,19 +63,22 @@ impl Source {
     pub fn paths(&self) -> Vec<String> {
         match &self.cocmd_config {
             Some(config) => {
-                config.paths.unwrap_or_default().iter().map(|p| normalize_path(p, Some(&self.location))).collect()
+                config.paths.iter().map(|p| normalize_path(p, Some(&self.location))).collect()
             }
             None => vec![], // or any other default behavior
         }
     }
 
-    pub fn automations(&self) -> Vec<Automation> {
+    pub fn automations(&mut self, settings: &Settings) -> Vec<&Automation> {
+
         let mut result = vec![];
-        if let Some(config) = &self.cocmd_config {
-            for automation in &config.automations.unwrap() {
+
+        if let Some(source_config) = self.cocmd_config.as_mut() {
+            for automation in source_config.automations.iter_mut() {
                 automation.load_content(&self.location);
-                if automation.supports_os(&self.settings.os) {
-                    result.push(automation.clone());
+                if automation.supports_os(&settings.os) {
+                    
+                    result.push(automation as &Automation);
                 }
             }
         }
@@ -84,5 +87,9 @@ impl Source {
 
     pub fn location(&self) -> &str {
         &self.location
+    }
+
+    pub fn to_string(&self) -> String {
+        self.location.to_string()
     }
 }

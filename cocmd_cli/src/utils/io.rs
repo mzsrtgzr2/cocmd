@@ -1,10 +1,9 @@
 use std::fs;
-use std::io::{Write, BufRead, Read};
+use std::io::{Write, BufRead};
 use std::os::unix::prelude::PermissionsExt;
 use std::path::{Path, PathBuf};
-use std::collections::BTreeMap;
-use serde::{Serialize, Deserialize};
-use serde_yaml::{to_string, from_str};
+use serde::de::DeserializeOwned;
+use serde::Serialize;
 use std::error::Error;
 use std::fs::File;
 
@@ -154,38 +153,19 @@ pub fn to_file<T>(data: &T, file: &str) -> Result<(), Box<dyn Error>>
 where
     T: Serialize,
 {
-    let yaml_string = to_string(data)?;
     let mut file = File::create(file)?;
-    file.write_all(yaml_string.as_bytes())?;
+    serde_yaml::to_writer(&mut file, data)?;
     Ok(())
 }
 
 // Function to deserialize a value from a YAML file
 pub fn from_file<T>(file: &str) -> Result<T, Box<dyn Error>>
 where
-    T: Deserialize<'static>,
+    T: DeserializeOwned,
 {
-    let mut file = File::open(file)?;
-    let mut contents = String::new();
-    file.read_to_string(&mut contents)?;
+    // Open the file and deserialize directly from it
+    let file = File::open(file)?;
+    let result = serde_yaml::from_reader(file)?;
 
-    let result = from_str(&contents)?;
-    Ok(result)
-}
-
-// Function to convert a value to a BTreeMap for YAML serialization
-pub fn to_dict<T>(data: &T) -> BTreeMap<String, serde_yaml::Value>
-where
-    T: Serialize,
-{
-    serde_yaml::to_value(data).unwrap_or_default()
-}
-
-// Function to create a value from a BTreeMap after YAML deserialization
-pub fn from_dict<T>(data: BTreeMap<String, serde_yaml::Value>) -> Result<T, Box<dyn Error>>
-where
-    T: Deserialize<'static>,
-{
-    let result = serde_yaml::from_value(serde_yaml::Value::Mapping(data))?;
     Ok(result)
 }

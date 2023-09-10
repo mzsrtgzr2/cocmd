@@ -1,17 +1,14 @@
 use crate::utils::sys::OS;
 use crate::utils::io::{normalize_path, from_file};
 use serde_derive::{Serialize, Deserialize};
+use super::script_model::ScriptModel;
 
-#[derive(Debug, Serialize, Deserialize)]
-pub struct ScriptModel {
-    // Define the fields of ScriptModel here
-}
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Hash, Clone)]
 pub struct Automation {
-    name: String,
-    file: Option<String>,
-    content: Option<ScriptModel>,
+    pub name: String,
+    pub file: Option<String>,
+    pub content: Option<ScriptModel>,
 }
 
 impl Automation {
@@ -33,17 +30,17 @@ impl Automation {
     pub fn supports_os(&self, os: &OS) -> bool {
         if let Some(content) = &self.content {
             // Assuming that content.env is the OS enum variant or a similar value
-            return content.env == os || content.env == OS::ANY;
+            return content.env == *os || content.env == OS::ANY;
         }
         false
     }
 }
 
-#[derive(Debug, Serialize, Deserialize)]
+#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Hash)]
 pub struct SourceConfigModel {
     pub name: String,
     pub aliases: Option<String>,
-    pub paths: Option<Vec<String>>,
-    pub automations: Option<Vec<Automation>>,
+    pub paths: Vec<String>,
+    pub automations: Vec<Automation>,
 }
 

@@ -49,7 +49,12 @@ impl SourcesManager {
                 let mut sources = HashSet::new();
                 for line in lines {
                     let source = Source::new(line.as_str(), settings);
-                    sources.insert(source);
+                    match source {
+                        Ok(source_obj) => {
+                            sources.insert(source_obj);
+                        }
+                        Err(_) => todo!(),
+                    }
                 }
                 sources
             }
@@ -57,12 +62,12 @@ impl SourcesManager {
         }
     }
 
-    pub fn automations(&self) -> HashMap<String, Automation> {
+    pub fn automations(&self) -> HashMap<String, &Automation> {
         let mut automations = HashMap::new();
-        for source in &self.sources {
-            for automation in &source.automations {
-                let key = format!("{}.{}", source.name, automation.name);
-                automations.insert(key, automation.clone());
+        for source in self.sources.iter() {
+            for automation in source.automations(&self.settings) {
+                let key = format!("{}.{}", source.name(), automation.name);
+                automations.insert(key, automation);
             }
         }
         automations
