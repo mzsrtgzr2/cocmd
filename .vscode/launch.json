@@ -21,7 +21,7 @@
             "args": [
                 "add",
                 "source",
-                "ba",
+                "demo",
                 // "user_arg1",
                 // "user_arg2"
             ],

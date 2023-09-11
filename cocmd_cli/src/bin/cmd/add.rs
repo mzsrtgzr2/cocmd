@@ -17,7 +17,7 @@ pub fn add_source(sources_manager: &mut SourcesManager, source: &str) -> Result<
         Path::new(source).to_owned()
     };
 
-    let locations = find_cocmd_files(&source_label.to_str().unwrap(), sources_manager.settings.scan_depth);
+    let locations = find_cocmd_files(&source_label, sources_manager.settings.scan_depth);
 
     let lst_locs = locations.join("\n  - ");
     let style = Style::new().bold().green();

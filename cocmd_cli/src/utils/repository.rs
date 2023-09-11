@@ -1,7 +1,7 @@
 use std::fs;
 use std::path::{Path, PathBuf};
 use std::collections::HashSet;
-
+use crate::consts;
 /// Recursively scan all files in the specified directory and its subdirectories up to a given depth.
 /// It looks for files with a name matching `source_label` and returns a list of paths to those files.
 ///
@@ -30,14 +30,13 @@ use std::collections::HashSet;
 /// This function is used to locate files with a specific name within a directory and its subdirectories.
 ///
 /// Note: This function assumes that the current working directory is the starting point for the search.
-pub fn find_cocmd_files(source_label: &str, scan_depth: usize) -> Vec<String> {
+pub fn find_cocmd_files(source_label: &Path, scan_depth: usize) -> Vec<String> {
     let mut result = Vec::new();
     let mut visited = HashSet::new();
     
     // Define a helper function for recursion
     fn visit_dir(
         current_dir: &Path,
-        source_label: &str,
         scan_depth: usize,
         result: &mut Vec<String>,
         visited: &mut HashSet<PathBuf>,
@@ -53,18 +52,20 @@ pub fn find_cocmd_files(source_label: &str, scan_depth: usize) -> Vec<String> {
                 if let Ok(entry) = entry {
                     let path = entry.path();
                     if path.is_dir() {
-                        visit_dir(&path, source_label, scan_depth - 1, result, visited);
-                    } else if path.is_file() && path.file_name().unwrap_or_default() == source_label {
+                        visit_dir(&path, scan_depth - 1, result, visited);
+                    } else if path.is_file() && path.file_name().unwrap_or_default() == consts::SOURCE_CONFIG_FILE {
                         result.push(path.to_string_lossy().into_owned());
                     }
                 }
             }
+        } else {
+            panic!("can't find path: {:?}", current_dir)
         }
     }
     
-    if let Ok(initial_dir) = fs::canonicalize(Path::new(".")) {
-        visit_dir(&initial_dir, source_label, scan_depth, &mut result, &mut visited);
-    }
+    
+    visit_dir(source_label, scan_depth, &mut result, &mut visited);
+    
     
     result
 }
