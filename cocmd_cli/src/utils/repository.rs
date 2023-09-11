@@ -17,7 +17,7 @@ use crate::consts;
 /// # Example
 ///
 /// ```rust
-/// let source_label = "cocmd.yaml";
+/// let source_label = "/.../....";
 /// let scan_depth = 2;
 ///
 /// let paths = find_cocmd_files(source_label, scan_depth);
