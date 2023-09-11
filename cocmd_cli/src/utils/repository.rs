@@ -59,7 +59,7 @@ pub fn find_cocmd_files(source_label: &Path, scan_depth: usize) -> Vec<String> {
                 }
             }
         } else {
-            panic!("can't find path: {:?}", current_dir)
+            print!("can't find path: {:?}", current_dir)
         }
     }
     
