@@ -69,16 +69,14 @@ impl Source {
         }
     }
 
-    pub fn automations(&mut self, settings: &Settings) -> Vec<&Automation> {
+    pub fn automations(&self, settings: &Settings) -> Vec<Automation> {
 
         let mut result = vec![];
 
-        if let Some(source_config) = self.cocmd_config.as_mut() {
-            for automation in source_config.automations.iter_mut() {
-                automation.load_content(&self.location);
+        if let Some(source_config) = &self.cocmd_config {
+            for automation in source_config.automations.iter() {
                 if automation.supports_os(&settings.os) {
-                    
-                    result.push(automation as &Automation);
+                    result.push(automation.load_content(&self.location) );
                 }
             }
         }

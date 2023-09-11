@@ -1,5 +1,3 @@
-pub mod settings;
-pub use settings::Settings;
 pub mod add;
 
 use std::process::exit;

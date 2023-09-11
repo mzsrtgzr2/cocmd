@@ -1,10 +1,10 @@
 use crate::utils::sys::OS;
 use crate::utils::io::{normalize_path, from_file};
-use serde_derive::{Serialize, Deserialize};
+use serde_derive::{Serialize as Se, Deserialize as De};
 use super::script_model::ScriptModel;
 
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Hash, Clone)]
+#[derive(Debug, Se, De, PartialEq, Eq, Hash, Clone)]
 pub struct Automation {
     pub name: String,
     pub file: Option<String>,
@@ -12,18 +12,24 @@ pub struct Automation {
 }
 
 impl Automation {
-    pub fn load_content(&mut self, location: &str) {
+    pub fn load_content(&self, location: &str)->Automation {
         if let Some(file) = &self.file {
             let normalized_path = normalize_path(file, Some(location));
             
             match from_file::<ScriptModel>(&normalized_path) {
                 Ok(script_model) => {
-                    self.content = Some(script_model);    
+                    Automation{
+                        content: Some(script_model),
+                        ..self.clone()
+                    }  
                 }
                 Err(_) => {
                     // Handle the error if needed
+                    self.clone()
                 }
             }
+        } else {
+            self.clone()
         }
     }
 
@@ -36,7 +42,8 @@ impl Automation {
     }
 }
 
-#[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Hash)]
+
+#[derive(Debug, Se, De, PartialEq, Eq, Hash)]
 pub struct SourceConfigModel {
     pub name: String,
     pub aliases: Option<String>,

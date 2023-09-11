@@ -8,9 +8,9 @@ use crate::utils::io::{file_write_lines, file_read_lines};
 use crate::core::models::source_config_model::Automation;
 
 pub struct SourcesManager {
-    settings: Settings,
-    sources_file: String,
-    sources: HashSet<Source>,
+    pub settings: Settings,
+    pub sources_file: String,
+    pub sources: HashSet<Source>,
 }
 
 impl SourcesManager {
@@ -40,7 +40,7 @@ impl SourcesManager {
 
     fn save_sources(sources_file: &str, sources: &HashSet<Source>) {
         let source_strings: Vec<String> = sources.iter().map(|s| s.to_string()).collect();
-        file_write_lines(sources_file, &source_strings);
+        let _ = file_write_lines(sources_file, &source_strings);
     }
 
     fn load_sources(sources_file: &str, settings: &Settings) -> HashSet<Source> {
@@ -62,7 +62,7 @@ impl SourcesManager {
         }
     }
 
-    pub fn automations(&self) -> HashMap<String, &Automation> {
+    pub fn automations(&self) -> HashMap<String, Automation> {
         let mut automations = HashMap::new();
         for source in self.sources.iter() {
             for automation in source.automations(&self.settings) {

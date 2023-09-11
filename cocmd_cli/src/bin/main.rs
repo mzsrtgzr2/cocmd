@@ -3,6 +3,8 @@ use cocmd::Settings;
 use clap::{Parser, Subcommand};
 use cmd::add;
 use cmd::tracing;
+use cocmd::core::sources_manager;
+use cocmd::core::sources_manager::SourcesManager;
 
 #[derive(Parser)]
 #[command(author = "Your Name", version = "1.0", about = "CoCmd CLI")]
@@ -79,6 +81,7 @@ fn main() {
     let cli = Cli::parse();
 
     let settings = Settings::new(None, None);
+    let mut sources_manager = SourcesManager::new(settings);
     tracing(cli.verbose);
 
     match cli.command {
@@ -101,7 +104,7 @@ fn main() {
         },
         Commands::Add(args) => match args.add_commands {
             AddCommands::Source { name } => {
-                add::add_source(&settings,&name);
+                add::add_source(&mut sources_manager,&name);
             }
         },
         Commands::Remove => {

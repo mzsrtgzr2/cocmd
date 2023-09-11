@@ -8,7 +8,7 @@ pub struct Settings {
     pub terminal: String,
     pub config_file: String,
     pub sources_file: String,
-    pub scan_depth: i32,
+    pub scan_depth: usize,
     pub os: OS,
     // sources_manager: SourcesManager, // You'll need to define this
     // credentials: CredsConfigModel, // You'll need to define this
