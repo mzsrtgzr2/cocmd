@@ -6,6 +6,8 @@ use cmd::tracing;
 use cocmd::core::sources_manager;
 use cocmd::core::sources_manager::SourcesManager;
 
+use crate::cmd::run::run_automation;
+
 #[derive(Parser)]
 #[command(author = "Your Name", version = "1.0", about = "CoCmd CLI")]
 struct Cli {
@@ -93,6 +95,7 @@ fn main() {
         }
         Commands::Run => {
             println!("'cocmd run' was used");
+            run_automation(&mut sources_manager, None);
         }
         Commands::Show(args) => match args.show_commands {
             ShowCommands::Source { name } => {

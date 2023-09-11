@@ -1,5 +1,5 @@
 pub mod add;
-
+pub mod run;
 use std::process::exit;
 
 use anyhow::Result;

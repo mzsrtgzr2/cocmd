@@ -5,7 +5,7 @@
     "version": "0.2.0",
     "configurations": [
         {
-            "name": "(lldb) Launch",
+            "name": "add source",
             "type": "lldb",
             "request": "launch",
             "cargo": {
@@ -22,17 +22,27 @@
                 "add",
                 "source",
                 "demo",
-                // "user_arg1",
-                // "user_arg2"
             ],
             "cwd": "${workspaceFolder}"
-            // "program": "${workspaceRoot}/cocmd_cli/target/debug/cocmd",
-            // "args": [],
-            // "stopAtEntry": false,
-            // "cwd": "${workspaceRoot}",
-            // "environment": [],
-            // "externalConsole": false,
-            // "MIMode": "lldb"
+        },
+        {
+            "name": "run",
+            "type": "lldb",
+            "request": "launch",
+            "cargo": {
+                "args": [
+                    "build",
+                    "--bin=cocmd"
+                ],
+                "filter": {
+                    "name": "cocmd",
+                    "kind": "bin"
+                }
+            },
+            "args": [
+                "run",
+            ],
+            "cwd": "${workspaceFolder}"
         }
     ]
 }

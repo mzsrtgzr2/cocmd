@@ -1,5 +1,5 @@
 use crate::{consts, utils::sys::OS};
-use std::fs;
+use std::fs::{self, OpenOptions};
 use crate::utils::sys::get_os;
 
 #[derive(PartialEq, Eq)]
@@ -25,7 +25,11 @@ impl Settings {
 
         // Create directories and files
         fs::create_dir_all(home).unwrap();
-        fs::File::create(&sources_file).unwrap();
+        OpenOptions::new()
+            .create(true)
+            .append(true)
+            .open(&sources_file)
+            .unwrap();
 
         // Initialize other fields
         Settings {
