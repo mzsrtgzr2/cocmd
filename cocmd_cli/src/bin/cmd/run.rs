@@ -30,7 +30,7 @@ pub fn run_automation(sources_manager: &mut SourcesManager, specific_name: Optio
     if let Some(script) = available_automations.get(selected_name) {
         
         // let output = ScriptRunner::run(script, &settings.os, &script_args, &settings, auto_yes);
-        print!("{:?}", script);
+        info!("{:?}", script);
         // let output = script.content;
 
         // info!("[blue] Script executed:");
@@ -38,7 +38,7 @@ pub fn run_automation(sources_manager: &mut SourcesManager, specific_name: Optio
         //     info!(" - {}", line);
         // }
 
-        info!("[bold green]Script {} completed", script.name);
+        info!("Script {} completed", script.name);
     } else {
         error!("I don't know this script");
     }
