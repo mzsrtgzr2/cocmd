@@ -75,7 +75,12 @@ impl Source {
     pub fn paths(&self) -> Vec<String> {
         match &self.cocmd_config {
             Some(config) => {
-                config.paths.iter().map(|p| normalize_path(p, Some(&self.location))).collect()
+                match &config.paths{
+                    Some(paths) => {
+                        paths.iter().map(|p| normalize_path(p, Some(&self.location))).collect()
+                    }
+                    None => vec![], // or any other default behavior
+                }
             }
             None => vec![], // or any other default behavior
         }
@@ -86,9 +91,11 @@ impl Source {
         let mut result = vec![];
 
         if let Some(source_config) = &self.cocmd_config {
-            for automation in source_config.automations.iter() {
-                if automation.supports_os(&settings.os) {
-                    result.push(automation.load_content(&self.location) );
+            if let Some(automations) = &source_config.automations{
+                for automation in automations.iter() {
+                    if automation.supports_os(&settings.os) {
+                        result.push(automation.load_content(&self.location) );
+                    }
                 }
             }
         }

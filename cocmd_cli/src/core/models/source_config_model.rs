@@ -35,10 +35,11 @@ impl Automation {
 
     pub fn supports_os(&self, os: &OS) -> bool {
         if let Some(content) = &self.content {
-            // Assuming that content.env is the OS enum variant or a similar value
-            return content.env == *os || content.env == OS::ANY;
+            if let Some(content_env) = &content.env {
+                *content_env == *os || *content_env == OS::ANY;
+            }
         }
-        false
+        true
     }
 }
 
@@ -47,7 +48,7 @@ impl Automation {
 pub struct SourceConfigModel {
     pub name: String,
     pub aliases: Option<String>,
-    pub paths: Vec<String>,
-    pub automations: Vec<Automation>,
+    pub paths: Option<Vec<String>>,
+    pub automations: Option<Vec<Automation>>,
 }
 
