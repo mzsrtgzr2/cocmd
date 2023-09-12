@@ -3,7 +3,6 @@ use cocmd::Settings;
 use clap::{Parser, Subcommand};
 use cmd::add;
 use cmd::tracing;
-use cocmd::core::sources_manager;
 use cocmd::core::sources_manager::SourcesManager;
 
 use crate::cmd::run::run_automation;
@@ -22,11 +21,14 @@ struct Cli {
 enum Commands {
     ProfileLoader,
     Refresh,
-    Run,
+    Run {
+        name: Option<String>
+    },
     Show(ShowArgs),
     Add(AddArgs),
     Remove,
 }
+
 
 
 #[derive(Parser)]
@@ -93,9 +95,9 @@ fn main() {
         Commands::Refresh => {
             println!("'cocmd refresh' was used");
         }
-        Commands::Run => {
+        Commands::Run {name} => {
             println!("'cocmd run' was used");
-            run_automation(&mut sources_manager, None);
+            run_automation(&mut sources_manager, name);
         }
         Commands::Show(args) => match args.show_commands {
             ShowCommands::Source { name } => {

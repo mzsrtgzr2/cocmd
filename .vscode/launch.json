@@ -41,6 +41,7 @@
             },
             "args": [
                 "run",
+                "docker.setup"
             ],
             "cwd": "${workspaceFolder}"
         }

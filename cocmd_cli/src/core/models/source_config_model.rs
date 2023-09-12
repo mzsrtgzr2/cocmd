@@ -2,7 +2,7 @@ use crate::utils::sys::OS;
 use crate::utils::io::{normalize_path, from_file};
 use serde_derive::{Serialize as Se, Deserialize as De};
 use super::script_model::ScriptModel;
-
+use tracing::error;
 
 #[derive(Debug, Se, De, PartialEq, Eq, Hash, Clone)]
 pub struct Automation {
@@ -23,8 +23,9 @@ impl Automation {
                         ..self.clone()
                     }  
                 }
-                Err(_) => {
+                Err(err) => {
                     // Handle the error if needed
+                    error!(err);
                     self.clone()
                 }
             }
