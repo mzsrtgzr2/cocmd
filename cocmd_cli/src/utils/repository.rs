@@ -54,7 +54,7 @@ pub fn find_cocmd_files(source_label: &Path, scan_depth: usize) -> Vec<String> {
                     if path.is_dir() {
                         visit_dir(&path, scan_depth - 1, result, visited);
                     } else if path.is_file() && path.file_name().unwrap_or_default() == consts::SOURCE_CONFIG_FILE {
-                        result.push(path.to_string_lossy().into_owned());
+                        result.push(current_dir.to_string_lossy().into_owned());
                     }
                 }
             }

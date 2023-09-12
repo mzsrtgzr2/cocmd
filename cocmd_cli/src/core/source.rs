@@ -5,7 +5,7 @@ use crate::core::models::source_config_model::SourceConfigModel;
 use crate::utils::io::{from_file, exists, normalize_path};
 use crate::Settings;
 use crate::core::models::source_config_model::Automation;
-
+use tracing::error;
 
 #[derive(PartialEq, Eq, Hash, Debug)]
 pub struct Source {
@@ -31,15 +31,27 @@ impl Source {
                 .join(consts::SOURCE_CONFIG_FILE);
             
             if config_file_path.exists() {
-                let config: SourceConfigModel = from_file(&config_file_path.to_str().unwrap())
-                    .map_err(|e| e.to_string())?;
-                source.cocmd_config = Some(config);
+                let config: Result<SourceConfigModel, String> = from_file(&config_file_path.to_str().unwrap())
+    .map_err(|e| e.to_string());
+                match config {
+                    Ok(config_res) => {
+                        // Successfully loaded the configuration
+                        // You can use 'config' here
+                        source.cocmd_config = Some(config_res);
+                        Ok(source)
+                    }
+                    Err(err) => {
+                        // Handle the error, for example, log it
+                        error!("{}", err);
+                        Err(err)
+                    }
+                }
+            } else {
+                return Err(format!("Config Path {:?} does not exist.", config_file_path));    
             }
         } else {
-            return Err(format!("Path {} does not exist.", source.location));
+            return Err(format!("Source Path {} does not exist.", source.location));
         }
-
-        Ok(source)
     }
 
     pub fn is_exists_locally(&self) -> bool {

@@ -30,8 +30,10 @@ pub fn add_source(sources_manager: &mut SourcesManager, source: &str) -> Result<
     if Confirm::new().with_prompt("Do you want to continue?").interact()? {
         for loc in locations {
             let source = Source::new(&loc, &sources_manager.settings);
-            sources_manager.add_source(source.unwrap());
-            println!("{}", style.apply_to(format!("Source '{:?}' added", loc)));
+            if let Ok(source_res) = source{
+                sources_manager.add_source(source_res);
+                println!("{}", style.apply_to(format!("Source '{:?}' added", loc)));
+            }
         }
     } else {
         println!("{}", style.apply_to("Skipped. you answered 'NO'"));

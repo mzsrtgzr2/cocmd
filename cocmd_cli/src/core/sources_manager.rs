@@ -6,6 +6,7 @@ use crate::core::source::Source;
 use crate::utils::io::{file_write_lines, file_read_lines};
 
 use crate::core::models::source_config_model::Automation;
+use tracing::error;
 
 pub struct SourcesManager {
     pub settings: Settings,
@@ -53,7 +54,7 @@ impl SourcesManager {
                         Ok(source_obj) => {
                             sources.insert(source_obj);
                         }
-                        Err(_) => todo!(),
+                        Err(msg) => error!(msg),
                     }
                 }
                 sources
