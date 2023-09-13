@@ -65,6 +65,8 @@ tracing-subscriber = { version = "^0.3.11", features = ["env-filter"] }
 dirs = "5.0.1"
 lazy_static = "1.4.0"
 dialoguer = "0.10.4"
+execute = "0.2.12"
+termimad = "0.25.2"
 
 
 [features]

@@ -6,6 +6,7 @@ use serde::de::DeserializeOwned;
 use serde::Serialize;
 use std::error::Error;
 use std::fs::File;
+use std::io::Read;
 
 
 /// Normalizes a path by joining it with a base path if provided and resolving to an absolute path.
@@ -149,7 +150,7 @@ pub fn chmod_x(file: &str) {
 
 
 // Function to serialize a value to YAML and write it to a file
-pub fn to_file<T>(data: &T, file: &str) -> Result<(), Box<dyn Error>>
+pub fn to_yaml_file<T>(data: &T, file: &str) -> Result<(), Box<dyn Error>>
 where
     T: Serialize,
 {
@@ -159,7 +160,7 @@ where
 }
 
 // Function to deserialize a value from a YAML file
-pub fn from_file<T>(file: &str) -> Result<T, Box<dyn Error>>
+pub fn from_yaml_file<T>(file: &str) -> Result<T, Box<dyn Error>>
 where
     T: DeserializeOwned,
 {
@@ -168,4 +169,15 @@ where
     let result = serde_yaml::from_reader(file)?;
 
     Ok(result)
+}
+
+pub fn from_file(file_path: &str) -> Result<String, Box<dyn Error>> {
+    // Open the file
+    let mut file = File::open(file_path)?;
+
+    // Read the entire contents of the file into a String
+    let mut content = String::new();
+    file.read_to_string(&mut content)?;
+
+    Ok(content)
 }

@@ -6,6 +6,8 @@ use cmd::tracing;
 use cocmd::core::sources_manager::SourcesManager;
 
 use crate::cmd::run::run_automation;
+use crate::cmd::profile_loader::run_profile_loader;
+use crate::cmd::show::{show_source, show_sources};
 
 #[derive(Parser)]
 #[command(author = "Your Name", version = "1.0", about = "CoCmd CLI")]
@@ -90,21 +92,20 @@ fn main() {
 
     match cli.command {
         Commands::ProfileLoader => {
-            println!("'cocmd profile_loader' was used");
+            let _ = run_profile_loader(&mut sources_manager);
         }
         Commands::Refresh => {
             println!("'cocmd refresh' was used");
         }
         Commands::Run {name} => {
-            println!("'cocmd run' was used");
-            run_automation(&mut sources_manager, name);
+            let _ = run_automation(&mut sources_manager, name);
         }
         Commands::Show(args) => match args.show_commands {
             ShowCommands::Source { name } => {
-                println!("'cocmd show source' was used, name is: {}", name);
+                show_source(&mut sources_manager, name);
             }
             ShowCommands::Sources => {
-                println!("'cocmd show sources' was used");
+                show_sources(&mut sources_manager);
             }
         },
         Commands::Add(args) => match args.add_commands {

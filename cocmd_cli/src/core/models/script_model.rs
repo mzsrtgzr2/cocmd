@@ -16,7 +16,8 @@ pub enum StepRunnerType {
 #[derive(Debug, Serialize, Deserialize, PartialEq, Eq, Hash, Clone)]
 pub struct StepModel {
     pub runner: StepRunnerType,
-    pub content: String,
+    pub content: Option<String>,
+    pub file: Option<String>,
     pub title: String,
 }
 

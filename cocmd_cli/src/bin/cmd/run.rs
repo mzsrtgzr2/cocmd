@@ -1,13 +1,15 @@
-use std::{process, io};
+use std::process;
 
 use anyhow::Result;
 use cocmd::core::{sources_manager::SourcesManager, models::script_model::{StepModel, StepRunnerType, ScriptModel}};
 use dialoguer::{theme::ColorfulTheme, Select};
 
-use std::process::Command;
+use std::process::{Command, Stdio};
+use execute::{Execute, shell};
 use cocmd::utils::sys::OS;
 
 use tracing::{info, error};
+use termimad;
 
 pub fn run_automation(sources_manager: &mut SourcesManager, specific_name: Option<String>) -> Result<cocmd::CmdExit> {
     let available_automations = sources_manager.automations();
@@ -52,31 +54,36 @@ pub fn run_automation(sources_manager: &mut SourcesManager, specific_name: Optio
     })
 }
 
+fn interactive_shell(step: &StepModel) {
+    let mut command = shell(&step.content.as_ref().unwrap());
 
+    command.stdout(Stdio::piped());
+    command.stdin(Stdio::piped());
+
+    print!("{:?}", step.content);
+    let output = command.execute_output().unwrap();
+
+    println!("{}", String::from_utf8(output.stdout).unwrap());
+}
 
 fn handle_step(step: &StepModel, env: OS) {
+    let content = step.content.as_ref().unwrap().as_str();
+    let skin = termimad::MadSkin::default();
     match &step.runner {
         StepRunnerType::SHELL => {
-            // Execute shell command and print to stdout/stderr
-            let output = Command::new("sh")
-                .arg("-c")
-                .arg(&step.content)
-                .output()
-                .expect("Failed to execute shell command.");
-            
-            println!("stdout: {}", String::from_utf8_lossy(&output.stdout));
-            println!("stderr: {}", String::from_utf8_lossy(&output.stderr));
+            skin.print_text(&format!("# running step - {}", &step.title));
+            interactive_shell(step);
             
         }
         StepRunnerType::MARKDOWN => {
             // Print Markdown content
-            println!("{}", step.content);
+            skin.print_text(content);
         }
         StepRunnerType::PYTHON => {
             // Execute Python script
             let output = Command::new("python")
                 .arg("-c")
-                .arg(&step.content)
+                .arg(content)
                 .output()
                 .expect("Failed to execute Python script.");
 
@@ -90,19 +97,19 @@ fn handle_step(step: &StepModel, env: OS) {
                     Command::new("cmd")
                         .arg("/C")
                         .arg("start")
-                        .arg(&step.content)
+                        .arg(content)
                         .spawn()
                         .expect("Failed to open link in the default browser.");
                 }
                 OS::Linux => {
                     Command::new("xdg-open")
-                        .arg(&step.content)
+                        .arg(content)
                         .spawn()
                         .expect("Failed to open link in the default browser.");
                 }
                 OS::MacOS => {
                     Command::new("open")
-                        .arg(&step.content)
+                        .arg(content)
                         .spawn()
                         .expect("Failed to open link in the default browser.");
                 }

@@ -2,15 +2,15 @@ use std::path::Path;
 use std::fs;
 use crate::consts;
 use crate::core::models::source_config_model::SourceConfigModel;
-use crate::utils::io::{from_file, exists, normalize_path};
+use crate::utils::io::{from_yaml_file, exists, normalize_path};
 use crate::Settings;
 use crate::core::models::source_config_model::Automation;
 use tracing::error;
 
 #[derive(PartialEq, Eq, Hash, Debug)]
 pub struct Source {
-    location: String,
-    cocmd_config: Option<SourceConfigModel>,
+    pub location: String,
+    pub cocmd_config: Option<SourceConfigModel>,
 }
 
 impl Source {
@@ -31,7 +31,7 @@ impl Source {
                 .join(consts::SOURCE_CONFIG_FILE);
             
             if config_file_path.exists() {
-                let config: Result<SourceConfigModel, String> = from_file(&config_file_path.to_str().unwrap())
+                let config: Result<SourceConfigModel, String> = from_yaml_file(&config_file_path.to_str().unwrap())
     .map_err(|e| e.to_string());
                 match config {
                     Ok(config_res) => {
@@ -93,8 +93,9 @@ impl Source {
         if let Some(source_config) = &self.cocmd_config {
             if let Some(automations) = &source_config.automations{
                 for automation in automations.iter() {
-                    if automation.supports_os(&settings.os) {
-                        result.push(automation.load_content(&self.location) );
+                    let automation_loaded = automation.load_content(&self.location);
+                    if automation_loaded.supports_os(&settings.os) {
+                        result.push( automation_loaded );
                     }
                 }
             }

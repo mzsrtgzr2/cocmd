@@ -1,10 +1,11 @@
 pub mod add;
 pub mod run;
+pub mod profile_loader;
+pub mod show;
 use std::process::exit;
 
 use anyhow::Result;
-use clap::ArgMatches;
-use console::{style, Style};
+use console::Style;
 use cocmd::CmdExit;
 use tracing::debug;
 use tracing::metadata::LevelFilter;
@@ -12,18 +13,6 @@ use tracing_subscriber::prelude::__tracing_subscriber_SubscriberExt;
 use tracing_subscriber::util::SubscriberInitExt;
 use tracing_subscriber::{EnvFilter, Registry};
 
-pub const BANNER: &str = r#"
-    B A N N E R
-"#;
-pub fn banner(v: &str, matches: &ArgMatches) {
-    if !matches.get_flag("no_banner") {
-        println!(
-            "{}\n                    {}",
-            style(BANNER).magenta(),
-            style(v).dim()
-        );
-    }
-}
 
 pub fn tracing(verbose: bool) {
     let level = if verbose {
