@@ -1,0 +1,15 @@
+
+description: Build docker from source
+steps:
+- content: |
+    # Build docker from source
+    git clone 
+    cd docker
+
+    # Build docker  
+    make build
+    
+    # Install docker
+    sudo make install
+  runner: shell
+  title: Build docker from source

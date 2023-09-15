@@ -78,3 +78,26 @@ pub fn show_source(sources_manager: &SourcesManager, name: String) -> Result<coc
         message: None,
     })
 }
+
+
+// handle show aliases in a source by the source name 
+pub fn show_aliases(sources_manager: &SourcesManager, name: String) -> Result<cocmd::CmdExit> {
+
+    let source = &sources_manager.sources[&name];
+    let skin = termimad::MadSkin::default();
+    
+    skin.print_text(&format!("# {}", name));
+    skin.print_text(&format!("- location: {}", source.location()));
+    
+    if let Some(alias) = &source.aliases() {
+        skin.print_text(&format!("## aliases"));
+        skin.print_text(&format!("```{}```", alias));
+    }
+
+    Ok(cocmd::CmdExit {
+        code: exitcode::OK,
+        message: None,
+    })
+}
+
+

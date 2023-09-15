@@ -11,6 +11,11 @@ aliases: |
     alias gpush='git push'
     alias gpushs='git push --set-upstream origin'
     alias gs='git status'
+    alias gtag='git tag'
+    alias gtagd='git tag -d'
+    alias gtagp='git push --tags'
+    alias gtagr='git push --delete origin'
+    
 paths:
     - ./scripts/
     - ./bin/

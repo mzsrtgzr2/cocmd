@@ -27,4 +27,6 @@ automations:
       file: ./cocmd.monitor.yaml
     - name: build-run
       file: ./cocmd.buildrun.yaml
+    - name: build-from-source
+      file: ./cocmd.buildfromsource.yaml
     

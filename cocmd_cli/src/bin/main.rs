@@ -7,6 +7,7 @@ use cocmd::core::sources_manager::SourcesManager;
 
 use crate::cmd::run::run_automation;
 use crate::cmd::profile_loader::run_profile_loader;
+use crate::cmd::show::show_aliases;
 use crate::cmd::show::{show_source, show_sources};
 
 #[derive(Parser)]
@@ -59,7 +60,11 @@ enum ShowCommands {
     Source{
         name: String
     },
-    Sources
+    Sources,
+    Aliases{
+        name: Option<String>
+    
+    }
 }
 
 
@@ -106,6 +111,10 @@ fn main() {
             }
             ShowCommands::Sources => {
                 show_sources(&mut sources_manager);
+            },
+            ShowCommands::Aliases { name } => {
+                println!("'cocmd show aliases' was used");
+                show_aliases(&mut sources_manager, name);
             }
         },
         Commands::Add(args) => match args.add_commands {
